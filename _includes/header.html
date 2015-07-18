@@ -3,9 +3,10 @@
     {% for cat in site.categories%}
       <li>
         <a href="{{ cat[0] | category_link }}" class="categoryItem">
-          {{ cat | first }}<span class="c_cnt">({{ cat | size | add:-1}})</span>
+          {{ cat | first }}<span class="c_cnt">({{ cat | size | plus:-1 }})</span>
         </a>
       </li>
     {% endfor%}
   </nav>
 </div>
+<!-- {{ cat | size}} -->
