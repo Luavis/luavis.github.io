@@ -6,7 +6,7 @@ categories: http
 
 ---
 
-![Http logo]({{ site_url }}/asstes/http_logo.png)
+![Http logo]({{ site_url }}/assets/http_logo.png)
 
 우리가 지금 사용하고 있는 웹에서 가장 흔하게 볼 수 있는 프로토콜 중 하나를 뽑으라 하면 대부분의 개발자들이 주저없이 HTTP를 선택할 것이다.
 이 HTTP의 기본적인 사양을 내포하고 있는 버전인 1.0을 이번에 공부하기 위해 HTTP/1.0의 spec들에 관하여 서술하고 있는 RFC 1945를 공부해보기로 했다.
