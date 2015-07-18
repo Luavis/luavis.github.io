@@ -1,5 +1,6 @@
 
 module Jekyll
+  
   module CategoryFilter
 
     def category_link(category_name)
@@ -9,4 +10,4 @@ module Jekyll
   end
 end
 
-Liquid::Template.register_filter(Jekyll::AddFilter)
+Liquid::Template.register_filter(Jekyll::CategoryFilter)

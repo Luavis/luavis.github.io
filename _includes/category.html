@@ -1,0 +1,22 @@
+<div class="home">
+
+  <h1><strong>{{ include.cate_name }}</strong>의 Posts</h1>
+  <div id="post-content" class="clearfix">
+    <div id="time-line-circle" class="circle bg-orange">
+      <div class="circle-sm bg-white circle-center"></div>
+    </div>
+    <div class="f-left">
+        <ul class="post-list">
+          {% for post in site.categories.[include.cate_name] %}
+            <li>
+              <span class="post-meta">{{ post.date | date: "%b %-d, %Y" }}</span>
+
+              <h2>
+                <a class="post-link" href="{{ post.url }}">{{ post.title }}</a>
+              </h2>
+            </li>
+          {% endfor %}
+        </ul>
+    </div>
+  </div>
+</div>
