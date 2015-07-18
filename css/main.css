@@ -1016,3 +1016,6 @@ footer {
   border-left: 10px solid #ffcc00;
   border-bottom-left-radius:  10px;
 }
+strong {
+  color: #ffcc00;
+}
