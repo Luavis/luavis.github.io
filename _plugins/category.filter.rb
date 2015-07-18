@@ -2,7 +2,7 @@
 module Jekyll
   module CategoryFilter
 
-    def cate(category_name)
+    def category_link(category_name)
       Jekyll.sites()[0].baseurl + "category/" + category_name
     end
 
