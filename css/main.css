@@ -1025,3 +1025,6 @@ footer {
 strong {
   color: #ffcc00;
 }
+#avatar-image {
+  border-radius: 80px; margin-bottom: 30px; block: inline-block
+}
