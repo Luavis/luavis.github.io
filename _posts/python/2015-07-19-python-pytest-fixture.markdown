@@ -10,6 +10,11 @@ categories: python
 
 우리가 흔히 사용하는 라이브러리에서는 일반적으로  unit test기반의 테스팅 파일을 설치시 정상적인 설치가 되었는지 또 라이브러리를 PR할 시에 이 라이브러리의 확장이 버그 없이 확장된것인지를 확인해주기 위해서 함께 업로드해 준다. python에서는 보통 Pytest를 사용하는데, 그 중 Fixture 기능에대해서 정리해보기 위해 Pytest 공식 사이트의 latest 버전의(2.4) fixture 기능에 대해 나와있는 [페이지](https://pytest.org/latest/fixture.html)를 번역해 보기로 했다.
 
+*이 외의 pytest 관련 문서*
+
+1. [Python hook]({% post_url /python/2015-07-19-python-pytest-hook %})
+
+
 ----
 
 test fixture의 목적은 신뢰되고 반복적으로 실행되는 테스팅에서 고정된 기반을 만들어주는것이다. pytest fixtures setup/teardown 함수가 제공되는 일반적인 xUnit 스타일을 활용하여 성능 향상을 보여준다.
