@@ -388,6 +388,12 @@ fieldset {
   padding: 0.35em 0.625em 0.75em;
 }
 
+em {
+  font-style: italic;
+  font-weight: bold;
+  color: #ffcc00;
+}
+
 /*
  * 1. Corrects color not being inherited in IE6/7/8/9
  * 2. Corrects text not wrapping in FF3 
