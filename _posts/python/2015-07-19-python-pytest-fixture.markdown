@@ -28,8 +28,9 @@ test fixture의 목적은 신뢰되고 반복적으로 실행되는 테스팅에
 
 ## Fixtures as Function arguments
 
-Test function들은 fixture object들을 매개변수의 이름을 통하여 받을수 있다. 각각의 매개변수 이름은 fixture의 이름이다. fixture function들은 @pytest.fixture decoration을 통하여 등록할 수 있다. 간단한 예제를 우선 보자.
+Test function들은 fixture object들을 매개변수의 이름을 통하여 받을수 있다. 각각의 매개변수 이름은 fixture의 이름이다. fixture function들은 *@pytest.fixture* decorator를 통하여 등록할 수 있다. 간단한 예제를 우선 보자.
 
+*test_smtpsimple.py*
 {% highlight python linenos %}
 import pytest
 
@@ -44,3 +45,136 @@ def test_ehlo(smtp):
     assert 0 # for demo purposes
     
 {% endhighlight %}
+
+여기서 *test_ehlo* 테스트 함수는 *smtp fixture*를 갖는다. pytest는 이를 찾고 *@pytest.fixture*가 마크되어있는 *stmp*함수를 호출하게 된다. 테스트를 실행하게 되면 아래와 같은 출력화면을 볼 수 있다.
+
+    $ py.test test_smtpsimple.py
+    =========================== test session starts ============================
+    platform linux -- Python 3.4.1 -- py-1.4.27 -- pytest-2.7.1
+    rootdir: /tmp/doc-exec-98, inifile:
+    collected 1 items
+
+    test_smtpsimple.py F
+
+    ================================= FAILURES =================================
+    ________________________________ test_ehlo _________________________________
+
+    smtp = <smtplib.SMTP object at 0x7f9d45764c88>
+
+    def test_ehlo(smtp):
+        response, msg = smtp.ehlo()
+        assert response == 250
+    >       assert 0 # for demo purposes
+    E       assert 0
+
+    test_smtpsimple.py:11: AssertionError
+    ========================= 1 failed in 1.07 seconds =========================
+
+failure traceback를 보면 우리는 test함수가 fixture function에 의해서 *smtplib.SMTP()*가 호출되고 이로인해 만들어진 인스턴스인 smtp 매개변수를 통하여 smtp fixture를 호출한 것을 볼 수 있다. test function은 출력결과를 보기 위해 의도적으로 설치한 assert 0으로 인하여 fail하게 되었다.
+
+pytest가 위의 test_elho function을 호출하는 방법에 대해서 정확하게 서술해보았다.
+   
+ 1. pytest는 test_가 접두사(prefix)로 되어 있기 떄문에 test_elho를 찾을것이다. 이 test function은 smtp라는 이름의 함수 매개변수를 필요로한다. fixture-marked된 함수들중에서 smtp라는 이름의 fixture function을 찾는다.
+ 
+ 1. *smtp()*를 호출하고 return instance를 받는다.
+ 
+ 1. *test_ehlo(<SMTP instance>)*는 호출되고 테스트 함수 내에서 실패했다.(assert 0 떄문에) 
+
+    주의할 점은 만약 당신이 함수의 매개변수를 잘못 입력하였거나 혹은 원하는 기능이 사용불가능한 상태이면, 당연히 에러가 발생할 것이다.
+
+
+> ###Note
+>
+> 당신은 언제나 --fixtures를 이용하여
+> 
+> *py.test --fixtures test_simplefactory.py*
+>
+> 사용가능한 fixture들을 확인할 수 있다.
+>
+> 2.3 버전 이전에는 @pytest.fixture decorator가 없었다. pytest_funcarg__NAME prefix를 사용하여 fixture임을 표기할 수 있었다. 이 기능은 남아 있으나, 더 이상 권장하지는 않는다.
+
+##“Funcargs” a prime example of dependency injection
+
+fixtures를 test function에 적용하기 위해서는 pytest-2.0에서는 현재까지 사용되고 있는 “funcargs” or “funcarg mechanism”를 소개하고 있다. pytest-2.3에서부터는 더 많은 방법이 있지만 “funcargs”가 가장 주로  test function의 dependency를 직접적으로 설정하는 방법이다.
+
+## Sharing a fixture across tests in a module (or class/session)
+
+네트워크 연결을 필요로하는 Fixture 연결성에 의존하게 되고 연결 생성에 시간적 비용이 많이 드는 경우가 흔하다.
+이 전의 예제를 확장하여 우리는 *scope="module"* 매개변수를 @pytest.fixture에 추가하여 module내에서 한번만 실행하도록 설정할 수 있다. 한 test module내에 복수의 test function에서 사용하더라도 같은 stmp fixture instance를 받을 수 있다.
+다음 예제는 fixture function을 conftest.py라는 test function과는 분리된 파일에 넣어 다른 test module에서도 접근할 수 있도록 했다.
+
+*conftest.py*
+{% highlight python linenos %}
+import pytest
+import smtplib
+
+@pytest.fixture(scope="module")
+def smtp():
+    return smtplib.SMTP("merlinux.eu")
+{% endhighlight %}
+
+fixture의 이름은 다시 한번 smtp로 하였고 당신은 conftest.py가 위치한 directory혹은 그 하위 directory에 있는 test function 혹은 다른 fixture function에서 접근할 수 있다.
+
+*test_module.py*
+{% highlight python linenos %}
+
+def test_ehlo(smtp):
+  response = smtp.ehlo()
+  assert response[0] == 250
+  assert "merlinux" in response[1]
+  assert 0  # for demo purposes
+
+def test_noop(smtp):
+  response = smtp.noop()
+  assert response[0] == 250
+  assert 0  # for demo purposes
+
+{% endhighlight %}
+
+우리는 의도적으로 어떻게 진행되고 있는지 분석하기 위해서 *assert 0* 구문을 추가하였다. 그리고 테스트를 실행하면:
+
+    $ py.test test_module.py
+    =========================== test session starts ============================
+    platform linux -- Python 3.4.1 -- py-1.4.27 -- pytest-2.7.1
+    rootdir: /tmp/doc-exec-98, inifile:
+    collected 2 items
+
+    test_module.py FF
+
+    ================================= FAILURES =================================
+    ________________________________ test_ehlo _________________________________
+
+    smtp = <smtplib.SMTP object at 0x7fb558b12240>
+
+        def test_ehlo(smtp):
+            response = smtp.ehlo()
+            assert response[0] == 250
+    >       assert "merlinux" in response[1]
+    E       TypeError: Type str doesn't support the buffer API
+
+    test_module.py:5: TypeError
+    ________________________________ test_noop _________________________________
+
+    smtp = <smtplib.SMTP object at 0x7fb558b12240>
+
+        def test_noop(smtp):
+            response = smtp.noop()
+            assert response[0] == 250
+    >       assert 0  # for demo purposes
+    E       assert 0
+
+    test_module.py:11: AssertionError
+    ========================= 2 failed in 0.82 seconds =========================
+    
+
+당신은 두개의  *assert 0*를 볼수 있다. 그리고 더 중요한것은 당신이 동일 모듈 범위 내에서 pytest가 traceback을 통하여 보여준 매개변수로 부터 smtp object가 공유되고 있다는 것 또한 볼 수 있다는 것이다.(같은 object hash값을 갖고 있다[0x7fb558b12240]) 결과적으로 smtp를 사용하고 있는 두개의 test functions은 하나의 재사용된  같은 smtp instance를 사용하여 더 빠르게 동작한다.
+
+만약 당신이 이것을 모듈 범위가 아닌 테스트의 전체 세션에서 동작하는 편이 더 좋다고 결정했다면. 간단하게 선언할 수있다.
+
+{% highlight python linenos %}
+@pytest.fixture(scope="session")
+def smtp(...):
+    # the returned fixture value will be shared for
+    # all tests needing it
+{% endhighlight %}
+
