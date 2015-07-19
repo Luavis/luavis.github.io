@@ -11,5 +11,4 @@ copyright_year: 2015
 include: ["_categories"]
 permalink: "/:title"
 
-# Build settings
 markdown: kramdown
