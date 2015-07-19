@@ -178,3 +178,4 @@ def smtp(...):
     # all tests needing it
 {% endhighlight %}
 
+## fixture finalization / executing teardown code
