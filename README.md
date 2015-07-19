@@ -1,4 +1,4 @@
 b.luavis.kr
 ===
 
-github blog repository worked with [Jykill](http://www.jekyllrb.com)
+github blog repository worked with [Jekyll](http://www.jekyllrb.com)
