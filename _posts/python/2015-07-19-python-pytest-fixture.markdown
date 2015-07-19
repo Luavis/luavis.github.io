@@ -25,3 +25,22 @@ test fixture의 목적은 신뢰되고 반복적으로 실행되는 테스팅에
 > ###Note
 >
 > integration and more linear writing of teardown code. pytest-2.4는 추가로 context 관리의 통합과 teardown code를 더 선형적으로 작성할 수 있도록 만들어주는 *yield* fixture mechanism에 대해서 소개하고 있다.(*experimental*)
+
+## Fixtures as Function arguments
+
+Test function들은 fixture object들을 매개변수의 이름을 통하여 받을수 있다. 각각의 매개변수 이름은 fixture의 이름이다. fixture function들은 @pytest.fixture decoration을 통하여 등록할 수 있다. 간단한 예제를 우선 보자.
+
+{% highlight python linenos %}
+import pytest
+
+@pytest.fixture
+def smtp():
+    import smtplib
+    return smtplib.SMTP("merlinux.eu")
+
+def test_ehlo(smtp):
+    response, msg = smtp.ehlo()
+    assert response == 250
+    assert 0 # for demo purposes
+    
+{% endhighlight %}
