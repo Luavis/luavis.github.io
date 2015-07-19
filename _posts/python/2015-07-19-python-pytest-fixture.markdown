@@ -70,7 +70,7 @@ def test_ehlo(smtp):
     test_smtpsimple.py:11: AssertionError
     ========================= 1 failed in 1.07 seconds =========================
 
-failure traceback를 보면 우리는 test함수가 fixture function에 의해서 *smtplib.SMTP()*가 호출되고 이로인해 만들어진 인스턴스인 smtp 매개변수를 통하여 smtp fixture를 호출한 것을 볼 수 있다. test function은 출력결과를 보기 위해 의도적으로 설치한 assert 0으로 인하여 fail하게 되었다.
+failure traceback를 보면 우리는 test 함수가 fixture function에 의해서 *smtplib.SMTP()*가 호출되고 이로 인해 만들어진 인스턴스인 smtp 매개변수를 통하여 smtp fixture를 호출한 것을 볼 수 있다. test function은 출력 결과를 보기 위해 의도적으로 설치한 assert 0으로 인하여 fail 하게 되었다.
 
 pytest가 위의 test_elho function을 호출하는 방법에 대해서 정확하게 서술해보았다.
    
@@ -99,9 +99,9 @@ fixtures를 test function에 적용하기 위해서는 pytest-2.0에서는 현�
 
 ## Sharing a fixture across tests in a module (or class/session)
 
-네트워크 연결을 필요로하는 Fixture 연결성에 의존하게 되고 연결 생성에 시간적 비용이 많이 드는 경우가 흔하다.
-이 전의 예제를 확장하여 우리는 *scope="module"* 매개변수를 @pytest.fixture에 추가하여 module내에서 한번만 실행하도록 설정할 수 있다. 한 test module내에 복수의 test function에서 사용하더라도 같은 stmp fixture instance를 받을 수 있다.
-다음 예제는 fixture function을 conftest.py라는 test function과는 분리된 파일에 넣어 다른 test module에서도 접근할 수 있도록 했다.
+네트워크 연결을 필요로 하는 Fixture 연결성에 의존하게 되고 연결 생성에 시간적 비용이 많이 드는 경우가 흔하다.
+이 전의 예제를 확장하여 우리는 *scope="module"* 매개변수를 @pytest.fixture에 추가하여 module 내에서 한 번만 실행하도록 설정할 수 있다. 한 test module 내에 복수의 test function에서 사용하더라도 같은 stmp fixture instance를 받을 수 있다.
+다음 예제는 fixture function을 conftest.py라는 test function 과는 분리된 파일에 넣어 다른 test module에서도 접근할 수 있도록 했다.
 
 *conftest.py*
 {% highlight python linenos %}
@@ -113,7 +113,7 @@ def smtp():
     return smtplib.SMTP("merlinux.eu")
 {% endhighlight %}
 
-fixture의 이름은 다시 한번 smtp로 하였고 당신은 conftest.py가 위치한 directory혹은 그 하위 directory에 있는 test function 혹은 다른 fixture function에서 접근할 수 있다.
+fixture의 이름은 다시 한번 smtp로 하였고 당신은 conftest.py가 위치한 directory 혹은 그 하위 directory에 있는 test function 혹은 다른 fixture function에서 접근할 수 있다.
 
 *test_module.py*
 {% highlight python linenos %}
@@ -167,9 +167,10 @@ def test_noop(smtp):
     ========================= 2 failed in 0.82 seconds =========================
     
 
-당신은 두개의  *assert 0*를 볼수 있다. 그리고 더 중요한것은 당신이 동일 모듈 범위 내에서 pytest가 traceback을 통하여 보여준 매개변수로 부터 smtp object가 공유되고 있다는 것 또한 볼 수 있다는 것이다.(같은 object hash값을 갖고 있다[0x7fb558b12240]) 결과적으로 smtp를 사용하고 있는 두개의 test functions은 하나의 재사용된  같은 smtp instance를 사용하여 더 빠르게 동작한다.
+당신은 두 개의 *assert 0*을 볼 수 있다. 그리고 더 중요한 것은 당신이 동일 모듈 범위 내에서 pytest가 traceback을 통하여 보여준 매개변수로부터 smtp object가 공유되고 있다는 것 또한 볼 수 있다는 것이다.(같은 object hash 값을 갖고 있다[0x7fb558b12240]) 결과적으로 smtp를 사용하고 있는 두 개의 test functions은 하나의 재사용된 같은 smtp instance를 사용하여 더 빠르게 동작한다.
+당신은 두 개의 assert 0을 볼 수 있다. 그리고 더 중요한 것은 당신이 동일 모듈 범위 내에서 pytest가 traceback을 통하여 보여준 매개변수로부터 smtp object가 공유되고 있다는 것 또한 볼 수 있다는 것이다.(같은 object hash 값을 갖고 있다[0x7fb558b12240]) 결과적으로 smtp를 사용하고 있는 두 개의 test functions은 하나의 재사용된 같은 smtp instance를 사용하여 더 빠르게 동작한다.
 
-만약 당신이 이것을 모듈 범위가 아닌 테스트의 전체 세션에서 동작하는 편이 더 좋다고 결정했다면. 간단하게 선언할 수있다.
+만약 당신이 이것을 모듈 범위가 아닌 테스트의 전체 세션에서 동작하는 편이 더 좋다고 결정했다면. 간단하게 선언할 수 있다.
 
 {% highlight python linenos %}
 @pytest.fixture(scope="session")
