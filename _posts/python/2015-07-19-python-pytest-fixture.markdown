@@ -180,3 +180,82 @@ def smtp(...):
 {% endhighlight %}
 
 ## fixture finalization / executing teardown code
+
+pytest는 fixture가 지정 구역을 벗어날때에 특정 종결자를(finalization) 호출하는 것을 지원한다. fixture function 내에서 *request* 객체를 이용하여 당신은 *request.addfinalizer*를 한번 혹은 여러번 호출하여 이용할 수 있다.
+
+*conftest.py*
+{% highlight python linenos %}
+import smtplib
+import pytest
+
+@pytest.fixture(scope="module")
+def smtp(request):
+    smtp = smtplib.SMTP("merlinux.eu")
+    def fin():
+        print ("teardown smtp")
+        smtp.close()
+    request.addfinalizer(fin)
+    return smtp  # provide the fixture value
+{% endhighlight %}
+
+이 *fin* 함수는  모듈의 마지막에서 테스트 시에 테스트가 끝나면 실행 될 것이다.
+
+test를 실행해보자:
+
+    $ py.test -s -q --tb=no
+    FFteardown smtp
+
+    2 failed in 1.44 seconds
+
+우리는 smtp 인스턴스가 두개의 테스트 이후에 종결되는것을 볼 수 있다. 주의할 점은 scope='function'으로 데코레이션 했다면, setup(테스트 시작전의 fixture)과 finalize가 매 테스트 함수마다 실행될 것이다.
+
+## Fixtures can introspect the requesting test context
+
+Fixture function는 *request* 객체를 받아서 test function, class 혹은 module에게 "요청"할 수 있다. 이전에서 확인한 smtp fixture를 더 확장하여, 테스트 모듈로 부터 추가적인 서버의 URL을 fixture를 이용하여 읽어보자.
+
+*conftest.py*
+{% highlight python linenos %}
+import pytest
+import smtplib
+
+@pytest.fixture(scope="module")
+def smtp(request):
+    server = getattr(request.module, "smtpserver", "merlinux.eu")
+    smtp = smtplib.SMTP(server)
+
+    def fin():
+        print ("finalizing %s (%s)" % (smtp, server))
+        smtp.close()
+
+    return smtp
+{% endhighlight %}
+
+우리는 *request.module*를 사용하여 test 모듈로부터 optional하게 *smtpserver* attribute를 받아온다, 없다면 merlinux.eu로 설정 될 것이다. test_module.py를 다시 test해봐도 바뀐것은 없을것 이다.
+
+    $ py.test -s -q --tb=no
+    FF
+    2 failed in 0.62 seconds
+
+이제 다시 새로운 test모듈을 작성해서 모듈에 server URL을 실제로 설정해보자. 
+
+*test_anothersmtp.py*
+
+{% highlight python linenos %}
+smtpserver = "mail.python.org"  # will be read by smtp fixture
+
+def test_showhelo(smtp):
+    assert 0, smtp.helo()
+{% endhighlight %}
+
+위 코드를 test하면:
+
+    $ py.test -qq --tb=short test_anothersmtp.py
+    F
+    ================================= FAILURES =================================
+    ______________________________ test_showhelo _______________________________
+    test_anothersmtp.py:5: in test_showhelo
+        assert 0, smtp.helo()
+    E   AssertionError: (250, b'mail.python.org')
+    E   assert 0
+
+smtp fixture가 모듈에 선언되어 있던 mail server 이름을 사용하였다.
