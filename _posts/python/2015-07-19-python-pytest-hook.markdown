@@ -21,6 +21,16 @@ categories: python
 
 ---
 
+Contents
+
+1. [Hook specification and validation](#hook-specification-and-validation)
+
+1. [Initialization, command line and configuration hooks](#initialization-command-line-and-configuration-hooks)
+
+1. [Generic “runtest” hooks](#generic-runtest-hooks)
+
+---
+
 ## Hook specification and validation
 
 pytest는 초기화, 동작, 테스트 실행과 reporting을 hooking하기 위해서 hook 함수를 호출한다. pytest는 각각의 hook 함수는 그 hook specification에 따라서 유효성 검사를 하는 plugin을 불러온다.
