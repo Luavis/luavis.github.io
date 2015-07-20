@@ -25,7 +25,7 @@ test fixture의 목적은 신뢰되고 반복적으로 실행되는 테스팅에
 
 * fixture은 단순한 유닛에서 부터(unit of unittesting) 함수 하나하나를 테스팅하도록 파라미터화한 fixture와 test의 configuration과 component options를 통하여 범위를 관리할 수 있다. 또한 fixture의 재사용은 클래스, 모듈 혹은 전 테스팅 세션에서 재사용이 가능하다.
 
-추가로, pytest는 일반적인 xunit style의 setup을 계속 지원한다. 당신은 이 고전적인 방식에서 새로운 스타일로 옮겨가면서 두가지를 혼용해서 사용할 수 있다.(주: new style로 옮겨주길 바라는거 같다.) 또한 원한다면 이미 있는 unittest.TestCase 혹은 nose based projects에서 바로 시작할 수 있다. 
+추가로, pytest는 일반적인 xunit style의 setup을 계속 지원한다. 우리는 이 고전적인 방식에서 새로운 스타일로 옮겨가면서 두가지를 혼용해서 사용할 수 있다.(주: new style로 옮겨주길 바라는거 같다.) 또한 원한다면 이미 있는 unittest.TestCase 혹은 nose based projects에서 바로 시작할 수 있다. 
 
 > ###Note
 >
@@ -83,14 +83,14 @@ pytest가 위의 test_elho function을 호출하는 방법에 대해서 정확�
  
  1. *smtp()*를 호출하고 return instance를 받는다.
  
- 1. *test_ehlo(<SMTP instance>)*는 호출되고 테스트 함수 내에서 실패했다.(assert 0 떄문에) 
+ 1. *test_ehlo()*는 호출되고 테스트 함수 내에서 실패했다.(assert 0 떄문에) 
 
-    주의할 점은 만약 당신이 함수의 매개변수를 잘못 입력하였거나 혹은 원하는 기능이 사용불가능한 상태이면, 당연히 에러가 발생할 것이다.
+    주의할 점은 만약 우리가 함수의 매개변수를 잘못 입력하였거나 혹은 원하는 기능이 사용불가능한 상태이면, 당연히 에러가 발생할 것이다.
 
 
 > ###Note
 >
-> 당신은 언제나 --fixtures를 이용하여
+> 언제나 --fixtures를 이용하여
 > 
 > *py.test --fixtures test_simplefactory.py*
 >
@@ -118,7 +118,7 @@ def smtp():
     return smtplib.SMTP("merlinux.eu")
 {% endhighlight %}
 
-fixture의 이름은 다시 한번 smtp로 하였고 당신은 conftest.py가 위치한 directory 혹은 그 하위 directory에 있는 test function 혹은 다른 fixture function에서 접근할 수 있다.
+fixture의 이름은 다시 한번 smtp로 하였고 conftest.py가 위치한 directory 혹은 그 하위 directory에 있는 test function 혹은 다른 fixture function에서 접근할 수 있다.
 
 *test_module.py*
 {% highlight python linenos %}
@@ -172,10 +172,10 @@ def test_noop(smtp):
     ========================= 2 failed in 0.82 seconds =========================
     
 
-당신은 두 개의 *assert 0*을 볼 수 있다. 그리고 더 중요한 것은 당신이 동일 모듈 범위 내에서 pytest가 traceback을 통하여 보여준 매개변수로부터 smtp object가 공유되고 있다는 것 또한 볼 수 있다는 것이다.(같은 object hash 값을 갖고 있다[0x7fb558b12240]) 결과적으로 smtp를 사용하고 있는 두 개의 test functions은 하나의 재사용된 같은 smtp instance를 사용하여 더 빠르게 동작한다.
-당신은 두 개의 assert 0을 볼 수 있다. 그리고 더 중요한 것은 당신이 동일 모듈 범위 내에서 pytest가 traceback을 통하여 보여준 매개변수로부터 smtp object가 공유되고 있다는 것 또한 볼 수 있다는 것이다.(같은 object hash 값을 갖고 있다[0x7fb558b12240]) 결과적으로 smtp를 사용하고 있는 두 개의 test functions은 하나의 재사용된 같은 smtp instance를 사용하여 더 빠르게 동작한다.
+여기서 우리는 두 개의 *assert 0*을 볼 수 있다. 그리고 더 중요한 것은 동일 모듈 범위 내에서 pytest가 traceback을 통하여 보여준 매개변수로부터 smtp object가 공유되고 있다는 것 또한 볼 수 있다는 것이다.(같은 object hash 값을 갖고 있다[0x7fb558b12240]) 결과적으로 smtp를 사용하고 있는 두 개의 test functions은 하나의 재사용된 같은 smtp instance를 사용하여 더 빠르게 동작한다.
+두 개의 assert 0을 볼 수 있다. 그리고 더 중요한 것은 동일 모듈 범위 내에서 pytest가 traceback을 통하여 보여준 매개변수로부터 smtp object가 공유되고 있다는 것 또한 볼 수 있다는 것이다.(같은 object hash 값을 갖고 있다[0x7fb558b12240]) 결과적으로 smtp를 사용하고 있는 두 개의 test functions은 하나의 재사용된 같은 smtp instance를 사용하여 더 빠르게 동작한다.
 
-만약 당신이 이것을 모듈 범위가 아닌 테스트의 전체 세션에서 동작하는 편이 더 좋다고 결정했다면. 간단하게 선언할 수 있다.
+만약 이것을 모듈 범위가 아닌 테스트의 전체 세션에서 동작하는 편이 더 좋다고 결정했다면. 간단하게 선언할 수 있다.
 
 {% highlight python linenos %}
 @pytest.fixture(scope="session")
@@ -186,7 +186,7 @@ def smtp(...):
 
 ## fixture finalization / executing teardown code
 
-pytest는 fixture가 지정 구역을 벗어날때에 특정 종결자를(finalization) 호출하는 것을 지원한다. fixture function 내에서 *request* 객체를 이용하여 당신은 *request.addfinalizer*를 한번 혹은 여러번 호출하여 이용할 수 있다.
+pytest는 fixture가 지정 구역을 벗어날때에 특정 종결자를(finalization) 호출하는 것을 지원한다. fixture function 내에서 *request* 객체를 이용하여 *request.addfinalizer*를 한번 혹은 여러번 호출하여 이용할 수 있다.
 
 *conftest.py*
 {% highlight python linenos %}
