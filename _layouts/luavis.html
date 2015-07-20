@@ -3,12 +3,11 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <meta property="og:title" content="{{ page.title }}">
-    <!-- <meta property="og:image" content="[##_image_##]"> -->
+    <meta property="og:title" content="{% if page.title %}{{ page.title }}{% else %}{{ site.title }}{% endif %}">
     <meta property="og:type" content="blog">
 
     <link rel="alternate" type="application/rss+xml" title="{{ page.title }}" href="{{ "feed.xml" | prepend: site.baseurl }}" />
-    <title>{{ page.title }}</title>
+    <title>{{ site.title }} {% if page.title %} - {{ page.title }} {% endif %}</title>
     
     <link rel="stylesheet" media="screen" href="{{ "css/main.css" | prepend: site.baseurl }}">
     <link rel="stylesheet" media="screen" href="{{ "css/pygment_trac.css" | prepend: site.baseurl }}">
