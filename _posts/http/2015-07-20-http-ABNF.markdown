@@ -1,0 +1,175 @@
+---
+layout: post
+title:  "RFC 1945(HTTP 1.0) ABNF"
+date:   2015-07-20 23:07:00
+categories: http
+
+---
+
+![Http logo]({{ site_url }}/assets/http_logo.png)
+
+*이 외의 RFC 1945 관련 문서*
+
+1. [HTTP Terminology]({% post_url /http/2015-07-19-http-Terminology %})
+1. [HTTP overall operation]({% post_url /http/2015-07-19-http-Overall-operation %})
+
+----
+
+ABNF는 Augmented Backus-Naur Form로 BNF([RFC 822](https://www.ietf.org/rfc/rfc0822.txt))이 확장된 것이다. ABNF 또한 이미 RFC로 정의되어 있지만([RFC 2234](https://www.ietf.org/rfc/rfc2234.txt)), 그보다 이전인 HTTP/1.0 스펙인 RFC 1945에서 이미 간략하게 다루고있다. 우리는 RFC 1945, section 2.1에 나와있는 스펙에 대해서 간략하게 정리하였다.
+
+
+----
+
+Contents
+
+1. [Constructs](#constructs)
+
+1. [Basic Rules](#basic-rules)
+
+----
+
+## Constructs
+
+
+_name = definition_
+
+    각 규칙의 이름은 이름 그 자체를 적는다. ("<", ">" 이런 기호 등으로 닫지 않는다.)
+    그리고 그 규칙에 해당하는 정의는 동호("=")로 분리된다. 공백문자는
+    라인이 계속되는것을 가르쳐주는 들여쓰기 외에는 의미가 없다. SP, LWS, HT, CRLF
+    DIGIT, ALPHA, 등 매우 기본적인 규칙은 대문자로 표기한다. "<", ">"는
+    정의가 규칙의 이름과 식별하는 가능하게 하다.
+    
+_"literal"_
+
+    표시 그대로의 문자열(리터럴, literal) 큰 따옴표로 둘러쌓인다.
+    이 표시가 없는 경우에는 문자열은 대소문자를 가리지 않는다.
+
+_rule1 | rule2_
+
+    Elements separated by a bar ("I") are alternatives,
+    "|" 문자로 구별되어 있는 요소들은 OR의 의미이다.
+    
+    예) "yes | no" = yes or no.
+
+*(rule1 rule2)*
+
+    괄호로 묶여 있는 요소들은 하나의 요소로 다루어 진다. 따라서 "(elem (foo | bar) elem)"은
+    ""elem foo elem"과 "elem bar elem"의 의미를 갖는다.
+
+_*rule_
+
+    asterisk("*") 문자 다음의 요소가 반복된다는 것을 의미한다. "<n>*<m>element"는
+    full form is "<n>*<m>element" indicating at least <n> and at
+    요소가 최소 n번에서 m번은 반복될 수 있다는 것을 의미한다. 기본값형이 *(element)는
+    요소가 0에서 부터 무한번 반복될 수 있다는 의미이다. 횟수를 나타내는 숫자는 0을 포함아여 어떤 숫자도 가능하다.
+    
+    예) "1*element"는 최소 1개는 존재한다는 의미이다
+        "1*2element"는 한개 혹은 두개가 존재할 수 있다는 의미이다.
+
+_[rule]_
+
+    대괄호로 묶여있는 요소인 "[foo bar]"은 "*1(foo bar)"과 같은 의미이다.
+
+_<N>rule_
+
+    "<n>(element)"라 표기하는것은 "<n>*<n>(element)"표가하는것과 같다.
+    이는 요소가 정확히 n번 존재한다는 것을 의미한다.
+    따라서 2DIGIT 두자리 이진수를 나타낸다, 그리고 3ALPHA 3개의 영문자 문자열을
+    의미한다.
+    
+_#rule_
+    
+    "#"으로 정의되어 있는 구조는 *과 비슷하다. 차이점은 요소들간의 구분을 "," 혹은
+    LWS(Linear White Space)로 한다. <n>#<m>element는 요소가 n개에서
+    m개 존재할 수 있다는 의미이다. "( *LWS element *( *LWS "," *LWS element ))"는
+    1#element와 같은 의미를 갖는다. (element), , (element)와 같이 표기하면
+    null element를 의미하지만, 요소를 셀때는 포함이 되지 않는다.
+    
+    예를들어, 1#2(3ALPHA)라 하면 ABC, ,DEF라 표기해도 문제되지 않는다. null 요소까지
+    생각하면 3개이지만 null요소는 포함시키지 않기 때문이다. 여기서도 또한 <n>, <m>은
+    0을 포함하여 어떤 숫자도 들어갈 수 있다.
+
+_; comment_
+
+    세미콜론을 규칙의 문자열의 오른쪽 끝에 두면 라인 끝까지의 모든 문자열은 주석을 의미한다.
+
+_implied *LWS_
+    
+    BNF로 적은 문서의 문법은 글자에 기반한 문법입니다. 따로 표기하지 않는한, LWS(Linear White Space)는
+    두 인접한 단어(인용 문자열, 토큰 ...)에 포함될 수 있다. 그리고 두 인접한 단어를 분라하는 기준이 된다. 
+
+
+## Basic Rules
+
+RFC 1945의 section 2.2에서는 앞으로의 설명에서 사용할 기본적인 규칙에 대해서 ABNF로 정의 하고 있다. 몇줄 인용하면:
+
+
+    OCTET          = <any 8-bit sequence of data>
+
+    CHAR           = <any US-ASCII character (octets 0 - 127)>
+
+    UPALPHA        = <any US-ASCII uppercase letter "A".."Z">
+
+    LOALPHA        = <any US-ASCII lowercase letter "a".."z">
+
+    ALPHA          = UPALPHA | LOALPHA
+
+    DIGIT          = <any US-ASCII digit "0".."9">
+
+    CTL            = <any US-ASCII control character> 
+                       (octets 0 - 31) and DEL (127)>
+    CR             = <US-ASCII CR, carriage return (13)>
+
+    LF             = <US-ASCII LF, linefeed (10)>
+
+    SP             = <US-ASCII SP, space (32)>
+
+    HT             = <US-ASCII HT, horizontal-tab (9)>
+
+    <">            = <US-ASCII double-quote mark (34)>
+
+HTTP/1.0에서는 CR과 LF의 연속이 Entity-Body를 제외한 모든 프로토콜의 요소에 마지막지점을 나타낸다. Entity-Body의 라인의 마지막을 나타내는 문자는 entity의 종류에 따라 따로 정의되어 있다.
+
+    CRLF           = CR LF
+
+HTTP/1.0의 헤더는 여러줄로 구성되어 있을 수 있는데 앞에 문자가 HT나 SP로 정의 되어 있을 경우 앞의 헤더의 연속으로 간주한다.
+
+    LWS            = [CRLF] 1*( SP | HT )
+
+하지만 어떤 애플리케이션들은 이 점이 고려되있지 않은 경우가 있고, HTTP/1.0 애플리케이션은 이런식으로 헤더를 생성하면 안된다.
+
+TEXT의 규칙은 문자로 표현되는 영역의 내용만이 사용된다. *TEXT인 경우 US-ASCII 외의 다른 문자셋일 수도 있다.
+
+    TEXT           = <any OCTET except CTLs,
+                      but including LWS>
+헤더 영역의 TEXT는 US-ASCII 문자셋이외의 바이트가 포함되어 있을 경우 ISO-8859-1 문자셋의 문자라고 추정할 수 있다.
+
+16진수 형식의 수의 문자는 가끔 사용된다.
+
+    HEX            = "A" | "B" | "C" | "D" | "E" | "F"
+                          | "a" | "b" | "c" | "d" | "e" | "f" | DIGIT
+
+많은 HTTP/1.0 헤더 영역의 값은 LWS나 특수 문자로 구분된다, 이런 특수문자를 구분자로 쓰지 않기 위해서는 " "에 감싸져 있어야한다.
+
+    word           = token | quoted-string
+
+    token          = 1*<any CHAR except CTLs or tspecials>
+
+    tspecials      = "(" | ")" | "<" | ">" | "@"
+                         | "," | ";" | ":" | "\" | <">
+                         | "/" | "[" | "]" | "?" | "="
+                         | "{" | "}" | SP | HT
+
+주석이 HTTP 헤더에 포함되어 있을수 있다. HTTP 헤더에서의 주석은 괄호로 묶어서 나타낸다. 헤더를 제외한 다른 영역(Status line, body...)에서는 괄호는 주석으로 사용되지 않을 수 있다.
+
+    comment        = "(" *( ctext | comment ) ")"
+
+    ctext          = <any TEXT excluding "(" and ")">
+
+큰 따옴표로 묶여 있다면, 문맥의 문자열은 하나하나의 단어로 파싱된다.
+
+    quoted-string  = ( <"> *(qdtext) <"> )
+
+    qdtext         = <any CHAR except <"> and CTLs,
+                      but including LWS>
+

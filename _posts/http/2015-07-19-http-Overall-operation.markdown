@@ -10,7 +10,15 @@ categories: http
 
 두번째 파트에서는 HTTP의 전체적인 동작의 흐름에 대해서 정리해보았다.
 
-### Request
+*이 외의 RFC 1945 관련 문서*
+
+1. [HTTP Terminology]({% post_url /http/2015-07-19-http-Terminology %})
+1. [HTTP ABNF]({% post_url /http/2015-07-20-http-ABNF %})
+
+---
+
+
+## Request
 request는 전 파트인 용어 설명에 번역되어 있듯이 클라이언트의 통신 요청이다. RFC 1945에서는 이때에 Request에 수반되는 data들의 항목에 대하여 나열해 놓고 있다.
 
 * Reuqest 방법 (request method) i.e. GET, POST, HEAD
