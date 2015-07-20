@@ -67,6 +67,7 @@ opetion들이 파싱되기 전에 변경할 수 있다.
 
 각 매개변수가 어떤 값을 보여주는지 확인해보기 위해서 print함수를 이용해서 출력해보았다.
 
+*conftest.py*
 {% highlight python linenos %}
 
 def pytest_cmdline_preparse(config, args):
