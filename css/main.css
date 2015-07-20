@@ -219,6 +219,7 @@ abbr[title] {
 */
 b,
 strong {
+  font-size: 150%;
   font-weight: bold;
 }
 
@@ -607,7 +608,6 @@ ul {
 
 strong {
   font-family: "나눔고딕", "NanumGothic", 'OpenSansBold', "Helvetica Neue", Helvetica, Arial, sans-serif !important;
-  font-weight: normal;
 }
 
 .wrapper {
@@ -691,7 +691,7 @@ hr {
   border: 0;
   outline: none;
   height: 1px;
-  background: #ffcc00;
+  background: #970;
   margin: 0 0 20px;
 }
 
