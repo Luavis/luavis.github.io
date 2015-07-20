@@ -10,53 +10,182 @@ categories: python
 
 이번 문서에서는 Pytest의 hook 기능에 대해서 알아보고자 Pytest 공식 사이트의 latest 버전의(2.4) [hook reference 페이지](https://pytest.org/latest/plugins.html#pytest-hook-reference)를 번역해 보기로 했다.
 
+> Note:
+>
+> Hook 함수들은 conftest.py에 추가해야 동작한다.
+
+
 *이 외의 pytest 관련 문서*
 
 1. [Python fixture]({% post_url /python/2015-07-19-python-pytest-fixture %})
 
 ---
 
-Hook specification and validation
-pytest calls hook functions to implement initialization, running, test execution and reporting. When pytest loads a plugin it validates that each hook function conforms to its respective hook specification. Each hook function name and its argument names need to match a hook specification. However, a hook function may accept fewer parameters by simply not specifying them. If you mistype argument names or the hook name itself you get an error showing the available arguments.
+## Hook specification and validation
 
-Initialization, command line and configuration hooks
-pytest_load_initial_conftests(args, early_config, parser)[source]
+pytest는 초기화, 동작, 테스트 실행과 reporting을 hooking하기 위해서 hook 함수를 호출한다. pytest는 각각의 hook 함수는 그 hook specification에 따라서 유효성 검사를 하는 plugin을 불러온다.
+각각의 hook 함수 이름과 함수의 매개변수 이름은 hook의 specification에 맞쳐주어야 한다. 하지만 hook 함수는 spec에 비해서 더 적게 매개변수를 갖고 있어도 일반적으로 상관없다. 만약 매개변수 이름이나 hook 함수의 이름을 잘못 입력한 경우 에러가 발생할 것이다.
+
+밑에 있는 함수들의 테스트를 위해서 간략한 테스트 코드를 작성하였다.
+
+*test_example.py*
+{% highlight python linenos %}
+
+import pytest
+
+@pytest.mark.tryfirst
+def test_example():
+
+  assert 0
+
+{% endhighlight %}
+
+
+## Initialization, command line and configuration hooks
+
+<!--
+*pytest_load_initial_conftests*(args, early_config, parser)
+
 implements the loading of initial conftest files ahead of command line option parsing.
 
-pytest_cmdline_preparse(config, args)[source]
-(deprecated) modify command line arguments before option parsing.
+---
+-->
 
-pytest_cmdline_parse(pluginmanager, args)[source]
+*pytest_cmdline_preparse*(config, args) [*deprecated*]
+
+opetion들이 파싱되기 전에 변경할 수 있다.
+
+각 매개변수가 어떤 값을 보여주는지 확인해보기 위해서 print함수를 이용해서 출력해보았다.
+
+{% highlight python linenos %}
+
+def pytest_cmdline_preparse(config, args):
+  print("cmdline preparse")
+
+  print(config)
+  print(args)
+
+{% endhighlight %}
+
+이 코드를 conftest.py에 추가하고 testing을 시작하면, 
+
+    $ py.test -s
+    cmdline preparse
+    <_pytest.config.Config object at 0x10fa66790>
+    ['-s']
+    ========================================= test session starts =========================================
+    platform darwin -- Python 2.7.6 -- py-1.4.30 -- pytest-2.7.2
+    rootdir: /Users/Luavis/Projects/pytest-examples, inifile:
+    collected 1 items
+
+    test_example.py F
+
+    ============================================== FAILURES ===============================================
+    ____________________________________________ test_example _____________________________________________
+
+        @pytest.mark.tryfirst
+        def test_example():
+
+    >     assert 0
+    E     assert 0
+
+    test_example.py:7: AssertionError
+    ====================================== 1 failed in 0.01 seconds =======================================
+
+결과를 얻을 수 있다. -s라는 option을 붙혀서 *py.test*를 실행했을때, args에는 -s가 list형식으로 들어가 있는것을 볼 수 있다.
+
+---
+<!--
+*pytest_cmdline_parse*(pluginmanager, args)
+
 return initialized config object, parsing the specified args.
 
-pytest_namespace()[source]
+---
+
+*pytest_namespace*()
+
 return dict of name->object to be made globally available in the pytest namespace. This hook is called before command line options are parsed.
 
-pytest_addoption(parser)[source]
-register argparse-style options and ini-style config values.
+---
+-->
+*pytest_addoption*(parser)
 
-This function must be implemented in a plugin and is called once at the beginning of a test run.
+ini 파일이나 argument로 등록되는 설정들을 새롭게 등록할 수 있다.
+*이 함수는 플러그 인에서 구현되어 있어야하며, 테스트가 시작될 때 오직 한 번만 실행된다.*
 
-Parameters:	parser – To add command line options, call parser.addoption(...). To add ini-file values call parser.addini(...).
-Options can later be accessed through the config object, respectively:
+*Parameters*
 
-config.getoption(name) to retrieve the value of a command line option.
-config.getini(name) to retrieve a value read from an ini-style file.
-The config object is passed around on many internal objects via the .config attribute or can be retrieved as the pytestconfig fixture or accessed via (deprecated) pytest.config.
+- parser – 커맨드 라인 형식의 설정을 추가하고 싶다면, *parser.addoption(...)*를 호출하여 설정들을 추가할 수 있다. 만약 ini파일 형식의 설정을 추가하고 싶다면, *parser.addini(...)*를 호출하면 가능하다.
 
-pytest_cmdline_main(config)[source]
-called for performing the main command line action. The default implementation will invoke the configure hooks and runtest_mainloop.
+> Note
+>
+> 옵션들은 나중에 config 객체를 통하여 접근할 수 있다.
+>
+> *config.getoption(name)* 커맨드 라인으로 부터 받은 설정 값을 받을때
+> 
+> *config.getini(name)* ini file로 부터 받은 설정 값을 받을때
+> 
+> config 객체는 많은 pytest 내부 객체에 *.config*를 이용하여 접근할 수 있고, *pytestconfig*라는 fixture를 이용하여 접근할 수 있다. pytest module를 이용하여 *pytest.config*를 이용하여 접근할 수 있지만 *deprecated*된 기능이다.
 
-pytest_configure(config)[source]
-called after command line options have been parsed and all plugins and initial conftest files been loaded.
+---
 
-pytest_unconfigure(config)[source]
-called before test process is exited.
+*pytest_cmdline_main*(config)
 
-Generic “runtest” hooks
+main 커맨드 라인 동작이 실행될때 호출된다. 기본적인 구현은 configure hooks과 runtest_mainloop을 호출한다.
+
+위의 *pytest_addoption*과 합친 예제를 보자면:
+
+{% highlight python linenos %}
+
+def pytest_addoption(parser):
+  parser.addoption("--cmdopt", action="store", default="type1",
+        help="my option: type1 or type2")
+
+def pytest_cmdline_main(config):
+  print(config.getoption("--cmdopt"))
+
+{% endhighlight %}
+
+add option hook을 이용하여 커맨드라인 형식의 옵션 --cmdopt를 추가하였고, 이를 기본값으로 실행되었을때 cmdline_main에서는 config에서 확인 할 수 있어야 한다.
+
+    $ py.test
+    type1
+    ========================================= test session starts =========================================
+    platform darwin -- Python 2.7.6 -- py-1.4.30 -- pytest-2.7.2
+    rootdir: /Users/Luavis/Projects/pytest-examples, inifile:
+    collected 1 items
+
+    test_example.py F
+
+    ============================================== FAILURES ===============================================
+    ____________________________________________ test_example _____________________________________________
+
+        @pytest.mark.tryfirst
+        def test_example():
+    >     assert 0
+    E     assert 0
+
+    test_example.py:7: AssertionError
+    ====================================== 1 failed in 0.01 seconds =======================================
+
+
+
+---
+
+*pytest_configure*(config)
+커맨드 라인 형식의 옵션이 모두 파싱되었고, 모든 플러그인과 initaial conftest가 호출된 뒤에 호출된다.
+
+---
+
+*pytest_unconfigure*(config)
+테스트가 종료되기 전에 호출된다.
+
+## Generic “runtest” hooks
+
 All runtest related hooks receive a pytest.Item object.
 
-pytest_runtest_protocol(item, nextitem)[source]
+*pytest_runtest_protocol*(item, nextitem)
+
 implements the runtest_setup/call/teardown protocol for the given test item, including capturing exceptions and calling reporting hooks.
 
 Parameters:	
@@ -67,38 +196,54 @@ True if no further hook implementations should be invoked.
 pytest_runtest_setup(item)[source]
 called before pytest_runtest_call(item).
 
-pytest_runtest_call(item)[source]
+---
+
+*pytest_runtest_call*(item)
 called to execute the test item.
 
-pytest_runtest_teardown(item, nextitem)[source]
+---
+
+*pytest_runtest_teardown*(item, nextitem)[source]
 called after pytest_runtest_call.
 
 Parameters:	nextitem – the scheduled-to-be-next test item (None if no further test item is scheduled). This argument can be used to perform exact teardowns, i.e. calling just enough finalizers so that nextitem only needs to call setup-functions.
-pytest_runtest_makereport(item, call)[source]
+
+*pytest_runtest_makereport*(item, call)[source]
 return a _pytest.runner.TestReport object for the given pytest.Item and _pytest.runner.CallInfo.
 
 For deeper understanding you may look at the default implementation of these hooks in _pytest.runner and maybe also in _pytest.pdb which interacts with _pytest.capture and its input/output capturing in order to immediately drop into interactive debugging when a test failure occurs.
 
 The _pytest.terminal reported specifically uses the reporting hook to print information about a test run.
 
-Collection hooks
+---
+
+## Collection hooks
+
 pytest calls the following hooks for collecting files and directories:
 
-pytest_ignore_collect(path, config)[source]
+*pytest_ignore_collect*(path, config)
 return True to prevent considering this path for collection. This hook is consulted for all files and directories prior to calling more specific hooks.
 
-pytest_collect_directory(path, parent)[source]
+---
+
+*pytest_collect_directory*(path, parent)
 called before traversing a directory for collection files.
 
-pytest_collect_file(path, parent)[source]
+---
+
+*pytest_collect_file*(path, parent)
 return collection Node or None for the given path. Any new node needs to have the specified parent as a parent.
 
 For influencing the collection of objects in Python modules you can use the following hook:
 
-pytest_pycollect_makeitem(collector, name, obj)[source]
+---
+
+*pytest_pycollect_makeitem*(collector, name, obj)
 return custom item/collector for a python object in a module, or None.
 
-pytest_generate_tests(metafunc)[source]
+---
+
+*pytest_generate_tests*(metafunc)[source]
 generate (multiple) parametrized calls to a test function.
 
 After collection is complete, you can modify the order of items, delete or otherwise amend the test items:
@@ -106,57 +251,81 @@ After collection is complete, you can modify the order of items, delete or other
 pytest_collection_modifyitems(session, config, items)[source]
 called after collection has been performed, may filter or re-order the items in-place.
 
-Reporting hooks
+---
+
+## Reporting hooks
+
 Session related reporting hooks:
 
-pytest_collectstart(collector)[source]
+*pytest_collectstart*(collector)
 collector starts collecting.
 
-pytest_itemcollected(item)[source]
+---
+
+*pytest_itemcollected*(item)
 we just collected a test item.
 
-pytest_collectreport(report)[source]
+---
+
+*pytest_collectreport*(report)
 collector finished collecting.
 
-pytest_deselected(items)[source]
+---
+
+*pytest_deselected*(items)
 called for test items deselected by keyword.
+
+---
 
 And here is the central hook for reporting about test execution:
 
-pytest_runtest_logreport(report)[source]
+*pytest_runtest_logreport*(report)
 process a test setup/call/teardown report relating to the respective phase of executing a test.
 
-Debugging/Interaction hooks
+---
+
+## Debugging/Interaction hooks
+
 There are few hooks which can be used for special reporting or interaction with exceptions:
 
-pytest_internalerror(excrepr, excinfo)[source]
+*pytest_internalerror*(excrepr, excinfo)
 called for internal errors.
 
-pytest_keyboard_interrupt(excinfo)[source]
+---
+
+*pytest_keyboard_interrupt*(excinfo)
 called for keyboard interrupt.
 
-pytest_exception_interact(node, call, report)[source]
+---
+
+*pytest_exception_interact*(node, call, report)
 (experimental, new in 2.4) called when an exception was raised which can potentially be interactively handled.
 
 This hook is only called if an exception was raised that is not an internal exception like “skip.Exception”.
 
-Declaring new hooks
+---
+
+## Declaring new hooks
+
 Plugins and conftest.py files may declare new hooks that can then be implemented by other plugins in order to alter behaviour or interact with the new plugin:
 
-pytest_addhooks(pluginmanager)[source]
+*pytest_addhooks*(pluginmanager)
 called at plugin load time to allow adding new hooks via a call to pluginmanager.registerhooks(module).
 
 Hooks are usually declared as do-nothing functions that contain only documentation describing when the hook will be called and what return values are expected.
 
 For an example, see newhooks.py from xdist: pytest distributed testing plugin.
 
-Using hooks from 3rd party plugins
+---
+
+## Using hooks from 3rd party plugins
+
 Using new hooks from plugins as explained above might be a little tricky because the standard Hook specification and validation mechanism: if you depend on a plugin that is not installed, validation will fail and the error message will not make much sense to your users.
 
 One approach is to defer the hook implementation to a new plugin instead of declaring the hook functions directly in your plugin module, for example:
 
-# contents of myplugin.py
-
+*myplugin.py*
+{% highlight python linenos %}
 class DeferPlugin(object):
     """Simple plugin to defer pytest-xdist hook functions."""
 
@@ -167,9 +336,12 @@ class DeferPlugin(object):
 def pytest_configure(config):
     if config.pluginmanager.hasplugin('xdist'):
         config.pluginmanager.register(DeferPlugin())
+{% endhighlight %}
+
 This has the added benefit of allowing you to conditionally install hooks depending on which plugins are installed.
 
-hookwrapper: executing around other hooks
+## hookwrapper: executing around other hooks
+
 New in version 2.7: (experimental)
 
 pytest plugins can implement hook wrappers which which wrap the execution of other hook implementations. A hook wrapper is a generator function which yields exactly once. When pytest invokes hooks it first executes hook wrappers and passes the same arguments as to the regular hooks.
@@ -178,6 +350,7 @@ At the yield point of the hook wrapper pytest will execute the next hook impleme
 
 Here is an example definition of a hook wrapper:
 
+{% highlight python linenos %}
 import pytest
 
 @pytest.mark.hookwrapper
@@ -187,9 +360,12 @@ def pytest_pyfunc_call(pyfuncitem):
     # outcome.excinfo may be None or a (cls, val, tb) tuple
     res = outcome.get_result()  # will raise if outcome was exception
     # postprocess result
+{% endhighlight %}
+
 Note that hook wrappers don’t return results themselves, they merely perform tracing or other side effects around the actual hook implementations. If the result of the underlying hook is a mutable object, they may modify that result, however.
 
-Reference of objects involved in hooks
+## Reference of objects involved in hooks
+
 class Config[source]
 access to configuration values, pluginmanager and plugin hooks.
 
