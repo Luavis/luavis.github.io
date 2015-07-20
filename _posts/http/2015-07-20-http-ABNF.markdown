@@ -44,7 +44,7 @@ _"literal"_
     표시 그대로의 문자열(리터럴, literal) 큰 따옴표로 둘러쌓인다.
     이 표시가 없는 경우에는 문자열은 대소문자를 가리지 않는다.
 
-_rule1 | rule2_
+_rule1 `|` rule2_
 
     Elements separated by a bar ("I") are alternatives,
     "|" 문자로 구별되어 있는 요소들은 OR의 의미이다.
@@ -70,7 +70,7 @@ _[rule]_
 
     대괄호로 묶여있는 요소인 "[foo bar]"은 "*1(foo bar)"과 같은 의미이다.
 
-_<N>rule_
+_`<`N`>`rule_
 
     "<n>(element)"라 표기하는것은 "<n>*<n>(element)"표가하는것과 같다.
     이는 요소가 정확히 n번 존재한다는 것을 의미한다.
