@@ -173,48 +173,197 @@ add option hook을 이용하여 커맨드라인 형식의 옵션 --cmdopt를 추
 ---
 
 *pytest_configure*(config)
+
 커맨드 라인 형식의 옵션이 모두 파싱되었고, 모든 플러그인과 initaial conftest가 호출된 뒤에 호출된다.
 
 ---
 
 *pytest_unconfigure*(config)
+
 테스트가 종료되기 전에 호출된다.
+
+---
 
 ## Generic “runtest” hooks
 
-All runtest related hooks receive a pytest.Item object.
+모든 runtest들은 *pytest.Item* 객체를 받을 수 있는 훅으로 연관되어 있다.
 
 *pytest_runtest_protocol*(item, nextitem)
 
-implements the runtest_setup/call/teardown protocol for the given test item, including capturing exceptions and calling reporting hooks.
+runtest의  setup, test의 호출, teardown을 예외처리, hook의 report 호출까지 포함하여 모두 *item*으로 받을 수 있다.
 
-Parameters:	
-item – test item for which the runtest protocol is performed.
-nextitem – the scheduled-to-be-next test item (or None if this is the end my friend). This argument is passed on to pytest_runtest_teardown().
-Return boolean:	
-True if no further hook implementations should be invoked.
-pytest_runtest_setup(item)[source]
-called before pytest_runtest_call(item).
+*Parameters*
+
+- item – runtest 가 현재 실행되고 있는 test item
+- nextitem – 다음에 실행될 것이라고 계획되어 있는 test item(마지막인 경우에는 None이다). 이 매개변수는 pytest_runtest_teardown()로 부터 온다.
+<!-- the scheduled-to-be-next test item (or None if this is the end my friend). This argument is passed on to pytest_runtest_teardown().-->
+
+*Return* [boolean]
+
+만약 True를 반환하면 그 후의 hook이 동작하지 않는다. 
+
+---
+
+*pytest_runtest_setup*(item)
+
+*pytest_runtest_call(item)*가 호출되기 전에 호출된다.
 
 ---
 
 *pytest_runtest_call*(item)
-called to execute the test item.
+
+test item이 실행될때 호출된다.
 
 ---
 
-*pytest_runtest_teardown*(item, nextitem)[source]
-called after pytest_runtest_call.
+*pytest_runtest_teardown*(item, nextitem)
 
-Parameters:	nextitem – the scheduled-to-be-next test item (None if no further test item is scheduled). This argument can be used to perform exact teardowns, i.e. calling just enough finalizers so that nextitem only needs to call setup-functions.
+*pytest_runtest_call* 호출된 뒤에 호출된다.
 
-*pytest_runtest_makereport*(item, call)[source]
-return a _pytest.runner.TestReport object for the given pytest.Item and _pytest.runner.CallInfo.
+*Parameters*
 
-For deeper understanding you may look at the default implementation of these hooks in _pytest.runner and maybe also in _pytest.pdb which interacts with _pytest.capture and its input/output capturing in order to immediately drop into interactive debugging when a test failure occurs.
+- nextitem – 다음에 실행될 것이라고 계획되어 있는 test item(마지막인 경우에는 None이다).
 
-The _pytest.terminal reported specifically uses the reporting hook to print information about a test run.
+위의 모든 hook 함수들을 테스트 해보기 위하여, testcase code와 conftest.py를 수정했다.
 
+*test_example.py*
+{% highlight python linenos %}
+
+import pytest
+
+def test_example():
+  pass
+
+def test_example2():
+  pass
+  
+{% endhighlight %}
+
+
+*conftest.py*
+{% highlight python linenos %}
+
+def pytest_runtest_protocol(item, nextitem):
+  print("protocol")
+  print(item)
+  print(nextitem)
+
+def pytest_runtest_setup(item):
+  print("setup")
+  print(item)
+
+def pytest_runtest_call(item):
+  print("call")
+  print(item)
+
+def pytest_runtest_teardown(item, nextitem):
+  print("teardown")
+  print(item)
+  print(nextitem)
+  
+{% endhighlight %}
+
+teardown에서 발생하는 로그를 capturing되지 않도록 하기 위해서 -s(--capture=no) option을 주어 실행해보면,
+
+    $ py.test -s
+    ========================================= test session starts =========================================
+    platform darwin -- Python 2.7.6 -- py-1.4.30 -- pytest-2.7.2
+    rootdir: /Users/Luavis/Projects/pytest-examples, inifile:
+    collected 2 items
+    protocol
+    <Function 'test_example'>
+    <Function 'test_example2'>
+
+    test_example.py setup
+    <Function 'test_example'>
+    call
+    <Function 'test_example'>
+    .teardown
+    <Function 'test_example'>
+    <Function 'test_example2'>
+    protocol
+    <Function 'test_example2'>
+    None
+    setup
+    <Function 'test_example2'>
+    call
+    <Function 'test_example2'>
+    .teardown
+    <Function 'test_example2'>
+    None
+
+
+    ====================================== 2 passed in 0.01 seconds =======================================
+
+*test_example*이 실행되고 후 *test_example2*가 실행될 것이다 그리고 protocol에서 이번 *item*인 *test_example*과 다음 실행될 *test_example2*가 *nextitem*인 것을 확인할 수 있다. 그리고 그 다음 protocol에서는 *item*이 *test_example2*이고 그 다음 실행될 run test는 없음으로 *nextitem*은 None으로 설정된것을 볼 수 있다.
+
+----
+
+*pytest_runtest_makereport*(item, call)
+
+*item*은 *pytest.Item*의 instance이고, *call*은 *_pytest.runner.CallInfo*의 instance이다. 그리고 return 값은 *_pytest.runner.TestReport*의 instance여야 한다.
+
+동작 방식을 보고자 아까 수정했던 코드에 조금 수정을 더하여 보았다.
+
+*conftest.py*
+{% highlight python linenos %}
+
+# ...
+
+def pytest_runtest_teardown(item, nextitem):
+  return "tear down test"
+  
+def pytest_runtest_makereport(item, call):
+
+  print("item")
+  print(item)
+
+  print("call")
+  print(call)
+  
+{% endhighlight %}
+
+*test_example.py*
+{% highlight python linenos %}
+
+import pytest
+
+def test_example():
+  pass
+
+def test_example2():
+  pass
+  
+{% endhighlight %}
+
+그리고 *test_example.py*에서 *test_example2*를 지웠다. 그 결과를 출력해보면:
+
+    $ py.test
+    ========================================= test session starts =========================================
+    platform darwin -- Python 2.7.6 -- py-1.4.30 -- pytest-2.7.2
+    rootdir: /Users/Luavis/Projects/pytest-examples, inifile:
+    collected 1 items
+
+    test_example.py item
+    <Function 'test_example'>
+    call
+    <CallInfo when='setup' result: []>
+    item
+    <Function 'test_example'>
+    call
+    <CallInfo when='call' result: []>
+    .item
+    <Function 'test_example'>
+    call
+    <CallInfo when='teardown' result: ['tear down test']>
+
+
+    ====================================== 1 passed in 0.01 seconds =======================================
+
+
+이런 결과화면을 얻을 수 있다. teardown이 위에서 hook function에  return 값으로 처리된 값이 report쪽에서 result로 접근하여 볼 수 있다.
+
+<!--
 ---
 
 ## Collection hooks
@@ -339,6 +488,7 @@ def pytest_configure(config):
 {% endhighlight %}
 
 This has the added benefit of allowing you to conditionally install hooks depending on which plugins are installed.
+
 
 ## hookwrapper: executing around other hooks
 
@@ -561,3 +711,5 @@ time it took to run just the test
 
 class CallOutcome[source]
 Outcome of a function call, either an exception or a proper result. Calling the get_result method will return the result or reraise the exception raised when the function was called.
+
+-->
