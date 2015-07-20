@@ -51,7 +51,7 @@ implements the loading of initial conftest files ahead of command line option pa
 ---
 -->
 
-*pytest_cmdline_preparse*(config, args) [*deprecated*]
+**pytest_cmdline_preparse(config, args)** [*deprecated*]
 
 opetion들이 파싱되기 전에 변경할 수 있다.
 
@@ -108,7 +108,7 @@ return dict of name->object to be made globally available in the pytest namespac
 
 ---
 -->
-*pytest_addoption*(parser)
+**pytest_addoption(parser)**
 
 ini 파일이나 argument로 등록되는 설정들을 새롭게 등록할 수 있다.
 *이 함수는 플러그 인에서 구현되어 있어야하며, 테스트가 시작될 때 오직 한 번만 실행된다.*
@@ -129,7 +129,7 @@ ini 파일이나 argument로 등록되는 설정들을 새롭게 등록할 수 �
 
 ---
 
-*pytest_cmdline_main*(config)
+**pytest_cmdline_main(config)**
 
 main 커맨드 라인 동작이 실행될때 호출된다. 기본적인 구현은 configure hooks과 runtest_mainloop을 호출한다.
 
@@ -172,13 +172,13 @@ add option hook을 이용하여 커맨드라인 형식의 옵션 --cmdopt를 추
 
 ---
 
-*pytest_configure*(config)
+**pytest_configure(config)**
 
 커맨드 라인 형식의 옵션이 모두 파싱되었고, 모든 플러그인과 initaial conftest가 호출된 뒤에 호출된다.
 
 ---
 
-*pytest_unconfigure*(config)
+**pytest_unconfigure(config)**
 
 테스트가 종료되기 전에 호출된다.
 
@@ -188,7 +188,7 @@ add option hook을 이용하여 커맨드라인 형식의 옵션 --cmdopt를 추
 
 모든 runtest들은 *pytest.Item* 객체를 받을 수 있는 훅으로 연관되어 있다.
 
-*pytest_runtest_protocol*(item, nextitem)
+**pytest_runtest_protocol(item, nextitem)**
 
 runtest의  setup, test의 호출, teardown을 예외처리, hook의 report 호출까지 포함하여 모두 *item*으로 받을 수 있다.
 
@@ -204,19 +204,19 @@ runtest의  setup, test의 호출, teardown을 예외처리, hook의 report 호�
 
 ---
 
-*pytest_runtest_setup*(item)
+**pytest_runtest_setup(item)**
 
 *pytest_runtest_call(item)*가 호출되기 전에 호출된다.
 
 ---
 
-*pytest_runtest_call*(item)
+**pytest_runtest_call(item)**
 
 test item이 실행될때 호출된다.
 
 ---
 
-*pytest_runtest_teardown*(item, nextitem)
+**pytest_runtest_teardown(item, nextitem)**
 
 *pytest_runtest_call* 호출된 뒤에 호출된다.
 
@@ -299,7 +299,7 @@ teardown에서 발생하는 로그를 capturing되지 않도록 하기 위해서
 
 ----
 
-*pytest_runtest_makereport*(item, call)
+**pytest_runtest_makereport(item, call)**
 
 *item*은 *pytest.Item*의 instance이고, *call*은 *_pytest.runner.CallInfo*의 instance이다. 그리고 return 값은 *_pytest.runner.TestReport*의 instance여야 한다.
 
