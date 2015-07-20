@@ -9,8 +9,10 @@
     <link rel="alternate" type="application/rss+xml" title="{{ page.title }}" href="{{ "feed.xml" | prepend: site.baseurl }}" />
     <title>{{ site.title }} {% if page.title %} - {{ page.title }} {% endif %}</title>
     
-    <link rel="stylesheet" media="screen" href="{{ "css/main.css" | prepend: site.baseurl }}">
-    <link rel="stylesheet" media="screen" href="{{ "css/pygment_trac.css" | prepend: site.baseurl }}">
+    <link rel="stylesheet" href="{{ "css/main.css" | prepend: site.baseurl }}">
+    <link rel="stylesheet" href="{{ "css/pygment_trac.css" | prepend: site.baseurl }}">
+    <link rel="stylesheet" href="{{ "css/font-awesome.min.css" | prepend: site.baseurl }}">
+    
     <script src="{{ "js/jquery.min.js" | prepend: site.baseurl }}"></script>
 
     <!--[if lt IE 9]>
