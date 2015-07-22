@@ -3,6 +3,8 @@ layout: post
 title:  "RFC 1945(HTTP 1.0) ABNF"
 date:   2015-07-20 23:07:00
 categories: http
+description: ABNF
+keywords: http, rfc 1945, ABNF, BNF, Backus-Naur Form
 
 ---
 

@@ -3,6 +3,8 @@ layout: post
 title:  "Python pytest hook"
 date:   2015-07-19 18:49:00
 categories: python
+description: pytest hook
+keywords: pyetst, hook
 
 ---
 

@@ -3,6 +3,8 @@ layout: post
 title:  "Python pytest fixture"
 date:   2015-07-19 14:12:00
 categories: python
+description: pytest fixture
+keywords: pyetst, fixture
 
 ---
 

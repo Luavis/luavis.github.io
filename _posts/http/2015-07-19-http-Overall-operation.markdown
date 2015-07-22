@@ -3,6 +3,8 @@ layout: post
 title:  "RFC 1945(HTTP 1.0) 전체적인 동작"
 date:   2015-07-19 06:40:00
 categories: http
+description: http의 전체적인 동작방식
+keywords: http, rfc 1945, overall operation, operation, http request, http response
 
 ---
 

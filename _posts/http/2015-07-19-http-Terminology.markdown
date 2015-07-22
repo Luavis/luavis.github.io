@@ -3,6 +3,8 @@ layout: post
 title:  "RFC 1945(HTTP 1.0) 용어 설명"
 date:   2015-07-19 06:19:00
 categories: http
+description: http 용어 설명
+keywords: http, rfc 1945, terminology
 
 ---
 
