@@ -1,0 +1,85 @@
+---
+layout: post
+title:  "RFC 7540(HTTP 2) Frame"
+date:   2015-07-25 10:15:00
+categories: http2
+description: http2의 전체적인 동작방식
+keywords: http, http2, rfc 7540, frame
+
+---
+
+![Http logo]({{ site_url }}/assets/http2-fast-websites.png)
+
+---
+
+
+## 용어 설명
+
+
+*client*: HTTP/2의 끝부분에서 커넥션을 시작하는 부분입니다. Client는 HTTP 요청을 보내고 응답을 받습니다.
+
+*connection*: 두 endpoint간의 전송계츠의 연결을 말한다.
+
+*connection error*: HTTP/2 연결에서 발생하는 모든 에러.
+
+*endpoint*:  connection의 Server와 client를 말한다.
+
+*frame*: HTTP/2 connection의 가장작은 단위이고, 헤더와 프래임에 대해 정의되어 있는 비트들로 프래임의 길이를 갖고 
+*peer*:  endpoint인데, 
+
+When discussing a particular endpoint, "peer"
+      refers to the endpoint that is remote to the primary subject of
+      discussion.
+
+*receiver*:  frame을 받는 측에 해당하는 endpoint이다.
+
+*sender*:  An endpoint that is transmitting frames.
+
+*server*: HTTP/2 connection을 받아드리는 endpoint다. HTTP 요청를 받고 그에대한 응답을 보낸다.
+
+*stream*: HTTP/2에서 프래임을 보내고 받는 통로.
+
+*stream error*:  HTTP/2 스트림의 에러.
+
+## 프레임의 형태
+
+모든 프레임들은 payload의 길이를 나타내는 9 바이트 해더로 시작한다.
+
+
+
+     +-----------------------------------------------+
+     |                 Length (24)                   |
+     +---------------+---------------+---------------+
+     |   Type (8)    |   Flags (8)   |
+     +-+-------------+---------------+-------------------------------+
+     |R|                 Stream Identifier (31)                      |
+     +=+=============================================================+
+     |                   Frame Payload (0...)                      ...
+     +---------------------------------------------------------------+
+     
+*Figure 1: Frame Layout*
+
+각각의 헤더를 설명하면:
+
+Length:
+payload의 길이를 나타내고 unsigned 24bit integer이다. 이 값은 2^14(16,384)보다 커야하고, 수신측에서 설정한 SETTINGS_MAX_FRAME_SIZE에 비해서 더 큰 값이 보내지면 안된다.
+
+프래임 헤더의 9바이트는 이 값에 포함되지 않는다.
+
+Type:
+프레임의 타입을 나타내는 8비트 영역이다. 프레임의 타입은 형식과 의미를 결정한다. 구현할때 모르는 형식의 프레임은 무시해야한다.
+
+Flags:
+8비트의 프래임의 형식에 따라 정해진 boolean형의 플래그이다.
+
+플래그들은 프래임의 타입에 따라 의미가 달라진다. 특정 프래임 타입에서 의미가 없는 플래그는 무시되어야 하고, 돌려 보낼떄 0으로 unset되어 보내져야한다.
+
+R:
+
+예약된 1비트 영역이다. 이 비트의 의미는 없고, 0으로 초기화된 상태에서 송수신되어야한다. 
+
+Stream Identifier:
+unsigned 31 bit 정수형인 stream의 구별자이다.
+<!-- The value 0x0 is reserved for frames that are associated with the connection as a whole as opposed to an individual stream. -->
+
+프래임의 payload의 내용과 구조는 프래임 타입에 따라 정해진다.
