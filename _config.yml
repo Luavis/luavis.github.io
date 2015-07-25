@@ -8,7 +8,7 @@ facebook_username: luavis
 github_username:  luavis
 nickname: Luavis
 copyright_year: 2015
-include: ["_categories"]
+include: ["_categories", "_pages"]
 permalink: "/:categories/:title"
 
 markdown: kramdown
