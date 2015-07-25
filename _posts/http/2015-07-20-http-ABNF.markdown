@@ -144,6 +144,7 @@ TEXT의 규칙은 문자로 표현되는 영역의 내용만이 사용된다. *T
 
     TEXT           = <any OCTET except CTLs,
                       but including LWS>
+
 헤더 영역의 TEXT는 US-ASCII 문자셋이외의 바이트가 포함되어 있을 경우 ISO-8859-1 문자셋의 문자라고 추정할 수 있다.
 
 16진수 형식의 수의 문자는 가끔 사용된다.
