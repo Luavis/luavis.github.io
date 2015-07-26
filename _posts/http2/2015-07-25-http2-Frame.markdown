@@ -62,7 +62,7 @@ When discussing a particular endpoint, "peer"
 각각의 헤더를 설명하면:
 
 Length:
-payload의 길이를 나타내고 unsigned 24bit integer이다. 이 값은 2^14(16,384)보다 커야하고, 수신측에서 설정한 SETTINGS_MAX_FRAME_SIZE에 비해서 더 큰 값이 보내지면 안된다.
+payload의 길이를 나타내고 unsigned 24bit integer이다. 이 값은 2^14(16,384)보다 커야하고, 수신측에서 설정한 *SETTINGS_MAX_FRAME_SIZE*에 비해서 더 큰 값이 보내지면 안된다.
 
 프래임 헤더의 9바이트는 이 값에 포함되지 않는다.
 
@@ -79,7 +79,6 @@ R:
 예약된 1비트 영역이다. 이 비트의 의미는 없고, 0으로 초기화된 상태에서 송수신되어야한다. 
 
 Stream Identifier:
-unsigned 31 bit 정수형인 stream의 구별자이다.
-<!-- The value 0x0 is reserved for frames that are associated with the connection as a whole as opposed to an individual stream. -->
+unsigned 31 bit 정수형인 stream의 구별자이다. 각각의 개별적인 stream과는 다르게 connection에 관련된 frame에게 이 값이 0이 할당된다.
 
 프래임의 payload의 내용과 구조는 프래임 타입에 따라 정해진다.
