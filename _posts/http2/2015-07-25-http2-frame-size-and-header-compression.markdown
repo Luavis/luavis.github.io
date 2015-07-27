@@ -14,9 +14,9 @@ keywords: http, http2, rfc 7540, frame
 
 ## Frame Size
 
-frame의 payload의 최대 사이즈는 수신자 측의 *SETTINGS_MAX_FRAME_SIZE*만큼으로 제한되어 있다. 이 설정은 214 (16,384)과 224-1 (16,777,215) 값 사이에 정해져야한다. 
+frame의 payload의 최대 사이즈는 수신자 측의 *SETTINGS_MAX_FRAME_SIZE*만큼으로 제한되어 있다. 이 설정은 2^14 (16,384)과 2^24-1 (16,777,215) 값 사이에 정해져야한다. 
 
-모든 HTTP/2.0의 구현체는 9바이트의 frame 헤더와 214바이트의 payload의 길이를 최소한 받을 수 있어야한다. frame header의 크기는 frame 사이즈에 포함되어 있지 않다.
+모든 HTTP/2.0의 구현체는 9바이트의 frame 헤더와 2^14바이트의 payload의 길이를 최소한 받을 수 있어야한다. frame header의 크기는 frame 사이즈에 포함되어 있지 않다.
 
 > Note:
 > 
