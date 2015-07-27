@@ -70,8 +70,8 @@ HTTP 2.0에서의 스트림은 양방향성의 독립된 client와 server frame�
        ES: END_STREAM flag
        R:  RST_STREAM frame
 
-          
-위 그림은 frame으로 인한 상태의 변화에 대해 서술해 놨다. 떄문에 *HEADERS* 혹은 *PUSH_PROMISE*의 효율을 위해서 사용되는 *CONTINUATION* frame들은 보이지 않습니다. *END_STREAM* flag는 frame의 이벤트를 분할하여 동작한다. *END_STREAM* flag가 설정된 HEADERS frame는 두개의 상태를 발생시킬 수 있다.
+
+위 그림은 frame으로 인한 상태의 변화에 대해 서술해 놨다. 떄문에 *HEADERS* 혹은 *PUSH_PROMISE*, *CONTINUATION* frame등 상태를 변화 시키지 않는 frame들은 보이지 않습니다. *END_STREAM* flag는 frame의 이벤트를 분할하여 동작시킵니다. *END_STREAM* flag가 설정된 HEADERS frame는 두개의 상태를 발생시킬 수 있다.
 
 두개의 endpoint는 state stream에 대해서 서로 다른 각자의 관점을 갖고 있다. endpoint들은 한 쪽 endpoint에서만 일방적으로 stream 생성하여 편성해서는 안된다. 서로 다른 state를 갖게되어 얻는 부정적인 결과로는 *RST_STREAM*가 보내져서 closed 상태일 때 뿐이다.
 
