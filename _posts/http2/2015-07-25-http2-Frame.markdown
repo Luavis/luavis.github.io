@@ -62,7 +62,7 @@ When discussing a particular endpoint, "peer"
 각각의 헤더를 설명하면:
 
 Length:
-payload의 길이를 나타내고 unsigned 24bit integer이다. 이 값은 2^14(16,384)보다 커야하고, 수신측에서 설정한 *SETTINGS_MAX_FRAME_SIZE*에 비해서 더 큰 값이 보내지면 안된다.
+payload의 길이를 나타내고 unsigned 24bit integer이다. 수신자가 *SETTINGS_MAX_FRAME_SIZE*에서 2^14(16,384)보다 큰 값을 설정하지 않았다면 이보다 큰 값이 보내질 수 없다.
 
 프래임 헤더의 9바이트는 이 값에 포함되지 않는다.
 
