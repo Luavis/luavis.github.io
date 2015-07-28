@@ -78,30 +78,36 @@ collect-only 옵션과 함께 테스트를 시도하면:
 
     py.test --pyargs unittest2.test.test_skipping -q
 
-unittest2.test.test_skipping 테스트 모듈을 찾아서 테스팅을 시도한다. addopts를 이용하여 영구 설정하는것 또 가능하다.
+unittest2.test.test_skipping 테스트 모듈을 찾아서 테스팅을 시도한다.
+
+---
+
+pytest.ini 파일에 addopts 설정을 이용하여 영구히 설정하는것 또 가능하다.
 
 *content of pytest.ini*
-[pytest]
-addopts = --pyargs
 
-py.test NAME인 형태를 이용할 수 있다. 다만 NAME이 실질적으로 존재하는지에 대해서 확인해야합니다.
+    [pytest]
+    addopts = --pyargs
 
-Finding out what is collected
-You can always peek at the collection tree without running tests like this:
+```py.test NAME```인 형태를 이용할 수 있다. 다만 NAME이 실질적으로 존재하는지에 대해서 확인해야합니다.
 
-. $ py.test --collect-only pythoncollection.py
-=========================== test session starts ============================
-platform linux -- Python 3.4.1 -- py-1.4.27 -- pytest-2.7.1
-rootdir: /tmp/sandbox/pytest/doc/en, inifile: pytest.ini
-collected 3 items
-<Module 'example/pythoncollection.py'>
-  <Function 'test_function'>
-  <Class 'TestClass'>
-    <Instance '()'>
-      <Function 'test_method'>
-      <Function 'test_anothermethod'>
+> Note:
+> 
+> 어떤 파일의 어떤 함수를 테스트 파일들로 찾았는지 알기 위해서 --collect-only flag를 이용하여 아래와 같이 확인 할 수 있다.
 
-=============================  in 0.01 seconds =============================
+    $ py.test --collect-only pythoncollection.py
+    =========================== test session starts ============================
+    platform linux -- Python 3.4.1 -- py-1.4.27 -- pytest-2.7.1
+    rootdir: /tmp/sandbox/pytest/doc/en, inifile: pytest.ini
+    collected 3 items
+    <Module 'example/pythoncollection.py'>
+      <Function 'test_function'>
+      <Class 'TestClass'>
+        <Instance '()'>
+          <Function 'test_method'>
+          <Function 'test_anothermethod'>
+
+    =============================  in 0.01 seconds =============================
 
 ## customizing test collection to find all .py files
 
