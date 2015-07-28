@@ -86,7 +86,7 @@ def test_mytest():
         f()
 {% endhighlight %}
 Running it with, this time in “quiet” reporting mode:
-이번에는 quit모드를(non-verbose) 사용해보자.
+이번에는 quiet모드를(non-verbose) 사용해보자.
 
     $ py.test -q test_sysexit.py
     .
