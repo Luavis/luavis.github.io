@@ -670,6 +670,12 @@ code {
   border-radius: 2px;
 }
 
+@media print, screen and (max-width: 720px) {
+  code {
+    font-size: 12px;
+  }
+}
+
 code .lineno {
   margin-right: 10px;
   -webkit-user-select: none;
