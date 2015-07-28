@@ -8,7 +8,7 @@ keywords: python, pep 8, 한글 번역
 
 ---
 
-이 문서는 현재 https://bitbucket.org/sk8erchoi/peps-korean에서 공동 번역이 이루어지고 있습니다.
+이 문서는 현재 [여기](https://bitbucket.org/sk8erchoi/peps-korean)에서 공동 번역이 이루어지고 있습니다.
 
 관심 있는 분들의 참여 부탁드립니다.
 
