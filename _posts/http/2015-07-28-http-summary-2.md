@@ -10,8 +10,6 @@ keywords: http, rfc 1945, http 1.0
 
 ## Request
 
----
-
 *Request-URI*
 
     Request-URI    = absoluteURI | abs_path
@@ -37,9 +35,9 @@ Request-URI에 다른 인코딩이 된 문자를 옮기고 싶다면 percent enc
 
 위의 request header들은 request의 modifier 역활을 할 수 있다. Request header로는 위와 같은 헤더를 사용할 수 있지만, protocol version에 따라 변경될 수 있다.
 
-## Response
-
 ---
+
+## Response
 
 
     Response        = Simple-Response | Full-Response
@@ -104,10 +102,9 @@ Response는 header 필드 없이도 작동하는 Simple Response라는 항목이
                    | WWW-Authenticate        ; Section 10.16
                    
 
+---
 
 ## Entity
-
----
 
 Full-Request와 Full-Response는 entity를 주고 받는다. entity는  Entity-Header와  Entity-Body를 포함하고 있다.
 
@@ -133,6 +130,8 @@ Entity-Body는 실질적인 data에대해 나타낸다. Entity-Body의 사이즈
 
 Content-Type을 통해서 읽고 Simple-Response이변 URL의 확장자로 찾는다. 이런 과정에도 여전히 알 수 없는 타입에 대해서는 type을 application/octet-stream로 취급한다.
 
+---
+
 ## Method Definitions
 
 - GET : Request-URI가 가르키고 있는 정보를 받아온다는 의미이다. If-Modified-Since가 있는 GET은 Conditinoal GET으로 의미가 변경된다. 이는 네트워크의 사용률을 낮추기위한 방법으로 If-Modified-Since 이후에 값이 변경된 적이 없다면, 이를 캐쉬된 entity를 사용한다.
@@ -147,6 +146,8 @@ Content-Type을 통해서 읽고 Simple-Response이변 URL의 확장자로 찾�
     + posting의 결과에대해서 보내주어야한다.
 
     + 포함되어있는 동작을 통하여 데이터베이스에 추가해야한다.
+
+---
 
 ## Header Field Definitions
 
@@ -200,6 +201,7 @@ Content-Type을 통해서 읽고 Simple-Response이변 URL의 확장자로 찾�
     
     ```realm-value    = quoted-string```
     
+---
 
 ## Authenticate
 
@@ -218,39 +220,44 @@ Content-Type을 통해서 읽고 Simple-Response이변 URL의 확장자로 찾�
     Authorization: Basic QWxhZGRpbjpvcGVuIHNlc2FtZQ==
 
 
+---
+
 # Additional Features
 
 모든 HTTP/1.0 Application에서 동작한다고 장담은 안되는 기능이지만 부록에 포함되어 있다.
 
 ## Additional Request Methods
 
-- PUT : POST와 같이 entity-body를 해당 Request-URI에 저장하는 기능이지만, 이미 파일이 존재한다면, 새로운 버전의 파일이라 인식하고 덮어쓴다.
+- *PUT* : POST와 같이 entity-body를 해당 Request-URI에 저장하는 기능이지만, 이미 파일이 존재한다면, 새로운 버전의 파일이라 인식하고 덮어쓴다.
 
-- DELETE : Request-URI에 해당하는 파일을 삭제한다.
+- *DELETE* : Request-URI에 해당하는 파일을 삭제한다.
 
-- LINK : 이미 존재하는 resource와 링크를 생성한다.(리눅스의 symbol이나 윈도우 환경의 바로가기 같은 기능을 말하는듯 하다.)
+- *LINK* : 이미 존재하는 resource와 링크를 생성한다.(리눅스의 symbol이나 윈도우 환경의 바로가기 같은 기능을 말하는듯 하다.)
 
-- UNLINK : 위에서 언급한 LINK를 삭제한다.
+- *UNLINK* : 위에서 언급한 LINK를 삭제한다.
+
+
+---
 
 
 ## Additional Header Field Definitions
 
-- Accept : 이 헤더가 request 헤더로 사용될 때에는 response에 대해서 이해가능한 타입에 대해 user-agent가 미리 MIME으로 설정한다. ```*/*```는 모든 타입을 의미하고, ```type/*```는 type밑에 있는 모든 subtype에 대해서 받을 수 있음을 나타낸다.
+- *Accept* : 이 헤더가 request 헤더로 사용될 때에는 response에 대해서 이해가능한 타입에 대해 user-agent가 미리 MIME으로 설정한다. ```*/*```는 모든 타입을 의미하고, ```type/*```는 type밑에 있는 모든 subtype에 대해서 받을 수 있음을 나타낸다.
 
-- Accept-Charset :  user-agent가 해석할 수 잇는 charset에 대해서 미리 정해놓은 헤더이다. 기본값은 US-ASCII와 ISO-8859-1이다.
+- *Accept-Charset* :  user-agent가 해석할 수 잇는 charset에 대해서 미리 정해놓은 헤더이다. 기본값은 US-ASCII와 ISO-8859-1이다.
 
-- Accept-Encoding : Accept 헤더와 비슷하지만, content-coding에 대해서 제한하는 헤더이다.
+- *Accept-Encoding* : Accept 헤더와 비슷하지만, content-coding에 대해서 제한하는 헤더이다.
 
-- Accept-Language : Accept 헤더와 비슷하지만, 사용자가 받아드릴 수 있는 언어에 대하여 서술해놓은 헤더이다. 
+- *Accept-Language* : Accept 헤더와 비슷하지만, 사용자가 받아드릴 수 있는 언어에 대하여 서술해놓은 헤더이다. 
 
-- Content-Language : Response에서 Entity-Body의 언어가 어떤 언어로 설정 되어 있는지에 대해서 서술하고 있다.
+- *Content-Language* : Response에서 Entity-Body의 언어가 어떤 언어로 설정 되어 있는지에 대해서 서술하고 있다.
 
-- Link : 어떤 value와 link를 할 지에 대해서 적어 놓는 헤더이다.
+- *Link* : 어떤 value와 link를 할 지에 대해서 적어 놓는 헤더이다.
 
-- MIME-Version : 어떤 MIME Version을 사용하고 있는지 서술한다.
+- *MIME-Version* : 어떤 MIME Version을 사용하고 있는지 서술한다.
 
-- Retry-After : 503 헤더에 포함되어 잠시후 재요청을 원할 때 적어둔다. 초 단위로 10진수로 적는다.
+- *Retry-After* : 503 헤더에 포함되어 잠시후 재요청을 원할 때 적어둔다. 초 단위로 10진수로 적는다.
 
-- Title : entity의 제목에 대해서 적어두는 header다.
+- *Title* : entity의 제목에 대해서 적어두는 header다.
 
-- URI : Request-URI의 리소스가 인식할 수 있는 URI에 대해서 서술해둔다.(어떤 기능인지 정확히 모르겠다.) 해당 URI에 접근 가능한지는 보장되지 않는다.
+- *URI* : Request-URI의 리소스가 인식할 수 있는 URI에 대해서 서술해둔다.(어떤 기능인지 정확히 모르겠다.) 해당 URI에 접근 가능한지는 보장되지 않는다.

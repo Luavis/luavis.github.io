@@ -10,8 +10,6 @@ keywords: http, rfc 1945, http 1.0
 
 ## HTTP VERSION
 
----
-
 HTTP 버전은 ```<major version>.<minor version>``` 으로 이루어 진다.
 
     <minor>가 올라가는 경우는 파싱 알고리즘의 차이는 없고, 헤더의 추가나 기능의 추가를 나타낸다.
@@ -20,7 +18,6 @@ HTTP 버전은 ```<major version>.<minor version>``` 으로 이루어 진다.
 
 HTTP의 버전은 ```"HTTP" "/" "1*DIGIT" . "1*DIGIT"```같은 형식으로 표기한다. 또한,  HTTP/2.4는 HTTP/2.13에 비해 낮은 버전이다 minor version은 소숫점이 아니라 다른 버전으로 읽어야한다.
 
----
 HTTP/1.0 서버는 아래와 같은 사항을 지켜야한다:
 
 - HTTP/0.9 and HTTP/1.0 요청의 Request-Line을 인식 할 수 있어야한다.
@@ -37,9 +34,9 @@ HTTP/1.0 클라이언트는 아래와 같은 사항을 지켜야한다.:
 
 > 프록시나 게이트웨이는 다른 프로토콜이나 버전을 사용할 수 있지만 client와 server에 요청및 응답에 대해서는 각각의 endpoint가 지원하는 버전으로 다운그레이드와 업그레이드를 지원해 주어야 한다.
 
-## URI
-
 ---
+
+## URI
 
 *About URI*
 
@@ -90,9 +87,9 @@ URI에 대한 정확한 spec은 [RFC 1738](https://www.ietf.org/rfc/rfc1738.txt)
 
 포트에 대한 언급이 없다면 80번 포트로 간주하고, 대부분 TCP connection으로 동작하지만, 아닌 경우에는 URI scheme을 다르게 표기해주어야한다. 만약 abs_path가 없다면 "/"로 간주해야 한다.
 
-## Date/Time Formats
-
 ---
+
+## Date/Time Formats
 
 *Support date format*
 
@@ -131,9 +128,9 @@ URI에 대한 정확한 spec은 [RFC 1738](https://www.ietf.org/rfc/rfc1738.txt)
 
 첫번째 date 표기 방식이 가장 기본적인 표기 방식이고 만약 두번째, 세번째로 요청이나 응답을 받았다 해도, 다음 요청에서는 첫번째 date으로 보내고 받아야한다.
 
-## Charset
-
 ---
+
+## Charset
 
 HTTP는 MIME TYPE에 정의된 문자 인코딩을 사용한다. HTTP의 문자셋 정리는 case insensitive하게 받아드린다.(대소문자 상관 없음)
 
@@ -147,9 +144,9 @@ HTTP는 MIME TYPE에 정의된 문자 인코딩을 사용한다. HTTP의 문자�
              
 반면 HTTP는 어떤 charset이든 IANA Character Set에 정의되어 있으면 사용할 수 있다. 만약 charset에 대해서 표기가 없다면, US-ASCII or ISO-8859-1로 간주한다.
 
-## Content coding
-
 ---
+
+## Content coding
 
 content coding은 무손실 압축으로 data를 압축하는것을 말한다.
 
@@ -174,9 +171,9 @@ content-coding에 어떻게 표기되어 있는가보다, 이 표기가 어떤 �
 >
 > 프로그램 이름을 encoding formate으로 사용하는 것은 하지 말아야한다. 
 
-## Media Types
-
 ---
+
+## Media Types
 
 
        media-type     = type "/" subtype *( ";" parameter )
@@ -193,9 +190,10 @@ LWS(공백문자) type과 subtype혹은 paramter의 이름과 값사이에 존�
 
 media type에 대해서는 [RFC 1590](https://www.ietf.org/rfc/rfc1590.txt)에 정의되어 있는 방식으로 정의된 것을 사용한다. 등록되지 않은 형식의 media type은 사용이 권장되지 않는다.
 
+---
+
 ## About Text
 
----
 text타입의 subtype들은 CRLF를 라인 구분자로 사용해야한다.
 
 HTTP는 **Entity-Body**의 text에 한하여 CR이나 LF만 단독으로 라인 구분자로 사용하는 text도 허용한다.
@@ -206,16 +204,16 @@ HTTP는 **Entity-Body**의 text에 한하여 CR이나 LF만 단독으로 라인 
 
 media 타입에 정의되어 있는 charset parameter는 charater set을 나타낸다.
 
-## Multipart
-
 ---
+
+## Multipart
 
 multipart는 하나의 Entity-Body에서 여러가지 데이터를 한번에 보내고 싶을 때 사용한다. 이는 MIME에 정의되어 있는 multipart 타입을 사용하는데 대부분의 multipart는 boundary를 사용하고 이는 HTTP header에 병기한다.
 
+---
    
 ## product token
 
----   
 
 제품의 토큰은 User-Agent나 Server같은 헤더에 탑재하여 보낼 수 있고, 간단하게 하여 보내야한다.
 
@@ -223,9 +221,9 @@ multipart는 하나의 Entity-Body에서 여러가지 데이터를 한번에 보
     
     Server: Apache/0.8.4
 
-## Message
-
 ---
+
+## Message
 
        HTTP-message   = Simple-Request           ; HTTP/0.9 messages
                       | Simple-Response
