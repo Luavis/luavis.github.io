@@ -3,8 +3,8 @@ layout: post
 title:  "Python string concat"
 date:   2015-07-28 16:09:00
 categories: python
-description: difference between xrange and range
-keywords: python, xrange, range
+description: string concat benchmark
+keywords: python, string, concat
 
 ---
 
