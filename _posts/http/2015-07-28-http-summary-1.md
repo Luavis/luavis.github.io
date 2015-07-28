@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "RFC 1945(HTTP 1.0) 요약上"
+title:  "RFC 1945(HTTP 1.0) 요약 上"
 date:   2015-07-28 17:20:00
 categories: http
 description: http의 요약본 上
