@@ -131,33 +131,3 @@ collect_ignore = ["setup.py"]
 if sys.version_info[0] > 2:
     collect_ignore.append("pkg/module_py2.py")
 {% endhighlight %}
-
-만약 모듈내에 이런 파일들을 있다면:
-
-*content of pkg/module_py2.py*
-{% highlight python linenos %}
-def test_only_on_python2():
-    try:
-        assert 0
-    except Exception, e:
-        pass
-{% endhighlight %}
-
-그리고 setup.py dummy파일이 있다면:
-
-*content of setup.py*
-{% highlight python linenos %}
-0/0  # will raise exeption if imported
-{% endhighlight %}
-
-py.test는 python2를 이용하여 돌린다면, setup.py에서 나가게 되지만.
-
-    $ py.test --collect-only
-    =========================== test session starts ============================
-    platform linux -- Python 3.4.1 -- py-1.4.27 -- pytest-2.7.1
-    rootdir: /tmp/doc-exec-160, inifile: pytest.ini
-    collected 0 items
-
-    =============================  in 0.01 seconds =============================
-    
-만약 python3 모듈이 test collection에 포함되지 않을 것이다.
