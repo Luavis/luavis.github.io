@@ -16,7 +16,7 @@ Python 코드 작성 시 일반적인 컨벤션에 대해서 서술하고 있는
 우선 Sublime Text에서는 [Flake8Lint](https://github.com/dreadatour/Flake8Lint)라는 플러그인이 가장 유명한듯하다(?)
 wbond의 Package Control이 설치되어 있다면, Super + Shift + P를 이용하여 "Package Control: Install Package"를 입력하여 설치가능한 플러그인 목록을 로딩하고, "Flake8 Lint"를 선택하여 설치한다.
 
-물론 Manual 설치도 가능하다, Sublime Text의 Packages 디렉토리에 git clone git://github.com/dreadatour/Flake8Lint.git "Python Flake8 Lint" 명령어 혹은 github에서 download zip으로 받은 파일을 올려두는 방식으로도 설치가 가능하다.
+물론 Manual 설치도 가능하다, Sublime Text의 Packages 디렉토리에 ```git clone git://github.com/dreadatour/Flake8Lint.git "Python Flake8 Lint"```, git clone 명령어 혹은 github에서 download zip으로 받은 파일을 올려두는 방식으로도 설치가 가능하다.
 
 ----
 
