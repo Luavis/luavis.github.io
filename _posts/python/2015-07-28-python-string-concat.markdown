@@ -78,7 +78,7 @@ print 'method5=', timeit.timeit(method5, number=10)
 print 'method6=', timeit.timeit(method6, number=10)
 print 'method7=', timeit.timeit(method7, number=10)
 print 'method8=', timeit.timeit(method8, number=10)
-{% end highlight %}
+{% endhighlight %}
 
 결과를 확인해보면, 
 
