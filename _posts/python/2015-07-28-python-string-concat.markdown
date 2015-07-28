@@ -82,16 +82,14 @@ print 'method8=', timeit.timeit(method8, number=10)
 
 결과를 확인해보면, 
 
-```
-[GCC 4.2.1 Compatible Apple LLVM 6.0 (clang-600.0.39)]
-method1= 0.145534038544
-method2= 15.9896481037
-method3= 0.312026977539
-method4= 0.139698982239
-method5= 0.353417873383
-method6= 0.0955619812012
-method7= 0.106313943863
-method8= 0.101000070572
-```
+    [GCC 4.2.1 Compatible Apple LLVM 6.0 (clang-600.0.39)]
+    method1= 0.145534038544
+    method2= 15.9896481037
+    method3= 0.312026977539
+    method4= 0.139698982239
+    method5= 0.353417873383
+    method6= 0.0955619812012
+    method7= 0.106313943863
+    method8= 0.101000070572
 
 이런식인데, ```MutableString```은 2.6버전에서 이미 deprecated된 방식이라 하니 사용하지 않아야하고, method 6이 가장 빠르다는 결과가 나왔지만 6, 7, 8정도에서 취향에 따라 해도 큰 상관 없을듯하다..
