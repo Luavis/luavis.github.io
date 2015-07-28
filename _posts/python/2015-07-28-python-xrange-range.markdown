@@ -48,3 +48,6 @@ range를 사용한 경우인데 이때 Activity monitor로 메모리 점유율�
 ![range test]({{ site_url }}/assets/python-xrange-test.png)
 
 237M에서 3M로 줄어든다. 상황에 따라 사용하는게 맞다고 생각된다.
+
+
+> Python 3.0에서는 xrange는 없어졌고, range가 대신 xrange와 같은 방식으로 동작한다.
