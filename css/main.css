@@ -1,3 +1,17 @@
+@charset 'utf-8';
+
+@font-face {
+    font-family: 'bitstream_vera_sans_monoroman';
+    src: url('../fonts/VeraMono-webfont.eot');
+    src: url('../fonts/VeraMono-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/VeraMono-webfont.woff') format('woff'),
+         url('../fonts/VeraMono-webfont.ttf') format('truetype'),
+         url('../fonts/VeraMono-webfont.svg#bitstream_vera_sans_monoroman') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
 @font-face {
   font-family: 'OpenSansLight';
   src: url("../fonts/OpenSans-Light-webfont.eot");
@@ -643,9 +657,9 @@ blockquote {
 }
 
 code {
-  font-family: "Lucida Sans", Monaco, Bitstream Vera Sans Mono, Lucida Console, Terminal;
+  font-family: "bitstream_vera_sans_monoroman", "Bitstream Vera Sans Mono", sans-serif;
   color: #efefef;
-  font-size: 13px;
+  font-size: 15px;
   margin: 0 4px;
   padding: 4px 6px;
   -moz-border-radius: 2px;
@@ -654,6 +668,14 @@ code {
   -ms-border-radius: 2px;
   -khtml-border-radius: 2px;
   border-radius: 2px;
+}
+
+code .lineno {
+  margin-right: 10px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none
+  user-select: none;
 }
 
 pre {
