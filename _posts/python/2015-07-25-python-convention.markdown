@@ -8,6 +8,10 @@ keywords: python, pep 8, 한글 번역
 
 ---
 
+PEP 8에대해서 번역된 글이 있어 퍼왔습니다. 약간 수정된 사항이 있지만 jekyll에서 보기 편하도록 몇가지 Markdown 문법을 수정한것 외에는 내용상 차이는 없습니다. 원본을 확인하고 싶거나 번역에 참여하고 싶다면 아래 번역링크에 들어가서 확인해주시기 바랍니다.
+
+---
+
 이 문서는 현재 [여기](https://bitbucket.org/sk8erchoi/peps-korean)에서 공동 번역이 이루어지고 있습니다.
 
 관심 있는 분들의 참여 부탁드립니다.
@@ -15,19 +19,19 @@ keywords: python, pep 8, 한글 번역
  
 
 ------------------------------------
-PEP: 8
-Title: Style Guide for Python Code
-Version: $Revision$
-Last-Modified: $Date$
-Author: Guido van Rossum ,
-        Barry Warsaw 
-Status: Active
-Type: Process
-Content-Type: text/x-rst
-Created: 05-Jul-2001
-Post-History: 05-Jul-2001
-번역일: 13-May-2013
-번역자: keniallee@gmail.com (이수겸)
+    PEP: 8
+    Title: Style Guide for Python Code
+    Version: $Revision$
+    Last-Modified: $Date$
+    Author: Guido van Rossum ,
+            Barry Warsaw 
+    Status: Active
+    Type: Process
+    Content-Type: text/x-rst
+    Created: 05-Jul-2001
+    Post-History: 05-Jul-2001
+    번역일: 13-May-2013
+    번역자: keniallee@gmail.com (이수겸)
 
 
 문서 소개
