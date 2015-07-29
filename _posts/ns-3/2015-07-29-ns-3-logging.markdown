@@ -3,8 +3,8 @@ layout: post
 title:  "NS-3 Logging"
 date:   2015-07-29 18:28:00
 categories: ns-3
-description: http2의 전체적인 동작방식
-keywords: http, http2, rfc 7540, frame
+description: ns-3의 로깅 방식
+keywords: ns-3, logging
 
 ---
 
