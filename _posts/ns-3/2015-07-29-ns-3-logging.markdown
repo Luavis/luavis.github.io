@@ -24,7 +24,6 @@ ns-3의 install은 hg(mercurial)을 이용하여 repository에서 clone받아 �
 
 ## Logging
 
-
 Hello simluator의 내부를 보면 매크로 함수로보이는 매크로를 볼수 있다.
  
 NS_LOG_UNCOND(...);
