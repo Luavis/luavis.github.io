@@ -1,0 +1,76 @@
+---
+layout: post
+title:  "NS-3 Logging"
+date:   2015-07-29 18:28:00
+categories: ns-3
+description: http2의 전체적인 동작방식
+keywords: http, http2, rfc 7540, frame
+
+---
+
+## Intro
+ns-3의 install은 hg(mercurial)을 이용하여 repository에서 clone받아 사용할 수 있다. hg를 이용하여 다운받은 폴더에는 
+
+    ./waf --run hello-simulator  
+
+이런식으로 example에 있는 hello-simulator.cc파일을 실행할 수 있다. 
+
+## Logging component
+ 
+
+    NS_LOG_COMPONENT_DEFINE ("HelloSimulator"); 
+
+모듈의 log 컴포넌트 이름을 정의한다, android log cat의 tag name같은 역할이다. 
+
+## Logging
+
+
+Hello simluator의 내부를 보면 매크로 함수로보이는 매크로를 볼수 있다.
+ 
+NS_LOG_UNCOND(...);
+
+    As a convenience, the NS_LOG_UNCOND (...); macro will always log its 
+    arguments, even if the associated log- component is not enabled at any 
+    severity.
+
+어떤상황에서도 로깅을 해준다. 라는 설명이다. Unconditional logging이라 불리운다.
+
+그 외에도 여러 log macro가 정의되어 있고 이는 NS_LOG_UNCOND와는 다르게 실행시 미리 로그의 범위를 정해두어야한다. 
+
+
+    NS_LOG_ERROR (...);
+    NS_LOG_WARN (...);
+    NS_LOG_DEBUG (...);
+    NS_LOG_INFO (...);
+    NS_LOG_FUNCTION (...);
+    NS_LOG_LOGIC (...);
+ 
+특히, NS_LOG_FUNCTION은 
+{% highlight c++ linenos %}
+class A {
+
+public:
+
+  void a(int item) {
+
+    NS_LOG_FUNCTION(this);
+
+    ...
+
+  }
+
+};
+{% endhighlight %}
+
+이렇게 this를 pass하여 사용할 수 있다.
+
+* log 범위 설정
+
+NS-3에서 log의 범위는 이렇게 정의하여 실행한다.
+
+    NS_LOG="HelloSimulator=info|*" ./waf --run hello-simulator
+
+이의 설명은 튜토리얼에서는 NS_LOG="<component>=<severity>|<options>"이렇게 표시하고 있다.
+이 중 <component>는 HelloSimulator <severity>는 info, <options>는 전체로 규정하고 있다. 
+
+```*```혹은 ```all```을 이용하여 wildcard를 나타내고, 그 예로 NS_LOG=```***```는 모든조건에 대한 wildcard이다.
