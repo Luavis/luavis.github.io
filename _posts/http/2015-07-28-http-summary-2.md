@@ -10,6 +10,64 @@ keywords: http, rfc 1945, http 1.0
 
 ## Request
 
+       HTTP-message   = Simple-Request           ; HTTP/0.9 messages
+                      | Simple-Response
+                      | Full-Request             ; HTTP/1.0 messages
+                      | Full-Response
+
+       Full-Request   = Request-Line             ; Section 5.1
+                        *( General-Header        ; Section 4.3
+                         | Request-Header        ; Section 5.2
+                         | Entity-Header )       ; Section 7.1
+                        CRLF
+                        [ Entity-Body ]          ; Section 7.2
+
+       Full-Response  = Status-Line              ; Section 6.1
+                        *( General-Header        ; Section 4.3
+                         | Response-Header       ; Section 6.2
+                         | Entity-Header )       ; Section 7.1
+                        CRLF
+                        [ Entity-Body ]          ; Section 7.2
+                        
+        Simple-Request  = "GET" SP Request-URI CRLF
+
+        Simple-Response = [ Entity-Body ]
+        
+        
+*Message header*
+
+       HTTP-header    = field-name ":" [ field-value ] CRLF
+
+       field-name     = token
+       field-value    = *( field-content | LWS )
+
+       field-content  = <the OCTETs making up the field-value
+                        and consisting of either *TEXT or combinations
+                        of token, tspecials, and quoted-string>
+
+*General header*
+
+       General-Header = Date                     ; Section 10.6
+                      | Pragma                   ; Section 10.12
+                      
+General header의 헤더 이름은 프로토콜의 버전에 따라서 달라질 수 있다.
+
+*Method*
+
+       Method         = "GET"                    ; Section 8.1
+                      | "HEAD"                   ; Section 8.2
+                      | "POST"                   ; Section 8.3
+                      | extension-method
+
+       extension-method = token
+
+       Request-Header = Authorization            ; Section 10.2
+                      | From                     ; Section 10.8
+                      | If-Modified-Since        ; Section 10.9
+                      | Referer                  ; Section 10.13
+                      | User-Agent               ; Section 10.15
+
+
 *Request-URI*
 
     Request-URI    = absoluteURI | abs_path
@@ -138,7 +196,7 @@ Content-Type을 통해서 읽고 Simple-Response이변 URL의 확장자로 찾�
 
 - HEAD : GET과 같지만 server는 Entity-Body를 포함해서 응답을 보내면 안된다.
 
-- POST : 서버는 요청에 포함된 entityfmf Request-URI로 저장한다. 이 요청을 받을때 다음과 같은 기능이 가능해야한다 :
+- POST : 서버는 요청에 포함된 entity를 Request-URI로 저장한다. 이 요청을 받을때 다음과 같은 기능이 가능해야한다 :
     + 이미 존재하는 resource임을 알림
     
     + 게시판 뉴스그룹 이메일 리스트 등에 새로운 메세지를 포스팅한다.
