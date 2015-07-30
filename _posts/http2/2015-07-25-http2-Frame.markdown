@@ -18,26 +18,22 @@ keywords: http, http2, rfc 7540, frame
 
 *client*: HTTP/2의 끝부분에서 커넥션을 시작하는 부분입니다. Client는 HTTP 요청을 보내고 응답을 받습니다.
 
-*connection*: 두 endpoint간의 전송계츠의 연결을 말한다.
+*endpoint*:  connection의 Server와 client를 말한다.
+
+*connection*: 두 endpoint간의 전송계층의 연결을 말한다.
 
 *connection error*: HTTP/2 연결에서 발생하는 모든 에러.
 
-*endpoint*:  connection의 Server와 client를 말한다.
+*frame*: HTTP/2 connection의 가장작은 단위의 통신 메세지이다.
+*peer*:  특정 endpoint를 말할때, 이야기하고 있는 endpoint의 remote를 이야기한다.
 
-*frame*: HTTP/2 connection의 가장작은 단위이고, 헤더와 프래임에 대해 정의되어 있는 비트들로 프래임의 길이를 갖고 
-*peer*:  endpoint인데, 
+*receiver*: frame을 받는 측에 해당하는 endpoint이다.
 
-When discussing a particular endpoint, "peer"
-      refers to the endpoint that is remote to the primary subject of
-      discussion.
-
-*receiver*:  frame을 받는 측에 해당하는 endpoint이다.
-
-*sender*:  An endpoint that is transmitting frames.
+*sender*:  frame을 보내는 endpoint를 이야기한다.
 
 *server*: HTTP/2 connection을 받아드리는 endpoint다. HTTP 요청를 받고 그에대한 응답을 보낸다.
 
-*stream*: HTTP/2에서 프래임을 보내고 받는 통로.
+*stream*: HTTP/2에서 frame을 보내고 받는 통로.
 
 *stream error*:  HTTP/2 스트림의 에러.
 
