@@ -112,5 +112,100 @@ wbond의 Package Control이 설치되어 있다면, Super + Shift + P를 이용�
     }
 
 
+실행
+---
+
 원하는데로 적당히 커스텀해서 사용하면 될 듯 하다.
 lint가 라이브 모드나 혹은 저장시 자동 로딩 상태가 아니라면, Super + Control + 8 (Windows: Ctrl+Alt+Shift+8, Linux: Ctrl+Alt+8)로 lint를 실행할 수 있다.
+
+**개인적인 취향**
+
+일단 글쓴이는 ST3를 사용중이여서 위에 나와있던 퍼포먼스 문제가 크게 없어 라이브 모드를 사용하고, ruler_guide를 사용한다. 또 팝업이 작업에 많은 지장을 준다고 생각하여, 이를 끄고, 라인 길이를 120자까지 허용해두었다.
+
+
+		{
+		// debug mode (verbose output to ST python console)
+		"debug": false,
+
+		// run flake8 lint on file saving
+		"lint_on_save": false,
+		// run flake8 lint on file loading
+		"lint_on_load": false,
+
+		// run lint in live mode: lint file (without popup) every XXX ms
+		// please, be careful: this may cause performance issues on ST2
+		"live_mode": true,
+		// set live mode lint delay, in milliseconds
+		"live_mode_lint_delay": 1000,
+
+		// set ruler guide based on max line length setting
+		"set_ruler_guide": true,
+
+		// popup a dialog of detected conditions?
+		"popup": false,
+		// highlight detected conditions?
+		"highlight": true,
+
+		// highlight type:
+		// - "line" to highlight whole line
+		// - "error" to highlight error only
+		"highlight_type": "error",
+
+		// color values to highlight detected conditions
+		"highlight_color_critical": "#981600",
+		"highlight_color_error": "#DA2000",
+		"highlight_color_warning": "#EDBA00",
+
+		// show a mark in the gutter on all lines with errors/warnings:
+		// - "dot", "circle" or "bookmark" to show marks
+		// - "theme-alpha", "theme-bright", "theme-dark", "theme-hard" or "theme-simple" to show icon marks
+		// - "" (empty string) to do not show marks
+		"gutter_marks": "theme-simple",
+
+		// report successfull (passed) lint
+		"report_on_success": false,
+
+		// blink gutter marks on success (will not blink with live mode check)
+		// this icon is not depends on 'gutter_marks' settings
+		// please, be careful: this may cause performance issues on ST2
+		"blink_gutter_marks_on_success": true,
+
+		// load global flake8 config ("~/.config/flake8")
+		"use_flake8_global_config": true,
+		// load per-project config (i.e. "tox.ini", "setup.cfg" and ".pep8" files)
+		"use_flake8_project_config": true,
+
+		// set python interpreter (lint files for python >= 2.7):
+		// - 'internal' for use internal Sublime Text interpreter (2.6)
+		// - 'auto' for search default system python interpreter (default value)
+		// - absolute path to python interpreter for define another one
+		//   use platform specific notation, i.e. "C:\\Anaconda\\envs\\py33\\python.exe"
+		//   for Windows or then "/home/whatever/pythondist/python" for Unix
+		"python_interpreter": "auto",
+
+		// list of python built-in functions (like '_')
+		"builtins": [],
+
+		// turn on pyflakes error lint
+		"pyflakes": true,
+		// turn on pep8 error lint
+		"pep8": true,
+		// turn on pep257 error lint
+		"pep257": false,
+		// turn on naming error lint
+		"naming": true,
+		// turn off complexity check (set number > 0 to check complexity level)
+		"complexity": 5,
+
+		// set desired max line length
+		"pep8_max_line_length": 119,
+
+		// select errors and warnings (e.g. ["E", "W6"])
+		"select": [],
+		// skip errors and warnings (e.g. ["E303", "E4", "W"])
+		"ignore": [],
+
+		// files to ignore, for example: ["*.mako", "test*.py"]
+		"ignore_files": []
+	}
+
