@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "RFC 7540(HTTP 2) Streams State"
-date:   2015-08-01 4:49:00
+date:   2015-08-01 04:49:00
 categories: http2
 description: http2의 stream의 상태 변화에 대한 번역
 keywords: http, http2, stream, state
