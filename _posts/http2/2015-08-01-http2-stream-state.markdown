@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "RFC 7540(HTTP 2) Streams State"
-date:   2015-07-28 03:27:00
+date:   2015-08-01 4:49:00
 categories: http2
 description: http2의 stream의 상태 변화에 대한 번역
 keywords: http, http2, stream, state
@@ -170,21 +170,22 @@ closed 상태는 종료 단계이다.
 closed된 frame은 PRIORITY 이 외의 frame은 받을 수 없다. *RST_STREAM* 받은 후에 *PRIORITY* 외의 frame을 받게된다면, *STREAM_CLOSED* stream error로 취급된다. 
 아래의 경우를 제외하고는 *END_STREAM*가 설정된 frame을 받은뒤에 어떠한 frame이던 endpoint가 받았다면, 이 또한 STREAM_ERROR의 connnection error로 취급된다.
 
-<!--
-- WINDOW_UPDATE, RST_STREAM frames들은 이 상태에서 받을 수 있다. 
+- END_STREAM이 설정된 상태로 DATA나 HEADERS frame들이 보내진 잠깐의 시간동안은 closed 상태에서도 WINDOW_UPDATE, RST_STREAM frames가 받아 질 수있다. 원격에 있는 피어가 RST_STREAM이나 END_STERAM을 갖고 있는 frame을 처리하기 전까지는, WINDOW_UPDATE, RST_STREAM 같은 frames들이 보낼 수 있다. 일정 시간이 지났다면, 이 상태에서의 Endpoints는 WINDOW_UPDATE나 RST_STREAM을 무시해야하고 endpoints는 이를 connection에러의 종류인 *PROTOCOL_ERROR*로 취급할 수 있다.
 
-WINDOW_UPDATE, RST_STREAM frames can be received in this state for a short period after a DATA or HEADERS frame containing an END_STREAM flag is sent. Until the remote peer receives and processes RST_STREAM or the frame bearing the END_STREAM flag, it might send frames of these types. Endpoints MUST ignore WINDOW_UPDATE or RST_STREAM frames received in this state, though endpoints MAY choose to treat frames that arrive a significant time after sending END_STREAM as a connection error (Section 5.4.1) of type PROTOCOL_ERROR.
+- 이미 closed된 stream에 의존된 stream들의 우선순위를 재 조정하기 위해서, PRIORITY frame들은 보내질 수 있다. Endpoints는 PRIORITY frame을 처리해줘야한다. 하지만 이 stream이 이미 dependency tree에서 제거된 frame이라면 무시해야한다.
 
-PRIORITY frames can be sent on closed streams to prioritize streams that are dependent on the closed stream. Endpoints SHOULD process PRIORITY frames, though they can be ignored if the stream has been removed from the dependency tree (see Section 5.3.4).
+- RST_STREAM frame에 의해서, 이 상태로 전환 되었다면, RST_STREAM을 받은 peer는 이미 connection error를 발생 시킬 수 있는 frame을 보내거나 보낼 예정에 있을 수 있다. endpoint는 RST_STREAM를 보내고 난 뒤에 받은 frame들은 무시해야한다. endpoint는 일정시간 후에 도착한 frame들을 error로 처리할 수 잇따.
 
-If this state is reached as a result of sending a RST_STREAM frame, the peer that receives the RST_STREAM might have already sent — or enqueued for sending — frames on the stream that cannot be withdrawn. An endpoint MUST ignore frames that it receives on closed streams after it has sent a RST_STREAM frame. An endpoint MAY choose to limit the period over which it ignores frames and treat frames that arrive after this time as being in error.
+- RST_STREAM가 보내지고 나서 받은 Flow-controlled frame들은(예. DATA) 무시된다고하여도, connection의 flow-control window로써 카운팅 된다.
 
-Flow-controlled frames (i.e., DATA) received after sending RST_STREAM are counted toward the connection flow-control window. Even though these frames might be ignored, because they are sent before the sender receives the RST_STREAM, the sender will consider the frames to count against the flow-control window.
+- RST_STREAM를 보내고 나서 PUSH_PROMISE을 받을 수 있다. 이 경우 PUSH_PROMISE는 stream을 reset 상태가 되었다고 하여도 이를 다시 reserved 상태로 만들 수 있다. 따라서 RST_STREAM는 원하지 않는 promised stream을 닫을때 사용할 수 없다.
 
-An endpoint might receive a PUSH_PROMISE frame after it sends RST_STREAM. PUSH_PROMISE causes a stream to become "reserved" even if the associated stream has been reset. Therefore, a RST_STREAM is needed to close an unwanted promised stream.
+이 문서외의 더 자세한 가이드가 없다면, HTTP/2 구현체는 정확히 확인되지 않은 frame에 대해서는 connection error로 PROTOCOL_ERROR을 표현하게 된다.
 
-In the absence of more specific guidance elsewhere in this document, implementations SHOULD treat the receipt of a frame that is not expressly permitted in the description of a state as a connection error (Section 5.4.1) of type PROTOCOL_ERROR. Note that PRIORITY can be sent and received in any stream state. Frames of unknown types are ignored.
 
-An example of the state transitions for an HTTP request/response exchange can be found in Section 8.1. An example of the state transitions for server push can be found in Sections 8.2.1 and 8.2.2.
--->
+> Note:
+> 
+> PRIORITY는 어떤 상태의 stream이던 주고 받을 수 있다.
+> 모르는 타입의 frame들은 무시한다.
+
 
