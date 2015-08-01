@@ -53,3 +53,7 @@ HTTP/2의 각각의 endpoint들은 HTTP/2의 connection이 연결되면 서로 �
 server의 경우에는 빈 *SETTINGS* frame을 보내게 된다.
 
 만약 위와같은 사항이 지켜지지 않는경우 *PROTOCOL_ERROR*에 해당하는 connection error로 처리한다. 이는 *GOAWAY*형태의 frame을 통하여 처리될 것이다.
+
+> Note:
+> 
+> 현재(2015년 8월 1일 기준), 주요 브라우저들은 대부분 TLS가 지원되어야하는 h2를 사용하고 있습니다. 관련 사항은 [위키](https://en.wikipedia.org/wiki/HTTP/2)의 Browser support 항목에 제시되어 있으니 참조하세요
