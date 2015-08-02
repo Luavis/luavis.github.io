@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "RFC 7540(HTTP 2) Stream Identifiers"
-date:   2015-08-01 05:29:00
+date:   2015-08-02 05:29:00
 categories: http2
 description: http2의 Stream Identifiers
 keywords: http, http2, Stream, Identifiers
