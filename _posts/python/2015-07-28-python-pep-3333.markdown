@@ -1,0 +1,252 @@
+---
+layout: post
+title:  "Python PEP 3333"
+date:   2015-08-02 17:06:00
+categories: python
+description: PEP 3333 about wsgi
+keywords: python, wsgi, python 3, pep 0333, pep 3333
+
+---
+
+PEP 3333은 WSGI에 대해서 설명하고 있는 PEP 문서이다, 원 버전은 PEP 0333인데, python 3.x의 지원과 community errata addenda clarifications을 추가한 문서이다.
+
+----
+
+## Overview 
+
+WSGI는 "server" 혹은 "gateway" 측과 "application", "framework" 두가지로 나누어진다. server side에서는 appliction side에서  제공된 object를호출한다. 이 런 object들이 어떻게 제공되는지에 대한 spec은 server side에 나온다. 추가로, 순수한 server/gateway와 application/frameworks는 middleware를 생성해서 양측에서 구현할 수 있다.
+
+
+### A Note On String Types
+
+Python은 버전 별로 String의 구현이 조금씩 다른데, 이를 위해서 각각의 구현체를 어떤 상황에 사용해 두어야하는지 WSGI에서는 정의하고 있다.
+
+- *Native*(*str*) request/response헤더, metadata에서 사용한다.
+
+- *Bytestrings*(Python3: *bytes*, 2: *str*) request/response의 entity body에서 사용한다.
+
+
+## Application/Framework side
+
+----
+
+Application object는 두개의 매개변수를 받는 callable object이다. 아래에 function, class를 이용해서 구현한 예시가 있다.
+
+{% highlight python linenos %}
+HELLO_WORLD = b"Hello world!\n"
+
+def simple_app(environ, start_response):
+    """Simplest possible application object"""
+    status = '200 OK'
+    response_headers = [('Content-type', 'text/plain')]
+    start_response(status, response_headers)
+    return [HELLO_WORLD]
+{% endhighlight %}
+{% highlight python linenos %}
+class AppClass:
+"""Produce the same output, but using a class
+
+(Note: 'AppClass' is the "application" here, so calling it
+returns an instance of 'AppClass', which is then the iterable
+return value of the "application callable" as required by
+the spec.
+
+If we wanted to use *instances* of 'AppClass' as application
+objects instead, we would have to implement a '__call__'
+method, which would be invoked to execute the application,
+and we would need to create an instance for use by the
+server or gateway.
+"""
+
+def __init__(self, environ, start_response):
+    self.environ = environ
+    self.start = start_response
+
+def __iter__(self):
+    status = '200 OK'
+    response_headers = [('Content-type', 'text/plain')]
+    self.start(status, response_headers)
+    yield HELLO_WORLD
+{% endhighlight %}
+
+application은 두개의 위치성 매개변수를 가지고 있다.(python에서 매개변수의 위치로 호출하는 방식), 위에서는 environ과 start_response를 사용했는데 이 두 이름을 사용할 필요는 없다, 따라서 server side에서 구현할 때, keyword 방식으로 호출하면 안된다.
+
+environ은 CGI 환경에 대한 변수와 WSGI에서 필요로하는 변수를 갖고 있는 dictinary object이다. 이는 python builtin dictinary를 사용해야만한다.(subclass, UserDict등을 사용하면 안된다.)
+
+start_response는 두개의 위치성 매개변수와 하나의 optional 매개변수를 필요로 하는 callable이다.(status, response_headers, exc_info) 그리고 application은 이 callable을 무조건 호출해야한다. status는 "999 Message here"형태의 str이고, response_headers는 (header_name, header_value) tuple들의 list이다. exc_info parameter는 에러 메세지들을 보여주는데에 사용된다. 자세한 내용은 밑에 있다.
+
+## Server/Gateway side
+
+----
+
+server or gateway side에서는 application을 HTTP client에 의해 일어난 각각의 request에 대해서 한번씩 호출한다. 
+
+{% highlight python linenos %}
+
+import os, sys
+
+enc, esc = sys.getfilesystemencoding(), 'surrogateescape'
+
+def unicode_to_wsgi(u):
+    # Convert an environment variable to a WSGI "bytes-as-unicode" string
+    return u.encode(enc, esc).decode('iso-8859-1')
+
+def wsgi_to_bytes(s):
+    return s.encode('iso-8859-1')
+
+def run_with_cgi(application):
+    environ = {k: unicode_to_wsgi(v) for k,v in os.environ.items()}
+    environ['wsgi.input']        = sys.stdin.buffer
+    environ['wsgi.errors']       = sys.stderr
+    environ['wsgi.version']      = (1, 0)
+    environ['wsgi.multithread']  = False
+    environ['wsgi.multiprocess'] = True
+    environ['wsgi.run_once']     = True
+
+    if environ.get('HTTPS', 'off') in ('on', '1'):
+        environ['wsgi.url_scheme'] = 'https'
+    else:
+        environ['wsgi.url_scheme'] = 'http'
+
+    headers_set = []
+    headers_sent = []
+
+    def write(data):
+        out = sys.stdout.buffer
+
+        if not headers_set:
+             raise AssertionError("write() before start_response()")
+
+        elif not headers_sent:
+             # Before the first output, send the stored headers
+             status, response_headers = headers_sent[:] = headers_set
+             out.write(wsgi_to_bytes('Status: %s\r\n' % status))
+             for header in response_headers:
+                 out.write(wsgi_to_bytes('%s: %s\r\n' % header))
+             out.write(wsgi_to_bytes('\r\n'))
+
+        out.write(data)
+        out.flush()
+
+    def start_response(status, response_headers, exc_info=None):
+        if exc_info:
+            try:
+                if headers_sent:
+                    # Re-raise original exception if headers sent
+                    raise exc_info[1].with_traceback(exc_info[2])
+            finally:
+                exc_info = None     # avoid dangling circular ref
+        elif headers_set:
+            raise AssertionError("Headers already set!")
+
+        headers_set[:] = [status, response_headers]
+
+        # Note: error checking on the headers should happen here,
+        # *after* the headers are set.  That way, if an error
+        # occurs, start_response can only be re-called with
+        # exc_info set.
+
+        return write
+
+    result = application(environ, start_response)
+    try:
+        for data in result:
+            if data:    # don't send headers until body appears
+                write(data)
+        if not headers_sent:
+            write('')   # send headers now if body was empty
+    finally:
+        if hasattr(result, 'close'):
+            result.close()
+{% endhighlight %}
+
+start_response는 callable인 write를 return해야한다. write는 bytestring형인 data를 하나 갖고 이를 HTTP response body에 쓸 수 있어야한다.
+
+## Middleware: Components that Play Both Sides
+
+----
+
+middleware로는 다음과 같은 기능을 할 수 있다.
+
+- target URL에 기반하여, environ을 rewrite하고 서로 다른 application object를 호출 하도록 라우팅 시킨다.
+- 하나의 process에서 side-by-side로 다중의 applications 혹은 frameworks가 동작할 수 있도록 한다.
+- Load balancing과 remote processing
+- content의 생성 후 변형을 구현할 수 있다.
+
+{% highlight python linenos %}
+
+from piglatin import piglatin
+
+class LatinIter:
+
+    """Transform iterated output to piglatin, if it's okay to do so
+
+    Note that the "okayness" can change until the application yields
+    its first non-empty bytestring, so 'transform_ok' has to be a mutable
+    truth value.
+    """
+
+    def __init__(self, result, transform_ok):
+        if hasattr(result, 'close'):
+            self.close = result.close
+        self._next = iter(result).__next__
+        self.transform_ok = transform_ok
+
+    def __iter__(self):
+        return self
+
+    def __next__(self):
+        if self.transform_ok:
+            return piglatin(self._next())   # call must be byte-safe on Py3
+        else:
+            return self._next()
+
+class Latinator:
+
+    # by default, don't transform output
+    transform = False
+
+    def __init__(self, application):
+        self.application = application
+
+    def __call__(self, environ, start_response):
+
+        transform_ok = []
+
+        def start_latin(status, response_headers, exc_info=None):
+
+            # Reset ok flag, in case this is a repeat call
+            del transform_ok[:]
+
+            for name, value in response_headers:
+                if name.lower() == 'content-type' and value == 'text/plain':
+                    transform_ok.append(True)
+                    # Strip content-length if present, else it'll be wrong
+                    response_headers = [(name, value)
+                        for name, value in response_headers
+                            if name.lower() != 'content-length'
+                    ]
+                    break
+
+            write = start_response(status, response_headers, exc_info)
+
+            if transform_ok:
+                def write_latin(data):
+                    write(piglatin(data))   # call must be byte-safe on Py3
+                return write_latin
+            else:
+                return write
+
+        return LatinIter(self.application(environ, start_latin), transform_ok)
+
+
+# Run foo_app under a Latinator's control, using the example CGI gateway
+from foo_app import foo_app
+run_with_cgi(Latinator(foo_app))
+
+{% endhighlight %}
+
+
+## Specification Details
+
+----
