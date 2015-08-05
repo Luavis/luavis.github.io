@@ -116,7 +116,7 @@ wbond의 Package Control이 설치되어 있다면, Super + Shift + P를 이용�
 ---
 
 원하는데로 적당히 커스텀해서 사용하면 될 듯 하다.
-lint가 라이브 모드나 혹은 저장시 자동 로딩 상태가 아니라면, Super + Control + 8 (Windows: Ctrl+Alt+Shift+8, Linux: Ctrl+Alt+8)로 lint를 실행할 수 있다.
+lint가 라이브 모드나 혹은 저장 시 자동 로딩 상태가 아니라면, Super + Control + 8 (Windows: Ctrl+Alt+Shift+8, Linux: Ctrl+Alt+8)로 linter를 실행할 수 있다.
 
 **개인적인 취향**
 
