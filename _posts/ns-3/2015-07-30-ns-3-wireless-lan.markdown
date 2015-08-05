@@ -20,7 +20,7 @@ IEEE 802.11 Wireless LAN은 우리가 알고있는 WiFi에 관련된 표준을 I
 
 또한 2.4, 5GHz를 사용하는 wifi는 [ISM band](https://en.wikipedia.org/wiki/ISM_band)라 불리는 다용도 목적의 통신 밴드를 사용하여, 개인용으로 사용할 수 있다.(3.6GHz, 60GHz를 사용하는 버전도 있다. 위키참조)
 
-WLAN의 구현을 위해서 MAC과 PHY와 묶음이다.
+IEEE 802.11은 WLAN의 구현을 위해서 LLC, MAC, PHY(pysical)의 구현에 관한 내용이다.
 
 ## MAC (Media Access Control)
 
