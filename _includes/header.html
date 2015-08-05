@@ -2,7 +2,7 @@
   <nav class="category clearfix menu f-left">
     {% for cat in site.categories%}
       <li>
-        <a href="{{ cat[0] | prepend: 'category/' | prepend: site.baseurl}}" class="categoryItem">
+        <a href="{{ cat[0] | prepend: site.baseurl}}" class="categoryItem">
           {{ cat | first }}<span class="c_cnt">({{ cat[1] | size }})</span>
         </a>
       </li>

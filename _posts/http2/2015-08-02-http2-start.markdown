@@ -1,0 +1,59 @@
+---
+layout: post
+title:  "RFC 7540(HTTP 2) Starting HTTP/2"
+date:   2015-08-02 04:52:00
+categories: http2
+description: http1에서 http2로의 진입
+keywords: http, http2, start
+
+---
+
+![Http logo]({{ site_url }}/assets/http2-fast-websites.png)
+
+---
+
+## HTTP/2의 시작
+
+---
+
+HTTP/2에서는 전송계층의 프로토콜로 HTTP/1과는 다르게 TCP를 사용한다고 명시되어 있다. 또한 HTTP/2는 http와 https의 URI scheme을 HTTP/1.1과 동일하게 사용하고 포트 번호도 기본 설정을 80번 https는 443번을 사용한다.
+
+HTTP/2는 1.1과 동일하게 TLS위에서 동작하는 h2와 cleartext TCP위에서 동작하는 h2c로 나뉘게된다.
+
+- h2: HTTP/2에서는 TLS 1.2버전 혹은 그 이상의 버전을 요구하고 있다. 이 식별자는 TLS의 ALPN이란 확장 영역에서 사용한다. client는 이 영역에 있는 h2 ascii문자를(0x68, 0x32) 해석하여 HTTP/2임을 확인한다.
+
+- h2c는 cleartext TCP에서 동작하는 HTTP/2의 식별자를 말한다. HTTP/1.1의 Upgrade 헤더를 통하여 HTTP/2를 지원함을 표시한다. 아래에 자세한 동작원리가 있다.
+
+우선 클라이언트가 HTTP의 settings payload를 base64url encoding과 Upgrade header를 첨부하여 보낸다.
+
+     GET / HTTP/1.1
+     Host: server.example.com
+     Connection: Upgrade, HTTP2-Settings
+     Upgrade: h2c
+     HTTP2-Settings: <base64url encoding of HTTP/2 SETTINGS payload>
+     
+만약 HTTP/2를 지원하지 않는 서버라면 이를 무시하고 HTTP/1.1 connection을 유지하지만 HTTP/2를 지원한느 서버라면
+
+     HTTP/1.1 101 Switching Protocols
+     Connection: Upgrade
+     Upgrade: h2c
+
+     [ HTTP/2 connection ...
+
+101번 응답을 통하여 protocol을 전환한다.
+
+## Preface
+
+HTTP/2의 각각의 endpoint들은 HTTP/2의 connection이 연결되면 서로 다른 Preface를 전송하게 된다. 우선 client는  24개의 octet(바이트)를 보내는데,
+
+	0x505249202a20485454502f322e300d0a0d0a534d0d0a0d0a
+
+이와 같다, 이는 ```PRI * HTTP/2.0\r\n\r\nSM\r\n\r\n```에 해당하는 문자로, h2에서는 TLS-ALPN에서 h2를 확인한 경우 h2c에서는 서버로부터*Switching Protocol* 응답을 받은 경우이다.
+
+server의 경우에는 빈 *SETTINGS* frame을 보내게 된다.
+
+만약 위와같은 사항이 지켜지지 않는경우 *PROTOCOL_ERROR*에 해당하는 connection error로 처리한다. 이는 *GOAWAY*형태의 frame을 통하여 처리될 것이다.
+
+> Note:
+> 
+> 현재(2015년 8월 1일 기준), 주요 브라우저들은 대부분 TLS가 지원되어야하는 h2를 사용하고 있습니다. 관련 사항은 [위키](https://en.wikipedia.org/wiki/HTTP/2)의 Browser support 항목에 제시되어 있으니 참조하세요

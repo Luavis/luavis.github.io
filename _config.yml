@@ -12,3 +12,6 @@ include: ["_categories", "_pages"]
 permalink: "/:categories/:title"
 
 markdown: kramdown
+
+kramdown:
+    input: GFM
