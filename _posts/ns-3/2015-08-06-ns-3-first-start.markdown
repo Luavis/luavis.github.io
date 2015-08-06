@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "NS-3 First satrt"
-date:   2015-08-06 05:39:00
+date:   2015-08-06 11:12:00
 categories: ns-3
 description: ns-3 시작하기
 keywords: ns-3, start, 시작
