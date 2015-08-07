@@ -18,6 +18,8 @@ flag는 지정된 값을 0에서 부터 하나하나 더하여(OR연산을 구�
 
 그리고 특수한 경우가 아닌 이상  stream id가 0x0이 할당되어 있으면 PROTOCOL_ERROR로 처리된다. 또한 가변적인 값이 아닌 곳에서 더 많은 바이트를 할당하게 되면 FRAME_SIZE_ERROR로 처리한다.
 
+----
+
 ## DATA
 
 DATA frame은 type id로 0번이 할당되어 있고 가변적 길이의 바이너리 데이터를 주고 받는데에 사용된다 한개 혹은 여러개의 데이터 프레임을 이용하여 HTTP의 request나 response의 entity를 구현할 수 있다. DATA frame은 padding을 포함할 수 있는데, 보안적 이유에서 사용한다고 명시해두었다.
@@ -44,6 +46,7 @@ DATA frame은 type id로 0번이 할당되어 있고 가변적 길이의 바이�
 
 * PADDED (0x8):  이 flag가 설정되어 있으면 DATA Frame payload에 padding이 구현되어 있음을 설정한다.
 
+----
 
 ## HEADERS
 
@@ -83,6 +86,8 @@ HEADES frame은 type id 1번으로 할당되어 있고 일반적으로 스트림
 
 * PRIORITY (0x20): Priority 설정이  HEADERS frame에 포함되어 있음을 나타낸다.
 
+----
+
 ## PRIORITY
 
 PRIORITY frame은 type id 2번 이다. 이 frame으로는 Stream의 우선순위를 HEADERS로 먼저 설정하지 않았을 경우에 PRIORITY frame을 이용하여 설정할 수 있다.
@@ -103,6 +108,8 @@ PRIORITY frame은 type id 2번 이다. 이 frame으로는 Stream의 우선순위
 
 *PRIORITY frame은 flag로 설정할 수 있는 설정이 없다.*
 
+----
+
 ## RST_STREAM
 
 RST_STREAM는 type id 3번으로 이 frame은 stream을 stream error 때문에 스트림을 무조건적으로 닫는다. 
@@ -111,7 +118,9 @@ RST_STREAM는 type id 3번으로 이 frame은 stream을 stream error 때문에 �
     |                        Error Code (32)                        |
     +---------------------------------------------------------------+
 
-특정 flag를 설정 할 수 없으며, 에러 코드에 대해서는 아래에 나와있다. 만약 에러코드의 사이즈가 4바이트 이상이라면 FRAME_SIZE_ERROR로 처리한다.
+stream error를 처리하는 frame이다. 특정 flag를 설정 할 수 없으며, 에러 코드에 대해서는 下편 포스트에 나와 있을 것이다...(아마도..). 만약 에러코드의 사이즈가 4바이트 이상이라면 FRAME_SIZE_ERROR로 처리한다.
+
+----
 
 ## SETTINGS
 
