@@ -1120,3 +1120,43 @@ strong {
 .text-center {
   text-align: center;
 }
+
+/* mobile menu */
+.mobile-menu-opener {
+    display: none;
+}
+
+@media screen and (max-width: 560px) {
+    .mobile-menu-opener {
+        display: block;
+        list-style: none;
+        background-color: #565656;
+        width: 32px;
+        padding: 5px;
+        border-radius: 5px;
+        margin-top: 10px;
+        margin-left: 10px;
+        cursor: pointer;
+    }
+
+    .mobile-menu-opener > li {
+        background: white;
+        height: 2px;
+        width: 32px;
+        border-radius: 3px;
+        margin-bottom: 8px;
+    }
+
+    .mobile-menu-opener > li.last {
+        margin-bottom: 0;
+    }
+
+    .mobile-menu  {
+        background: url(../images/nav-bg.gif) #353535 !important;
+        float: initial;
+    }
+
+    .mobile-hidden {
+      display: none;
+    }
+}  
