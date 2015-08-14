@@ -74,6 +74,8 @@ HEADES frame은 type id 1번으로 할당되어 있고 일반적으로 스트림
 
 * Weight은 스트림이 얼마나 위의 dependent stream을 공유하고 있는 스트림들 가운데에서 얼마나 비중을 갖는지를 나타내는 값이다.
 
+* Header block fragment는 HPACK으로 압축한 헤더의 데이터를 넣는다.
+
 * Padding은 Pad length에 정의 해둔 길이만큼 패딩하면 되고 아니라면 무시하면된다.
 
 ### Flag

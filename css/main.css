@@ -601,7 +601,7 @@ body {
   padding: 0px 0 20px 0px;
   margin: 0px;
   font: 17px/1.8 "나눔고딕", "NanumGothic", "OpenSansRegular", "Helvetica Neue", Helvetica, Arial, sans-serif;
-  color: #f0e7d5;
+  color: #eee;
   font-weight: normal;
   background: #252525;
   background-attachment: fixed !important;
@@ -1159,4 +1159,22 @@ strong {
     .mobile-hidden {
       display: none;
     }
-}  
+}
+
+@media print {
+  footer {
+    display: none;
+  }
+  #header {
+    display: none;
+  }
+  #title {
+    display: none;
+  }
+  section {
+    margin-top: 0px;
+  }
+  #disqus_thread {
+    display: none;
+  }
+}
