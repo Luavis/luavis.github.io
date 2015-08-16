@@ -42,7 +42,7 @@ HTTP header압축에 대해서는 따로 표준을 따로(RFC 7451) 문서로 �
 
 예를 들어 User-agent에 해당하는 값에 대해선 한번의 connection에서 한번 보내게 되면 이 값을 indexing하기로 약속했다면 다음에는 1바이트로 이를 주고 받을 수 있다.
 
-여기서 특이한점은 쿠키에관련된 내용인데, cookie 헤더의 값은 여러개의 쿠키를 ;를 delimiter로 사용하여 나타낸다. 이러면 cookie 값이 하나만 바뀌어도 전체를 다시 indexing해야한다는 불편함이 있어, 표준에서는 하나의 cookie헤더에 하나의 cookie만을 적재하게 했다.
+여기서 특이한점은 쿠키에 관련된 내용인데, cookie 헤더의 값은 여러개의 쿠키를 ;를 delimiter로 사용하여 나타낸다. 이러면 cookie 값이 하나만 바뀌어도 전체를 다시 indexing해야한다는 불편함이 있어, 표준에서는 하나의 cookie헤더에 하나의 cookie만을 적재하게 했다.
 
 예를 들어, ```Cookie: a=b; c=d``` 라고 하는 cookie헤더가 있다면 이를 ```cookie: a=b```와 ```cookie: c=d```로 나타내어 indexing의 효율을 극대화하고 있다.(세션 쿠키같은 왠만한 상황에서 안 바뀌는 쿠키도 있기 때문에)
 
