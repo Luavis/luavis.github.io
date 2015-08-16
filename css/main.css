@@ -281,7 +281,7 @@ abbr[title] {
 */
 b,
 strong {
-  font-size: 120%;
+  font-size: 105%;
   font-weight: bold;
 }
 
@@ -1162,6 +1162,19 @@ strong {
 }
 
 @media print {
+  html, body, code, p, pre {
+    color: #333 !important;
+    background: white;
+  }
+  h1, h2, h3, strong, em, a {
+    color: #038 !important;
+  }
+  hr {
+    background: #038;
+  }
+  .wrapper {
+    padding-top: 0;
+  }
   footer {
     display: none;
   }
