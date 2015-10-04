@@ -1,0 +1,76 @@
+---
+layout: post
+title:  "Mosh(Mobile shell)"
+date:   2015-10-04 09:14:00
+categories: server
+description: Mosh, replacement of SSH
+keywords: mosh, ssh, server, remote, shell
+---
+
+## Tech video
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/XsIxNYl0oyU" frameborder="0" allowfullscreen></iframe>
+
+## Mosh
+
+SSH의 진화된 대체품으로 개발된 Mosh라 하는 애플리케이션에 대해서 SSH에 비해서 좋은 점과 간단한 사용법을 알아보겠습니다.
+
+## What is Mosh?
+Mosh는 원격터미널 애플리케이션으로(SSH와 같은..) 로밍이나 네트워크 상황이 좋지 않은 상황에서도 훌륭하게 돌아가는것을 목표로하고 있습니다.
+
+SSH는 일단 커넥션을 맺고 사용자의 키 입력이 있으면 이를 지속적으로 서버에 전송하면서 응답을 대기하고 변경사항만이 아니라 전체적인 화면을 지속적으로  re-draw(text를 쓰는거라 re-draw라는  표현에는 문제가 있지만)하게 해주게 됩니다.
+
+하지만 이 똑똑한 mosh는 diff만을 patch하는 방식이기 때문에 더 효율적으로 서버와 통신이 가능하다는 설명입니다. 또한 기존의 SSH는 TCP를 사용하는 반면에 UDP를 사용하기 때문에 조금 더 빠른 응답속도를 낼 수 있다고 합니다.
+
+설치하더라고 SSH를 이용하여 초기 세션을 맺고 키를 교환하는 작업을 거치기 때문에 특별한 데몬이 따로 돌아갈 필요없이 기존 SSH에 추가적으로 mosh-server를 설치해주기만 하면 됩니다.
+
+
+## How to install
+
+[여러가지 버전의 설치방법](https://mosh.mit.edu/#getting)
+
+우선 위 링크에서 여러 플랫폼에서의 설치 방법에 대해서 알 수 있다. 일단 필자는 local은 OS X(El capitan, 10.11)을 사용중이고 서버는 Ubuntu(14.04 LTS)를 사용중이라 각각의 환경에 알맞게 설치해 보았다.
+
+![](/assets/mosh-brew.png)
+Mac에서는 ruby를 이용해서 작성한 패키지 매니저인 homebrew를 이용하여 설치했고,
+
+![](/assets/mosh-apt.png)
+Ubuntu에서는 기본 내장되어 있는 apt(Advanced Packaging Tool)를 이용해서 설치했다.
+
+**자 이제 써보자!!**
+
+
+## How to use
+
+우선
+client에서는 mosh명령어를 이용해서 ssh와 똑같은 방식으로 연결한다.
+
+	$ mosh root@61.43.139.6
+
+만약 remote 서버의 ssh포트가 기본 설정인 22번이 아니라면 
+
+	$ mosh --ssh="ssh -p xxxx" root@61.43.139.6
+
+위와 같이 특정 포트번호를 설정해줘야한다 처음 bootstrap을 ssh 로 연결하기 때문에 문제시 되는거 같다.
+끝이다 정말 끝이다... 겉으로 보기에는 SSH를 연결했을 때와 큰 차이를 느끼지는 못했다
+다만 로그인 할때 필자는 ssh-key를 사용해서 로그인하는데 bootstrap을 ssh를 사용해서 그런지 특별한 설정 없이도 key로 연결되었고, X11 remote가 안된다는 점을 제외하면 큰 문제점은 발견하지 못했다.
+
+**이제 스트레스 테스트를 해보자!**
+
+일반적인 상황에서는 네트워크가 나쁜상황을 고의적으로 만들기가 힘들기 때문에 전송량이 대폭으로 늘어나는 환경을 만들기 위해서 random 문자열을 계속 출력하게  만들었다.
+
+	tr -dc A-Za-z0-9_ < /dev/urandom
+	
+짜잔... 이렇게 하고보니 영상에서 사용자의 키를 받는 연결과 그에 대한 출력에 대한 연결이 따로 연결되는게 중요한지 알게 되었다..
+
+![](/assets/mosh-test.png)
+
+SSH에서는 출력량이 너무 많아서 연결이 busy 한 상황이 되면 CTRL + C 연타를 계속하다보면 언젠가 꺼진다... 반면 mosh로 연결하면 누르는 순간에 키가 remote 서버에 입력되고 프로그램이 종료되는것을 볼 수 있었다.
+
+**그리고 무엇보다 mosh가 눈에 띄게 빨랐다.**
+
+그리고 mosh측에서 가장 어필하고 있는 기능인 인터넷이 끊어져도 다시 연결되는 상황으로 돌아오면 reconnect되어 그대로 사용할 수 있다.
+
+![](/assets/mosh-reconnect.png)
+
+SSH쪽은 broken pipe라는 메세지와 함께 연결이 끊어 졌지만 mosh는 몇 초 동안 인터넷 연결이 끊어졌는가를 지속적으로 표시해주고 인터넷이 다시 연결되는 상황이 되면 그대로 사용할 수 있다..
