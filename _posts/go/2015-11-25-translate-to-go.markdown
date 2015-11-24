@@ -8,17 +8,15 @@ keywords: go, google, golang
 
 ---
 
-# Golang 탐방
-
 *Golang을 배워보고 싶어졌습니다!!* 이유는 별거 없습니다. strict type이고 그러면서도 유연해 보이고, 성능도 어느정도 받쳐주고 무엇보다 구글이 support하고 있다는점이 마음에 들어서였습니다..
 
 Golang을 배우려면 우선 go 컴파일러를 설치해야겠지요. OS X에서는 brew를 이용해서 비교적 손쉽게 설치할 수 있었는데, 이는 다른 블로그에 자료가 많으니 참고하면 될 듯 합니다.
 
----
+개인적으로 언어를 배울때는 무언가 만들면서 배우기 때문에, 이 글에서는 그 대상으로 예전에 만들어둔 [autopocker.py](https://gist.github.com/Luavis/10089608)를 golang으로 포팅해가는 과정을 통해서 배워보기로 했습니다.
 
-## 기본적인 사항
 
-우선 개인적으로 언어를 배울때는 무언가 만들면서 배우는데, 그 대상으로 예전에 만들어둔 [autopocker.py](https://gist.github.com/Luavis/10089608)를 golang으로 포팅해가는 과정을 통해서 배워보기로 했습니다.
+## 기본적인 문법과 사용법
+
 
 우선 golang은 C언어와 유사하게 main함수에서 시작합니다.
 
@@ -190,17 +188,17 @@ $go get github.com/headzoo/surf
 import "github.com/headzoo/surf"
 {% endhighlight %}
 
-이렇게 불러서 사용할 수 있습니다. 그럼 go는 ```$GOPATH```에서 pkg directory에 있는 모듈들을 읽어들여 링크할 것이다.
+이렇게 불러서 사용할 수 있습니다. 그럼 go는 ```$GOPATH```에서 pkg directory에 있는 모듈들을 읽어들여 링크할 것입니다.
 
----
+## 번역번역
 
-이제 본격적으로 autopoker.py를 번역해보자.
+이제 본격적으로 autopoker.py를 번역해보겠습니다.
 
 {% gist Luavis/10089608 %}
 
-python으로 작성해두었던 코드는 위와 같다, 1년전에 작성한 코드여서 정확히 모르겠지만 우선 mechanize를 이용해서 web content를 crawling했고, 이 모듈을 통하여 login까지 성공 시킨거 같다. 그래서 찾아보았던 mechanize와 비슷한 기능을 하는 surf라는 모듈을 발견했고, 이를 사용해볼 생각이다.
+python으로 작성해두었던 코드는 위와 같습니다, 1년전에 작성한 코드여서 정확히 모르겠지만 우선 mechanize를 이용해서 web content를 crawling했고, 이 모듈을 통하여 login까지 성공 시키고 데몬등을 붙혀 서버에서 동작할 수 있게 작성했습니다. 그래서 찾아보았던 mechanize와 비슷한 기능을 하는 surf라는 모듈을 발견했고, 이를 사용해볼 생각입니다.
 
-우선 surf를 go get 명령어로 설치했고, 이를 이용해서 간단하게 페이지의 Titile가져오는 예제를 그대로 적용해보았다.
+우선 surf를 go get 명령어로 설치했고, 이를 이용해서 간단하게 페이지의 Titile가져오는 예제를 그대로 적용해보았습니다.
 
 {% highlight go linenos %}
 
@@ -230,13 +228,14 @@ $ go run autopoker.go
 Luavis' Dev story
 ```
 
-아주 잘 동작한다. 여러가지 문서를 참고하고 노력을 해서 전체를 번역해보았다.
+아주 잘 동작합니다. 여러가지 문서를 참고하고 노력을 해서 전체를 번역해보았습다.
 
 {% gist Luavis/6d4691c1c4a28cab99a8 %}
 
-몇 가지 해석을 달아보면 flag라는 모듈은 기본 모듈로 python에서 argparse와 같은 모듈인듯 하다. 그리고 flag.PrintDefaults 함수를 통해서 help메세지를 띄울 수 있고, ```:=```과 ```=```에는 큰 차이가 있습니다. ```=```는 하나의 연산자로 받아들이는 반면에 ```:=```는 하나의 syntax인 듯 합니다.([Short variable declarations](https://golang.org/ref/spec#Short_variable_declarations)) 의미 자체는 새로운 변수를(not const) 선언하는데 타입이나 var 키워드가 없어도 됩니다.(없어야되는거 같다 있으면 syntax error가 발생하니)
+몇 가지 해석을 달아보면 flag라는 모듈은 기본 모듈로 python에서 argparse와 같은 모듈인 듯 합니다. 그리고 flag.PrintDefaults 함수를 통해서 help메세지를 띄울 수 있고, ```:=```과 ```=```에는 큰 차이가 있습니다. ```=```는 하나의 연산자로 받아들이는 반면에 ```:=```는 하나의 syntax인 듯 합니다.([Short variable declarations](https://golang.org/ref/spec#Short_variable_declarations)) 의미 자체는 새로운 변수를(not const) 선언하는데 타입이나 var 키워드가 없어도 됩니다.(없어야되는거 같다 있으면 syntax error가 발생하니)
 
 그리고 unused variable은 굉장히 민감한 사항인듯합니다.(go run으로 실행시 실행이 되지 않습니다) 이는 ``` _``` 이름의 익명변수를 이용할 수 있습니다. 그리고 기본모듈로 List를 지원하며, 이때 Element에는 Value라고 하는 interface{} 가 있습니다. 이는 golang에서 굉장히 많이 사용하는데 타입이 애매한 경우에 사용합니다.(Objective-C의 id type). 우선 이것에 대해서 설명하려면 길어지니 사용법 부터 보면 값을 받고 line 62의 ```e.Value.(string)```와 같이 type casting이 가능합니다.
 
+------
 
 다음에는 go routine과 defer interface channel과 같이 golang에 특징적인 기능들에 대해서 블로깅 해보고 간단한 HTTP서버를 작성해보겠습니다.
