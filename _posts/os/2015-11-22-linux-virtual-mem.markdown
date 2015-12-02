@@ -2,7 +2,7 @@
 layout: post
 title:  "Linux Virtual Memory - 1"
 date:   2015-11-23 03:20:00
-categories: server
+categories: os
 description: 가상메모리와 리눅스 환경에서 가상메모리 동작방법
 keywords: linux, virtual, memory, memory protection
 ---
