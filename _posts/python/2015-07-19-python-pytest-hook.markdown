@@ -19,8 +19,8 @@ keywords: pyetst, hook
 
 *이 외의 pytest 관련 문서*
 
-1. [Python fixture]({% post_url /python/2015-07-19-python-pytest-fixture %})
-1. [Pytest with unittest]({% post_url /python/2015-07-21-python-pytest-with-unittest %})
+1. [Python fixture]({% post_url 2015-07-19-python-pytest-fixture %})
+1. [Pytest with unittest]({% post_url 2015-07-21-python-pytest-with-unittest %})
 
 ---
 

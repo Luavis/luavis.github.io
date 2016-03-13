@@ -12,8 +12,8 @@ keywords: http, rfc 1945, terminology
 
 *이 외의 RFC 1945 관련 문서*
 
-1. [HTTP overall operation]({% post_url /http/2015-07-19-http-Overall-operation %})
-1. [HTTP ABNF]({% post_url /http/2015-07-20-http-ABNF %})
+1. [HTTP overall operation]({% post_url 2015-07-19-http-Overall-operation %})
+1. [HTTP ABNF]({% post_url 2015-07-20-http-ABNF %})
 
 ---
 

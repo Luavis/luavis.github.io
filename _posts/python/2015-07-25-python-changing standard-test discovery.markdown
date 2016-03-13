@@ -12,8 +12,8 @@ keywords: pyetst, change, test file, directory
 
 *이 외의 pytest 관련 문서*
 
-1. [Python fixture]({% post_url /python/2015-07-19-python-pytest-fixture %})
-1. [Python hoook]({% post_url /python/2015-07-19-python-pytest-hook %})
+1. [Python fixture]({% post_url 2015-07-19-python-pytest-fixture %})
+1. [Python hoook]({% post_url 2015-07-19-python-pytest-hook %})
 
 ---
 
