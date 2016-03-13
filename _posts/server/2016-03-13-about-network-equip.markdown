@@ -3,7 +3,7 @@ layout: post
 title:  "네트워크 장비들에 관한 이야기"
 date:   2016-03-12 21:05:00
 categories: server
-description: "후니의 쉽게 쓴 시스코네트워킹 책의 - 네트워크 장비들에 관한 이야기 정리"
+description: "후니의 쉽게 쓴 시스코 네트워킹 - 네트워크 장비들에 관한 이야기 정리"
 keywords: "네트워킹 장비, 허브, 브릿지, 스위치, 라우터"
 ---
 
