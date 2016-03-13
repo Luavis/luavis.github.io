@@ -10,8 +10,13 @@ nickname: Luavis
 copyright_year: 2015
 include: ["_categories", "_pages"]
 permalink: "/:categories/:title"
-
+github: [metadata]
 markdown: kramdown
 
 kramdown:
     input: GFM
+gems:
+    - jekyll-gist
+whitelist:
+    - jekyll-gist
+
