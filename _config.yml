@@ -7,12 +7,12 @@ url: "http://b.luavis.kr" # the base hostname & protocol for your site
 facebook_username: luavis
 github_username:  luavis
 nickname: Luavis
-copyright_year: 2015
+copyright_year: 2016
+timezone: 'Asia/Seoul'
 include: ["_categories", "_pages"]
 permalink: "/:categories/:title"
 github: [metadata]
 markdown: kramdown
-
 kramdown:
     input: GFM
 gems:
