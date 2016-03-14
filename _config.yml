@@ -1,6 +1,6 @@
 # Site settings
 title: Luavis' Dev story
-description: 소마에서 시작하는 개발질
+description: 허접의 삽질
 email: luaviskang@gmail.com
 baseurl: "/" # the subpath of your site, e.g. /blog/
 url: "http://b.luavis.kr" # the base hostname & protocol for your site
