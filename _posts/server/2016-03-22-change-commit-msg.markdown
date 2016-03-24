@@ -1,10 +1,10 @@
 ---
 layout: post
-title:  "Reset commit"
+title:  "커밋메세지 수정"
 date:   2016-03-22 23:53:00
 categories: server
 description: "오늘 저녁에 생긴 일.."
-keywords: "git, amend, commit, undo"
+keywords: "git, rebase, commit, undo, 커밋, 메세지, 수정"
 ---
 
 ## 사건의 경위
