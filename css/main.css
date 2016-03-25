@@ -459,7 +459,7 @@ em {
 
 /*
  * 1. Corrects color not being inherited in IE6/7/8/9
- * 2. Corrects text not wrapping in FF3 
+ * 2. Corrects text not wrapping in FF3
  * 3. Corrects alignment displayed oddly in IE6/7
  */
 legend {
@@ -646,6 +646,7 @@ h3 {
 }
 
 a {
+  word-wrap: break-word;
   color: #ffcc00;
   font-weight: 400;
   text-decoration: none;
@@ -934,7 +935,7 @@ section #title .credits.right {
   }
 }
 @media print, screen and (max-width: 480px) {
-  
+
   section {
     margin-top: 40px;
   }
