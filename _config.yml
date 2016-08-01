@@ -2,13 +2,13 @@
 title: Luavis' Dev story
 description: 생계코딩
 email: luaviskang@gmail.com
+timezone: Asia/Seoul
 baseurl: "/" # the subpath of your site, e.g. /blog/
 url: "http://b.luavis.kr" # the base hostname & protocol for your site
 facebook_username: luavis
 github_username:  luavis
 nickname: Luavis
 copyright_year: 2016
-timezone: 'Asia/Seoul'
 include: ["_categories", "_pages"]
 permalink: "/:categories/:title"
 github: [metadata]
@@ -19,4 +19,3 @@ gems:
     - jekyll-gist
 whitelist:
     - jekyll-gist
-

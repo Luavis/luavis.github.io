@@ -1,3 +1,8 @@
-source 'https://rubygems.org'
+# frozen_string_literal: true
+# A sample Gemfile
+source "https://rubygems.org"
 
-gem 'github-pages'
+gem 'jekyll'
+gem 'jekyll-gist'
+gem 'kramdown'
+
