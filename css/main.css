@@ -48,7 +48,7 @@
 body {
   padding: 0px 0 20px 0px;
   margin: 0px;
-  font: 15px/1.8 "나눔고딕", "NanumGothic", "Nanum Gothic", "Helvetica", Helvetica, Arial, sans-serif;
+  font: 16px/1.8 Avenir,'Lato',"애플 SD 산돌고딕 Neo","Apple SD Gothic Neo","나눔바른고딕",NanumBarunGothic,"나눔고딕",NanumGothic,"맑은 고딕","Malgun Gothic","돋움",dotum,AppleGothic,sans-serif;
   color: #666864;
   font-weight: normal;
   background: #FDFFFD;
@@ -63,33 +63,29 @@ body {
 }
 
 h1, h2, h3, h4, h5, h6 {
-  color: #666864;
-  font-family: "나눔고딕", "NanumGothic", "Nanum Gothic", "Helvetica", Helvetica, Arial, sans-serif;
+  color: #363f38;
+  font-family: Avenir,'Lato',"애플 SD 산돌고딕 Neo","Apple SD Gothic Neo","나눔바른고딕",NanumBarunGothic,"나눔고딕",NanumGothic,"맑은 고딕","Malgun Gothic","돋움",dotum,AppleGothic,sans-serif;
+}
+
+
+h1, h2, h3 {
+  line-height: 1.1;
+}
+
+h3 {
+  font-size: 20px;
+  line-height: 24px;
+  font-weight: bold;
+  color: #59685c;
 }
 
 p, ul, ol, table, pre, dl {
   margin: 0 0 20px;
 }
 
-h1, h2, h3 {
-  line-height: 1.1;
-}
-
-h4, h5, h6 {
-  color: #666864;
-}
-
-h3 {
-  font-size: 20px;
-  line-height: 24px;
-  font-family: "나눔고딕", "NanumGothic", "Nanum Gothic", "Helvetica Neue", Helvetica, Arial, sans-serif !important;
-  font-weight: bold;
-  color: #7E9081;
-}
-
 a {
   word-wrap: break-word;
-  color: #7E9081;
+  color: #59685c;
   font-weight: 400;
   text-decoration: none;
 }
@@ -99,7 +95,7 @@ h1 a {
 }
 
 a:hover {
-  color: #90A195;
+  color: #1e2420;
 }
 
 a small {
@@ -114,7 +110,7 @@ ul {
 }
 
 strong {
-  font-family: "나눔고딕", "NanumGothic", "Nanum Gothic", "Helvetica Neue", Helvetica, Arial, sans-serif !important;
+  font-family: : Avenir,'Lato',"애플 SD 산돌고딕 Neo","Apple SD Gothic Neo","나눔바른고딕",NanumBarunGothic,"나눔고딕",NanumGothic,"맑은 고딕","Malgun Gothic","돋움",dotum,AppleGothic,sans-serif;
   font-weight: bold;
 }
 
@@ -159,6 +155,7 @@ code .lineno {
 }
 
 pre {
+  color: #cfd6d1;
   background: #191919;
   -moz-border-radius: 2px;
   -webkit-border-radius: 2px;
@@ -177,7 +174,7 @@ pre {
 }
 
 pre code {
-  color: #efefef;
+  color: #cfd6d1;
   text-shadow: 0px 1px 0px #000;
   padding: 0;
   margin: 0;
@@ -303,13 +300,13 @@ dt {
   box-shadow: inset 0px 1px 1px rgba(0, 0, 0, 0.2), 0px 1px 0px rgba(0, 0, 0, 0);
 }
 #header nav li a {
-  color: #90A195;
+  color: #b4bfb7;
   font-weight: bold;
   text-decoration: none;
 }
 
 #header nav li a:hover {
-  color: #ffeb9b;
+  color: #7d9083;
 }
 
 #header nav li.fork {
@@ -339,7 +336,6 @@ section #title {
   padding: 0 0 5px 0;
 }
 section #title h1 {
-  font-family: "나눔고딕", "NanumGothic", "Nanum Gothic", "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-weight: normal;
   font-size: 40px;
   text-align: center;
@@ -347,7 +343,6 @@ section #title h1 {
 }
 section #title i {
   color: #90A195;
-  font-family: "나눔고딕", "NanumGothic", "Nanum Gothic", "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-weight: normal;
   font-size: 12px;
   text-align: center;
@@ -356,7 +351,6 @@ section #title i {
 }
 section #title .credits {
   font-size: 11px;
-  font-family: "나눔고딕", "NanumGothic", "Nanum Gothic", "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-weight: normal;
   color: #696969;
   margin-top: -10px;
@@ -618,10 +612,10 @@ strong {
     background: white;
   }
   h1, h2, h3, strong, em, a {
-    color: #038 !important;
+    color: #666864 !important;
   }
   hr {
-    background: #038;
+    background: #666864;
   }
   .wrapper {
     padding-top: 0;
