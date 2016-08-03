@@ -20,7 +20,7 @@ keywords: "github, two factor, 2차 비밀번호"
 
 [https://github.com/settings/security](https://github.com/settings/security)에 접속하면 우선 Two-factor password를 설정할 수 있다.
 
-![tow-factor]({{ site_url }}/assets/two_factor.png)
+![two-factor]({{ site_url }}/assets/two_factor.png)
 
 설정해두면 github 로그인 시 패스워드 입력하고 OTP를 입력하게 된다. 
 
