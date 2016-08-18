@@ -8,6 +8,7 @@ keywords: mp3, Python, id3, MPEG-1 Layer 3
 
 ---
 
+
 ## MP3 decoder 제작
 
 ### 인간의 청각과 음성 심리
