@@ -12,8 +12,8 @@ keywords: pyetst, easy to start
 
 *이 외의 pytest 관련 문서*
 
-1. [Python fixture]({% post_url 2015-07-19-python-pytest-fixture %})
-1. [Python hoook]({% post_url 2015-07-19-python-pytest-hook %})
+1. [Python fixture]({% post_url /python/2015-07-19-python-pytest-fixture %})
+1. [Python hoook]({% post_url /python/2015-07-19-python-pytest-hook %})
 
 ---
 
@@ -23,7 +23,7 @@ keywords: pyetst, easy to start
 
     pip install -U pytest # or
     easy_install -U pytest
-    
+
 설치 후 올바른 버전이 설치되었는지를 확인해보기 위해서는
 
     $ py.test --version
@@ -32,7 +32,7 @@ keywords: pyetst, easy to start
 
 Our first test run
 Let’s create a first test file with a simple test function:
-간단하게 첫 테스트를 시도해보면, 
+간단하게 첫 테스트를 시도해보면,
 
 *content of test_sample.py*
 {% highlight python linenos %}

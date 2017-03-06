@@ -13,7 +13,7 @@ keywords: http, http2, rfc 7540, frame, poc, code
 ---
 
 
-[HTTP2 Frame]({% post_url 2015-07-25-http2-Frame %})
+[HTTP2 Frame]({% post_url /http2/2015-07-25-http2-Frame %})
 
 HTTP2의 Frame에 대해서 공부하고 포스팅 안한 부분에 대한 공부까지 합쳐서 일단 코드를 짜고 보았다. 개인적으로 Flow control을 보고 있지만 빠른 시간내로 포스팅 할 것을 목표로하고 일단 코드를 써봤는데..
 

@@ -12,8 +12,8 @@ keywords: pyetst, unittest
 
 *이 외의 pytest 관련 문서*
 
-1. [Python fixture]({% post_url 2015-07-19-python-pytest-fixture %})
-1. [Python hoook]({% post_url 2015-07-19-python-pytest-hook %})
+1. [Python fixture]({% post_url /python/2015-07-19-python-pytest-fixture %})
+1. [Python hoook]({% post_url /python/2015-07-19-python-pytest-hook %})
 
 --
 
@@ -21,7 +21,7 @@ keywords: pyetst, unittest
 
 pytest는 pythons에서 기본지원하는 unittest와의 연동을 지원한다. 예를들어 pytest의 fixture를 unittest에서 사용할 수 있다. 그래서 아래와 같은 예제를 만들어 보았다.
 
-    
+
     import pytest
     import unittest
 

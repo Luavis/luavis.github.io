@@ -14,8 +14,8 @@ keywords: pyetst, fixture
 
 *이 외의 pytest 관련 문서*
 
-1. [Python hook]({% post_url 2015-07-19-python-pytest-hook %})
-1. [Pytest with unittest]({% post_url 2015-07-21-python-pytest-with-unittest %})
+1. [Python hook]({% post_url /python/2015-07-19-python-pytest-hook %})
+1. [Pytest with unittest]({% post_url /python/2015-07-21-python-pytest-with-unittest %})
 
 ----
 
@@ -27,7 +27,7 @@ test fixture의 목적은 신뢰되고 반복적으로 실행되는 테스팅에
 
 * fixture은 단순한 유닛에서 부터(unit of unittesting) 함수 하나하나를 테스팅하도록 파라미터화한 fixture와 test의 configuration과 component options를 통하여 범위를 관리할 수 있다. 또한 fixture의 재사용은 클래스, 모듈 혹은 전 테스팅 세션에서 재사용이 가능하다.
 
-추가로, pytest는 일반적인 xunit style의 setup을 계속 지원한다. 우리는 이 고전적인 방식에서 새로운 스타일로 옮겨가면서 두가지를 혼용해서 사용할 수 있다.(주: new style로 옮겨주길 바라는거 같다.) 또한 원한다면 이미 있는 unittest.TestCase 혹은 nose based projects에서 바로 시작할 수 있다. 
+추가로, pytest는 일반적인 xunit style의 setup을 계속 지원한다. 우리는 이 고전적인 방식에서 새로운 스타일로 옮겨가면서 두가지를 혼용해서 사용할 수 있다.(주: new style로 옮겨주길 바라는거 같다.) 또한 원한다면 이미 있는 unittest.TestCase 혹은 nose based projects에서 바로 시작할 수 있다.
 
 > ###Note
 >
@@ -50,7 +50,7 @@ def test_ehlo(smtp):
     response, msg = smtp.ehlo()
     assert response == 250
     assert 0 # for demo purposes
-    
+
 {% endhighlight %}
 
 여기서 *test_ehlo* 테스트 함수는 *smtp fixture*를 갖는다. pytest는 이를 찾고 *@pytest.fixture*가 마크되어있는 *stmp*함수를 호출하게 된다. 테스트를 실행하게 되면 아래와 같은 출력화면을 볼 수 있다.
@@ -80,12 +80,12 @@ def test_ehlo(smtp):
 failure traceback를 보면 우리는 test 함수가 fixture function에 의해서 *smtplib.SMTP()*가 호출되고 이로 인해 만들어진 인스턴스인 smtp 매개변수를 통하여 smtp fixture를 호출한 것을 볼 수 있다. test function은 출력 결과를 보기 위해 의도적으로 설치한 assert 0으로 인하여 fail 하게 되었다.
 
 pytest가 위의 test_elho function을 호출하는 방법에 대해서 정확하게 서술해보았다.
-   
+
  1. pytest는 test_가 접두사(prefix)로 되어 있기 떄문에 test_elho를 찾을것이다. 이 test function은 smtp라는 이름의 함수 매개변수를 필요로한다. fixture-marked된 함수들중에서 smtp라는 이름의 fixture function을 찾는다.
- 
+
  1. *smtp()*를 호출하고 return instance를 받는다.
- 
- 1. *test_ehlo()*는 호출되고 테스트 함수 내에서 실패했다.(assert 0 떄문에) 
+
+ 1. *test_ehlo()*는 호출되고 테스트 함수 내에서 실패했다.(assert 0 떄문에)
 
     주의할 점은 만약 우리가 함수의 매개변수를 잘못 입력하였거나 혹은 원하는 기능이 사용불가능한 상태이면, 당연히 에러가 발생할 것이다.
 
@@ -93,7 +93,7 @@ pytest가 위의 test_elho function을 호출하는 방법에 대해서 정확�
 > ###Note
 >
 > 언제나 --fixtures를 이용하여
-> 
+>
 > *py.test --fixtures test_simplefactory.py*
 >
 > 사용가능한 fixture들을 확인할 수 있다.
@@ -172,7 +172,7 @@ def test_noop(smtp):
 
     test_module.py:11: AssertionError
     ========================= 2 failed in 0.82 seconds =========================
-    
+
 
 여기서 우리는 두 개의 *assert 0*을 볼 수 있다. 그리고 더 중요한 것은 동일 모듈 범위 내에서 pytest가 traceback을 통하여 보여준 매개변수로부터 smtp object가 공유되고 있다는 것 또한 볼 수 있다는 것이다.(같은 object hash 값을 갖고 있다[0x7fb558b12240]) 결과적으로 smtp를 사용하고 있는 두 개의 test functions은 하나의 재사용된 같은 smtp instance를 사용하여 더 빠르게 동작한다.
 두 개의 assert 0을 볼 수 있다. 그리고 더 중요한 것은 동일 모듈 범위 내에서 pytest가 traceback을 통하여 보여준 매개변수로부터 smtp object가 공유되고 있다는 것 또한 볼 수 있다는 것이다.(같은 object hash 값을 갖고 있다[0x7fb558b12240]) 결과적으로 smtp를 사용하고 있는 두 개의 test functions은 하나의 재사용된 같은 smtp instance를 사용하여 더 빠르게 동작한다.
@@ -243,7 +243,7 @@ def smtp(request):
     FF
     2 failed in 0.62 seconds
 
-이제 다시 새로운 test모듈을 작성해서 모듈에 server URL을 실제로 설정해보자. 
+이제 다시 새로운 test모듈을 작성해서 모듈에 server URL을 실제로 설정해보자.
 
 *test_anothersmtp.py*
 

@@ -12,8 +12,8 @@ keywords: pyetst, change, test file, directory
 
 *이 외의 pytest 관련 문서*
 
-1. [Python fixture]({% post_url 2015-07-19-python-pytest-fixture %})
-1. [Python hoook]({% post_url 2015-07-19-python-pytest-hook %})
+1. [Python fixture]({% post_url /python/2015-07-19-python-pytest-fixture %})
+1. [Python hoook]({% post_url /python/2015-07-19-python-pytest-hook %})
 
 ---
 
@@ -25,19 +25,19 @@ ini-file에 *norecursedirs*을 이용하여 테스팅 파일 찾는 것을 막�
 
     [pytest]
     norecursedirs = .svn _build tmp*
-    
+
 이를 통하여 .svn이나 tmp가 붙는 directory에는 접근하지 않는다.
 
 
 ## Changing naming conventions
-            
+
 테스트 코드를 찾는 naming convention을 변경할 수도 있는데,
-    
+
 
 *content of setup.cfg*
 
     # can also be defined in in tox.ini or pytest.ini file
-    
+
     [pytest]
     python_files=check_*.py
     python_classes=Check
@@ -53,7 +53,7 @@ class CheckMyApp:
         pass
     def complex_check(self):
         pass
-        
+
 {% endhighlight %}
 
 collect-only 옵션과 함께 테스트를 시도하면:
@@ -92,7 +92,7 @@ pytest.ini 파일에 addopts 설정을 이용하여 영구히 설정하는것 �
 ```py.test NAME```인 형태를 이용할 수 있다. 다만 NAME이 실질적으로 존재하는지에 대해서 확인해야합니다.
 
 > Note:
-> 
+>
 > 어떤 파일의 어떤 함수를 테스트 파일들로 찾았는지 알기 위해서 --collect-only flag를 이용하여 아래와 같이 확인 할 수 있다.
 
     $ py.test --collect-only pythoncollection.py

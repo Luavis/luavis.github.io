@@ -19,8 +19,8 @@ keywords: pyetst, hook
 
 *이 외의 pytest 관련 문서*
 
-1. [Python fixture]({% post_url 2015-07-19-python-pytest-fixture %})
-1. [Pytest with unittest]({% post_url 2015-07-21-python-pytest-with-unittest %})
+1. [Python fixture]({% post_url /python/2015-07-19-python-pytest-fixture %})
+1. [Pytest with unittest]({% post_url /python/2015-07-21-python-pytest-with-unittest %})
 
 ---
 
@@ -81,7 +81,7 @@ def pytest_cmdline_preparse(config, args):
 
 {% endhighlight %}
 
-이 코드를 conftest.py에 추가하고 testing을 시작하면, 
+이 코드를 conftest.py에 추가하고 testing을 시작하면,
 
     $ py.test -s
     cmdline preparse
@@ -136,9 +136,9 @@ ini 파일이나 argument로 등록되는 설정들을 새롭게 등록할 수 �
 > 옵션들은 나중에 config 객체를 통하여 접근할 수 있다.
 >
 > *config.getoption(name)* 커맨드 라인으로 부터 받은 설정 값을 받을때
-> 
+>
 > *config.getini(name)* ini file로 부터 받은 설정 값을 받을때
-> 
+>
 > config 객체는 많은 pytest 내부 객체에 *.config*를 이용하여 접근할 수 있고, *pytestconfig*라는 fixture를 이용하여 접근할 수 있다. pytest module를 이용하여 *pytest.config*를 이용하여 접근할 수 있지만 *deprecated*된 기능이다.
 
 ---
@@ -214,7 +214,7 @@ runtest의  setup, test의 호출, teardown을 예외처리, hook의 report 호�
 
 *Return* [boolean]
 
-만약 True를 반환하면 그 후의 hook이 동작하지 않는다. 
+만약 True를 반환하면 그 후의 hook이 동작하지 않는다.
 
 ---
 
@@ -250,7 +250,7 @@ def test_example():
 
 def test_example2():
   pass
-  
+
 {% endhighlight %}
 
 
@@ -274,7 +274,7 @@ def pytest_runtest_teardown(item, nextitem):
   print("teardown")
   print(item)
   print(nextitem)
-  
+
 {% endhighlight %}
 
 teardown에서 발생하는 로그를 capturing되지 않도록 하기 위해서 -s(--capture=no) option을 주어 실행해보면,
@@ -326,7 +326,7 @@ teardown에서 발생하는 로그를 capturing되지 않도록 하기 위해서
 
 def pytest_runtest_teardown(item, nextitem):
   return "tear down test"
-  
+
 def pytest_runtest_makereport(item, call):
 
   print("item")
@@ -334,7 +334,7 @@ def pytest_runtest_makereport(item, call):
 
   print("call")
   print(call)
-  
+
 {% endhighlight %}
 
 *test_example.py*
@@ -347,7 +347,7 @@ def test_example():
 
 def test_example2():
   pass
-  
+
 {% endhighlight %}
 
 그리고 *test_example.py*에서 *test_example2*를 지웠다. 그 결과를 출력해보면:
@@ -554,7 +554,7 @@ return configuration value from an ini file. If the specified name hasn’t been
 getoption(name, default=<NOTSET>, skip=False)[source]
 return command line option value.
 
-Parameters:	
+Parameters:
 name – name of the option. You may also specify the literal --OPT option instead of the “dest” option name.
 default – default value if no option of that name exists.
 skip – if True raise pytest.skip if option does not exists or has a None value.
