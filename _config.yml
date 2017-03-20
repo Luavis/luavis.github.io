@@ -1,7 +1,7 @@
 # Site settings
 title: Luavis' Dev story
 description: 생계코딩
-email: luaviskang@gmail.com
+email: me@luav.is
 timezone: Asia/Seoul
 baseurl: "/" # the subpath of your site, e.g. /blog/
 url: "http://b.luavis.kr" # the base hostname & protocol for your site

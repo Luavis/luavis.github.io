@@ -16,20 +16,20 @@
     {% endif %}
     <meta name="author" content="Luavis">
     <link rel="stylesheet" href="{{ "css/normalize.css" | prepend: site.baseurl }}">
-    <link rel="stylesheet" href="{{ "css/main.css?1" | prepend: site.baseurl }}">
+    <link rel="stylesheet" href="{{ "css/main.css?2" | prepend: site.baseurl }}">
     <link rel="stylesheet" href="{{ "css/pygment_trac.css" | prepend: site.baseurl }}">
     <link rel="stylesheet" href="{{ "css/font-awesome.min.css" | prepend: site.baseurl }}">
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
 
   </head>
   <body>
+    <div id="blog-title">
+      <h1><a href="{{ site.baseurl }}">{{ site.title }}</a></h1>
+      <i> {{ site.description}} </i>
+    </div>
     <div class="wrapper">
       {% include header.html %}
-      <section>
-      <div id="title">
-        <h1><a href="{{ site.baseurl }}">{{ site.title }}</a></h1>
-        <i> {{ site.description}} </i>
-      </div>
+      <section class="main-content-wrapper">
         {{ content }}
       </section>
     </div>
