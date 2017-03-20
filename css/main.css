@@ -547,11 +547,15 @@ footer {
   height: 32px;
 }
 
-#post-content {
+#post-list-container {
   margin-top: 20px;
   margin-left: 20px;
   border-left: 10px solid #666864;
   border-bottom-left-radius:  10px;
+}
+
+.post-content a {
+  text-decoration: underline;
 }
 
 strong {
