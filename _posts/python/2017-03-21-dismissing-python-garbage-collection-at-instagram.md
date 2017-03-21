@@ -1,7 +1,7 @@
 ---
 layout: post
-title:  "Instagram이 Python garbage collection 없앤 이유 - 上"
-date:   2017-03-21 03:33:00 +09:00
+title:  "Instagram이 Python garbage collection 없앤 이유"
+date:   2017-03-21 07:02:00 +09:00
 categories: python
 description: Instagram사에서 GC를 끄는것이 메모리를 위한 선택이였던 이유
 keywords: python, django, production, garbage collection, gc, insatgram, memory, management, multi processor
@@ -81,7 +81,7 @@ typedef union _gc_head {
 
 > **참고**
 >
-> 필자는 PyObject에 선언되어 있지도 않은 Py_GC_Head와 PyObject간의 관계가 어떻게 되는지 궁금했습니다. 이는 첫번째 변환식을 보면 조금의 답을 얻을 수 있었습니다. 
+> 필자는 PyObject에 선언되어 있지도 않은 Py_GC_Head와 PyObject간의 관계가 어떻게 되는지 궁금했습니다. 이는 첫번째 변환식을 보면 조금의 답을 얻을 수 있었습니다.
 >
 > 포인터 연산자에 1을 더하여 PyObject 포인터를 받아오는것으로 보아 메모리에 allocation 하는 순간에 이미 공간을 차지하고 있다 생각했고, [이 코드를](https://github.com/python/cpython/blob/6f0eb93183519024cb360162bdd81b9faec97ba6/Modules/gcmodule.c#L1732) 참조하시면 됩니다.
 
@@ -98,7 +98,77 @@ typedef union _gc_head {
 
 우선 `gc.disable()`을 호출하여 GC 호출을 껐습니다. 하지만 Instagram팀은 여전히 변화가 없는것을 보았고 찾아보니 `msgpack`이라고 하는 third-party library가  `gc.enable()`을 호출하고 있었습니다. 이로 인해서 `gc.disable()`은 소용없는 짓이 되었고, 이를 대체하기 위해서 `gc.set_threshold(0)`를 호출했습니다.(어떤 third-party도 이를 수정하는 일은 없었다고 합니다.) 결과는 성공적이였고, 공유메모리의 사용률이 90%에 육박하는 결과를 이루었습니다(이전 결과는 66%). 이는 전체 Django에 25%의 메모리 효율을 가져오는 결과를 주었고, 그리고 더 높은 GC 메모리 threshold(제한을 없앴기 때문에)로 인해서 Django의 성능(throughput) 또한 향상되는 효과를 얻었습니다.
 
-다음 글에서는, GC를 끔으로 인해서 생기는 여러가지 다양한 문제에 대해서 서술하겠습니다.
+### GC를 끄고 발생한 이후의 문제들
+
+다양한 설정으로 실험을 해본 뒤 좀 더 큰케일에서 돌려보았습니다. GC를 종료한 뒤 개발을 하던 web server의 *restarting 속도가 느려지면서* 지속적인 개발이 불가능할 정도에 달했습니다.(평소에는 10초 정도 소요되던 것이 60초가까이 늘어났다고 합니다.) 왜 발생하는지에 대한 특이 사항을 발견하지 못해서 재현이 힘들었고, 매우 많은 실험을 한뒤에 atop을 이용해서 위 문제점이 발생하는 지점을 찾을 수 있었다고 합니다. 종료되는 시점에 free memory는 거의 0에 가까워졌다가 [linux의 cached memory](http://tumblr.lunatine.net/post/28546340998/faq-linux-%EB%A9%94%EB%AA%A8%EB%A6%AC-%ED%9A%A8%EC%9C%A8%EC%9D%84-%EC%9C%84%ED%95%9C-vfscachepressure)가 해제 되면서 다시 돌아오는 현상이 일어난다고 합니다.(리눅스는 사용한 메모리를 cache 해둡니다. 위에서 말하는 것은 프로그램이 종료되는 시점에 메모리를 매우 많이 사용하는 작업이 이루어지고 있다는 것을 알 수 있습니다.) 또한 code나 data를 읽어 오기 위해서 disk 사용률이 100%에 달하게 됩니다.(Then came the moment where all the code/data needed to be read from disk (DSK 100%), and everything was slow., 원문입니다, 제가 이해하기로는 혹시 swap memory 같은것까지 건드리기 때문에 그런건가 이해가 되는데 이는 계속 글을 읽으면 이해가 됩니다.)
+
+Instagram팀에서 이런 현상이 일어나는 가장 큰 이유로 본 것이 Python interpreter이 종료시점에 마지막으로 GC작업을 진행하기 때문입니다. 이점을 해결하기 위해서 [uWSGI의 python plugin Py_Finalize](https://github.com/unbit/uwsgi/blob/38c6e62930171b7e28784cce0f88fadbd3474b06/plugins/python/python_plugin.c#L415)를 주석처리하였고 효과가 있었다고 합니다.
+
+이렇게 진행해본 뒤, CPython의 flag를 이용해서 GC를 동작하지 않도록 설정했습니다. 또 다시 대규모 scale의 서버들에 올려보았지만 몇몇 구식 CPU model(Sandybridge)만이 문제를 일으켰습니다. 이를 재현하기 위해서 각각의 서버에 atop을 실행하고 관찰하여서 uWSGI가 MINFLT(minor page faults)를 실행하고 캐시 메모리가 줄어드는 지점을 잡을 수 있었다고 합니다.
+이 지점을 perf를 이용해서 profile한 결과 Py_Finalize가 다시 실행되고 있는것을 확인 할 수 있었습니다.
+Process가 종료되는 순간에 마지막 GC 작업이외에도 type object, module 해제, 등 많은 작업들이 Py_Finalize를 호출하고 있었습니다. 그리고 이 작업은 다시 shared memory를 복사하게 만듭니다.
+
+### Cleanup 작업이 필요한가?
+
+`atexit` hook을 다른 third-party 모듈들이 정리작업을 하게됩니다. 이런 정리 작업이 어짜피 죽을 프로세스가 굳이 cleanup 작업이 필요할까? 하는 의문을 던졌고, 필요없다는 결론을 내리고 초기 프로그램이 켜지기 전에 아래와 같은 코드를 삽입했습니다.
+
+```python
+# gc.disable()는 잘 동작하지 않습니다, 몇몇 third-party 라이브러리가
+# 이를 다시 활설화 하기 때문입니다.
+gc.set_threshold(0)
+# 다른 atexit 함수들이 종료된 바로 직후에 프로그램을 종료해버립니다.
+# 그러지 않으면 CPyhton은 정리작업을 실행한 뒤에 Py_Finalize를 실행하고
+# CoW가 발생합니다.
+# 밑의 코드는 os._exit(0);를 실행하게 됩니다.
+# 영어 원문 주석이 궁금하시면 원문에서 찾아주세요.
+atexit.register(os._exit, 0)
+```
+
+보통 Python의 기본 라이브러리에 포함된 함수이름이 underscore(_)로 시작하는 경우에는 C언어 내장 함수인 경우가 대부분입니다. 혹시 어떤 방식으로 동작하는가 궁금해서 [찾아봤습니다](https://github.com/python/cpython/blob/0f6d73343d342c106cda2219ebb8a6f0c4bd9b3c/Modules/posixmodule.c#L4721).
+
+```c
+static PyObject *
+os__exit_impl(PyObject *module, int status)
+/*[clinic end generated code: output=116e52d9c2260d54 input=5e6d57556b0c4a62]*/
+{
+    _exit(status);
+    return NULL; /* Make gcc -Wall happy */
+}
+```
+
+매우 가차없이 종료합니다. 이로 인해서 Python interpreter는 Python 프로그램이 종료되는 시점에 Py_Finalize를 호출할 겨를이 없이 바로 종료됩니다. 그리고 위 코드로 전반적인 성능의 10% 가량의 이득을 보았다고 합니다.
+
+### GC를 끄는것 과연 안전한가?
+
+GC를 끄는 일이 과연 안전한 일인가.. 하는 많은 의문이 남습니다. 우선 첫번째로 GC가 없으면 메모리 관리는 과연 누가 언제 어떻게 할 것인가에 대한 문제가 남습니다. 다행히도 Python에서 메모리를 관리하는 핵심적인 방식은 Reference counting이라고 합니다. 아래 코드를 보면 object의 reference가 모종의 이유로 지속적으로 떨어져서 reference count가 0이 되는 순간 Python interpreter는 내부적으로 메모리를 해제합니다.(deallocation) Python에서의 GC는 [순환 참조(reference cycling)](http://stackoverflow.com/questions/9910774/what-is-a-reference-cycle-in-python)와 같이 Reference count가 불가능한 곳에서 사용하기 위해서 있는 부가적인 역할을 맡고 있습니다.
+
+```python
+#define Py_DECREF(op)                                   \
+    do {                                                \
+        if (_Py_DEC_REFTOTAL  _Py_REF_DEBUG_COMMA       \
+        --((PyObject*)(op))->ob_refcnt != 0)            \
+            _Py_CHECK_REFCNT(op)                        \
+        else                                            \
+        _Py_Dealloc((PyObject *)(op));                  \
+    } while (0)
+```
+
+### 정리
+
+GC를 없애서 인해서 얻을 수 있는 이득은 우선 두가지가 있습니다.
+
+1. *우선 각각의 서버에 8 GB 정도에 가까운 메모리를 비울 수 있었다고 합니다.*
+    * 이는 더 많은 메모리를 필요로 하는 서버들을 생성할 수 있음을 의미합니다.
+2. *CPU의 IPC(instructions per cycle)이 10% 가까이 증가하였습니다.*
+    * 아래와 같은 커맨드를 이용해서 측정해 본 결과 cache-miss 비율이 2-3% 정도 떨어졌다고 합니다. 이것이 IPC 성능 향상의 가장 큰 이유 입니다. CPU의 cache miss는 생각보다 큰 자원소모입니다. cache miss가 발생하면 CPU pipeline에 stall이 발생합니다. 하지만 최대한 많은 공유메모리를 사용함으로서 많은 page들이 캐싱되고 hit율 또한 높아질 수 밖에 없고 이는 stall을 최대한 막아주기 때문에 CPU 빠르게 동작하도록 합니다.
+
+```sh
+$ perf stat -a -e cache-misses,cache-references -- sleep 10
+Performance counter stats for 'system wide':
+       268,195,790      cache-misses              #   12.240 % of all cache refs     [100.00%]
+     2,191,115,722      cache-references
+      10.019172636 seconds time elapsed
+```
 
 ### Reference
 
