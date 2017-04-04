@@ -52,11 +52,11 @@ typedef struct {
 
 ### 첫번째 시도, Code object에서 reference counting 없애기
 
-Instagram에서 빠르게 실험적으로 CPython interpreter 개조해서 code object reference count이 올라가지 않는것을 확인하고, production 서버에 올려봤습니다. 하지만 효과는 미약했습니다... 왜 그런가에 대해서 고민했다 합니다. 일단 개조했던 구현체가 의도한대로 돌아간다는 보장이 없습니다. 그리고 공유메모리와 code object copy와의 고나계에 대해서 확실하게 증명한것이 아니라 어디까지나 심증이였습니다.. 여기서 이 친구들이 배운점은 하기전에 증명부터(Prove your theory before going for it) <strike>아 괜히 번역했다..</strike>
+Instagram에서 빠르게 실험적으로 CPython interpreter 개조해서 code object reference count이 올라가지 않는것을 확인하고, production 서버에 올려봤습니다. 하지만 효과는 미약했습니다... 왜 그런가에 대해서 고민했다 합니다. 일단 개조했던 구현체가 의도한대로 돌아간다는 보장이 없습니다. 그리고 공유메모리와 code object copy와의 관계에 대해서 확실하게 증명한것이 아니라 어디까지나 심증이였습니다.. 여기서 이 친구들이 배운점은 하기전에 증명부터(Prove your theory before going for it) <strike>아 괜히 번역했다..</strike>
 
 ### Page faults
 
-Instagram은 Copy-on-Write에 대해서 찾아본 결과, Copy-on-Write는 page fault와 관련이 있다는 것을 찾았습니다. 각각의 CoW는 page fault를 발생 시킵니다. 그래서 perftool을 이용해서 production 서버를 껏다가 켜고 fork되어서 worker process의 PID가 나올때까지 기다리고(...) 아래 커맨드를 이용해서 perftool을 붙여 언제  page fault가 일어나는지 지켜본 뒤 stack trace를 확인했다고 합니다.
+Instagram은 Copy-on-Write에 대해서 찾아본 결과, Copy-on-Write는 page fault와 관련이 있다는 것을 찾았습니다. 각각의 CoW는 page fault를 발생 시킵니다. 그래서 perftool을 이용해서 production 서버를 다가 켜고 fork되어서 worker process의 PID가 나올때까지 기다리고(...) 아래 커맨드를 이용해서 perftool을 붙여 언제  page fault가 일어나는지 지켜본 뒤 stack trace를 확인했다고 합니다.
 
 ```sh
 $ perf record -e page-faults -g -p <PID>
@@ -77,7 +77,7 @@ typedef union _gc_head {
     long double dummy;  /* force worst-case alignment */
 } PyGC_Head;
 ```
-원본에서는 GC 도중에 linked list가 뒤섞인다(shuffled) 라는 표현을 사용했습니다. 이로 인해서 CoW가 발생한다고 이야기하고 있습니다. 그리고 이는 메모리에 오히려 부작용을 낳고 있다 설명합니다. 필자는 shuffled라는 표현이 조금 애매해서 [코드](https://github.com/python-git/python/blob/master/Modules/gcmodule.c#L815)를 분석해봤습니다. 상세하게 해석한것이 아니라 정확하지는 않지만 finalizer가 호출하여 삭제할 object를 제외하고 세대별로 (기본적으로 3개가 있는것으로 보입니다, 혹시 이것이 이해가 안간다면 [Hello World에 좋은 글이](http://d2.naver.com/helloworld/1329) 있습니다.) 현재 reachable 하지 않은 object를 찾고 이를 비우는 방식입니다. 그리고 살아남은 Object를 gc_count를 기준으로 더 늙은(old) 세대로 옮기게 됩니다. 이런 과정속에 young 세대와 old 세대의 list를 합치는 과정, 혹은 ref count를 다시 세는 과정 등등이 shuffle에 해당하는것인지는 잘 모르겠습니다. 하지만 이런 과정속에 사용중인 대부분의 object에 해당하는 PyGC_Head및 PyObject 구조체에 쓰기 작업이 진행됩니다.
+원본에서는 GC 도중에 linked list가 뒤섞인다(shuffled) 라는 표현을 사용했습니다. 이로 인해서 CoW가 발생한다고 이야기하고 있습니다. 그리고 이는 메모리에 오히려 부작용을 낳고 있다 설명합니다. 필자는 shuffled라는 표현이 조금 애매해서 [코드](https://github.com/python-git/python/blob/master/Modules/gcmodule.c#L815)를 분석해봤습니다. 상세하게 해석한것이 아니라 정확하지는 않지만 finalizer가 호출하여 삭제할 object를 제외하고 세대별로 (기본적으로 3개가 있는것으로 보입니다, 혹시 이것이 이해가 안간다면 [Hello World에 좋은 글이](http://d2.naver.com/helloworld/1329) 있습니다.) 현재 reachable 하지 않은 object를 찾고 이를 비우는 방식입니다. 그리고 살아남은 Object를 gc_count를 기준으로 더 늙은(old) 세대로 옮기게 됩니다. 이런 과정에 young 세대와 old 세대의 list를 합치는 과정, 혹은 ref count를 다시 세는 과정 등등이 shuffle에 해당하는것인지는 잘 모르겠습니다. 하지만 이런 과정에 사용 중인 대부분의 object에 해당하는 PyGC_Head및 PyObject 구조체에 쓰기 작업이 진행됩니다.
 
 > **참고**
 >
@@ -96,11 +96,11 @@ typedef union _gc_head {
 ### 두번째 시도, GC를 꺼보자
 <strike>GC에 통수 맞았습니다.</strike>
 
-우선 `gc.disable()`을 호출하여 GC 호출을 껐습니다. 하지만 Instagram팀은 여전히 변화가 없는것을 보았고 찾아보니 `msgpack`이라고 하는 third-party library가  `gc.enable()`을 호출하고 있었습니다. 이로 인해서 `gc.disable()`은 소용없는 짓이 되었고, 이를 대체하기 위해서 `gc.set_threshold(0)`를 호출했습니다.(어떤 third-party도 이를 수정하는 일은 없었다고 합니다.) 결과는 성공적이였고, 공유메모리의 사용률이 90%에 육박하는 결과를 이루었습니다(이전 결과는 66%). 이는 전체 Django에 25%의 메모리 효율을 가져오는 결과를 주었고, 그리고 더 높은 GC 메모리 threshold(제한을 없앴기 때문에)로 인해서 Django의 성능(throughput) 또한 향상되는 효과를 얻었습니다.(간단하게 GC를 진행하는 타이밍이 없어졌기 때문에 조금 더 많은 연산을 Django에 할애할 수 있지 않을까 합니다.)
+우선 `gc.disable()`을 호출하여 GC 호출을 껐습니다. 하지만 Instagram팀은 여전히 변화가 없는것을 보았고 찾아보니 `msgpack`이라고 하는 third-party library가  `gc.enable()`을 호출하고 있었습니다. 이로 인해서 `gc.disable()`은 소용없는 짓이 되었고, 이를 대체하기 위해서 `gc.set_threshold(0)`를 호출했습니다.(어떤 third-party도 이를 수정하는 일은 없었다고 합니다.) 결과는 성공적이었고, 공유메모리의 사용률이 90%에 육박하는 결과를 이루었습니다(이전 결과는 66%). 이는 전체 Django에 25%의 메모리 효율을 가져오는 결과를 주었고, 그리고 더 높은 GC 메모리 threshold(제한을 없앴기 때문에)로 인해서 Django의 성능(throughput) 또한 향상되는 효과를 얻었습니다.(간단하게 GC를 진행하는 타이밍이 없어졌기 때문에 조금 더 많은 연산을 Django에 할애할 수 있지 않을까 합니다.)
 
 ### GC를 끄고 발생한 이후의 문제들
 
-다양한 설정으로 실험을 해본 뒤 좀 더 큰케일에서 돌려보았습니다. GC를 종료한 뒤 개발을 하던 web server의 **restarting 속도가 느려지면서** 지속적인 개발이 불가능할 정도에 달했습니다.(평소에는 10초 정도 소요되던 것이 60초가까이 늘어났다고 합니다.) 왜 발생하는지에 대한 특이 사항을 발견하지 못해서 재현이 힘들었고, 매우 많은 실험을 한뒤에 `atop`을 이용해서 위 문제점이 발생하는 지점을 찾을 수 있었다고 합니다. 종료되는 시점에 free memory는 거의 0에 가까워졌다가 [linux의 cached memory](http://tumblr.lunatine.net/post/28546340998/faq-linux-%EB%A9%94%EB%AA%A8%EB%A6%AC-%ED%9A%A8%EC%9C%A8%EC%9D%84-%EC%9C%84%ED%95%9C-vfscachepressure)가 해제 되면서 다시 돌아오는 현상이 일어난다고 합니다. (리눅스는 사용한 메모리를 cache 해둡니다. 위에서 말하는 것은 프로그램이 종료되는 시점에 메모리를 매우 많이 사용하는 작업이 이루어지고 있다는 것을 알 수 있습니다.) 또한 code나 data를 읽어 오기 위해서 disk 사용률이 100%에 달하게 됩니다.(Then came the moment where all the code/data needed to be read from disk (DSK 100%), and everything was slow., 원문입니다, 제가 이해하기로는 혹시 swap memory 같은것까지 건드리기 때문에 그런건가 이해가 되는데 이는 계속 글을 읽으면 이해가 됩니다.)
+다양한 설정으로 실험해본 뒤 좀 더 큰 스케일에서 돌려보았습니다. GC를 종료한 뒤 개발을 하던 web server의 **restarting 속도가 느려지면서** 지속적인 개발이 불가능할 정도에 달했습니다.(평소에는 10초 정도 소요되던 것이 60초가까이 늘어났다고 합니다.) 왜 발생하는지에 대한 특이 사항을 발견하지 못해서 재현이 힘들었고, 매우 많은 실험을 한뒤에 `atop`을 이용해서 위 문제점이 발생하는 지점을 찾을 수 있었다고 합니다. 종료되는 시점에 free memory는 거의 0에 가까워졌다가 [linux의 cached memory](http://tumblr.lunatine.net/post/28546340998/faq-linux-%EB%A9%94%EB%AA%A8%EB%A6%AC-%ED%9A%A8%EC%9C%A8%EC%9D%84-%EC%9C%84%ED%95%9C-vfscachepressure)가 해제 되면서 다시 돌아오는 현상이 일어난다고 합니다. (리눅스는 사용한 메모리를 cache 해둡니다. 위에서 말하는 것은 프로그램이 종료되는 시점에 메모리를 매우 많이 사용하는 작업이 이루어지고 있다는 것을 알 수 있습니다.) 또한 code나 data를 읽어 오기 위해서 disk 사용률이 100%에 달하게 됩니다.(Then came the moment where all the code/data needed to be read from disk (DSK 100%), and everything was slow., 원문입니다, 제가 이해하기로는 혹시 swap memory 같은것까지 건드리기 때문에 그런건가 이해가 되는데 이는 계속 글을 읽으면 이해가 됩니다.)
 
 Instagram팀에서 이런 현상이 일어나는 가장 큰 이유로 본 것이 Python interpreter이 종료시점에 마지막으로 GC작업을 진행하기 때문입니다. 이점을 해결하기 위해서 [uWSGI의 python plugin Py_Finalize](https://github.com/unbit/uwsgi/blob/38c6e62930171b7e28784cce0f88fadbd3474b06/plugins/python/python_plugin.c#L415)를 주석처리하였고 효과가 있었다고 합니다.
 
@@ -110,7 +110,7 @@ Process가 종료되는 순간에 마지막 GC 작업 이외에도 type object �
 
 ### Cleanup 작업이 필요한가?
 
-`atexit` hook을 다른 third-party 모듈들이 정리작업을 하게됩니다. 이런 정리 작업이 어짜피 죽을 프로세스가 굳이 cleanup 작업이 필요할까? 하는 의문을 던졌고, 필요없다는 결론을 내리고 초기 프로그램이 켜지기 전에 아래와 같은 코드를 삽입했습니다.
+`atexit` hook을 다른 third-party 모듈들이 정리작업을 하게됩니다. 이런 정리 작업이 어차피 죽을 프로세스가 굳이 cleanup 작업이 필요할까? 하는 의문을 던졌고, 필요없다는 결론을 내리고 초기 프로그램이 켜지기 전에 아래와 같은 코드를 삽입했습니다.
 
 ```python
 # gc.disable()는 잘 동작하지 않습니다, 몇몇 third-party 라이브러리가
