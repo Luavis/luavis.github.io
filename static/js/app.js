@@ -5,8 +5,8 @@ function rerenderView(){
     var triHeight = TRI_HEIGHT;
     var originalPosition = $('#scroll-space').scrollTop();
     var titleMaxSize = 42;
-    var titleMaxTop = 175;
-    var titleMaxThreshold = -158;
+    var titleMaxTop = 180;
+    var titleMaxThreshold = -163;
     var descriptionMaxTop = 245;
 
     // mobile
@@ -24,7 +24,7 @@ function rerenderView(){
         triHeight = 0;
 
     $('#triangle').css({
-        'top': -1 * TRI_HEIGHT + 'px',
+        'top': -1 * (TRI_HEIGHT - 1) + 'px',
         'border-width': position + 'px 0px ' + triHeight + 'px  ' + triWidth + 'px'
     });
     if(originalPosition < 80) {

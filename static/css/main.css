@@ -47,11 +47,12 @@
 
 html {
   height: 100%;
+  background: #67a6b8;
 }
 
 body {
   margin: 0px;
-  font: 16px/1.8 "나눔바른고딕",NanumBarunGothic,"나눔고딕",NanumGothic,"맑은 고딕","Malgun Gothic","돋움",dotum,AppleGothic,sans-serif;
+  font: 16px/1.8 "나눔고딕",NanumGothic,"Nanum Gothic","맑은 고딕","Malgun Gothic","돋움",dotum,AppleSDGothic,sans-serif;
   font-weight: normal;
   color: #404040;
   position: relative;
@@ -62,13 +63,14 @@ body {
 }
 
 h1, h2, h3, h4, h5, h6, p, a {
-  font-family: "나눔바른고딕",NanumBarunGothic,"나눔고딕",NanumGothic,"맑은 고딕","Malgun Gothic","돋움",dotum,AppleGothic,sans-serif;
+  font-family: "나눔고딕",NanumGothic,"Nanum Gothic","맑은 고딕","Malgun Gothic","돋움",dotum,AppleSDGothic,sans-serif;
   color: #404040;
   margin-top: 0px;
 }
 
 
 #scroll-space {
+  -webkit-overflow-scrolling: touch;
   overflow-x: hidden;
   overflow-y: scroll;
   position: absolute;
