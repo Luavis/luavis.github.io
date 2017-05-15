@@ -374,7 +374,57 @@ pre {
 
 
 @media print {
+  html, body, code, p, pre {
+    color: #333 !important;
+    background: white;
+  }
+  body {
+    overflow-y: scroll;
+    overflow-x: scroll;
+  }
   a {
     text-decoration: none;
+  }
+  #blog-title {
+    background: none;
+    height: 200px;
+  }
+  #blog-title h1 a {
+    border-bottom: 1px solid #404040;
+    color: #404040;
+    position: static;
+  }
+  #blog-title p {
+    color: #404040;
+    position: static;
+  }
+  #scroll-space {
+    position: static;
+    padding-top: 0;
+    margin-top: 0;
+    overflow-x: hidden;
+    overflow-y: hidden;
+    height: initial;
+  }
+  .share {
+    display: none;
+  }
+  .footer #copyright {
+    background: none;
+  }
+  .footer .name-wrapper .links {
+    display: none;
+  }
+  .footer #avatar-image {
+    display: none;
+  }
+  .wrapper {
+    margin-bottom: 0;
+  }
+  #disqus_thread {
+    display: none;
+  }
+  noscript {
+    display: none;
   }
 }
