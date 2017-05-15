@@ -1,31 +1,38 @@
-<footer class="site-footer">
-  <div id="subscription" class="module text-center">
-    <a href="{{ site_url }}/about/">
-      <img src="https://avatars3.githubusercontent.com/u/1534596?v=3&amp;s=460" id="avatar-image" alt="avatar" width="160">
-    </a>
-    <br>
-    {% if site.github_username %}
-      <a href="https://github.com/{{ site.github_username }}">
-        <div class="icon icon-sm">
-        {% include github.svg %}
-        </div>
-      </a>
-    {% endif %}
-    {% if site.facebook_username %}
-      <a href="https://facebook.com/{{ site.facebook_username }}">
-        <div class="icon icon-sm">
-          {% include facebook.svg %}
-        </div>
-      </a>
-    {% endif %}
-    <a href="{{ site_url }}/feed.xml" rel="alternate" type="application/rss+xml">
-      <div class="icon icon-sm">
-        {% include rss.svg %}
+<footer class="footer">
+  <div id="copyright">
+    <p>
+      &copy; {{ site.since_year }}-{{ site.copyright_year }} <a href="{{ site.url }}">{{ site.nickname }}</a><br>
+      Designed by <a href="{{ site.designed_by_url }}">{{ site.designed_by }}</a>
+    </p>
+  </div>
+  <div id="avatar-wrapper">
+    <img src="https://avatars3.githubusercontent.com/u/1534596?v=3&amp;s=460" id="avatar-image" alt="avatar" width="148">
+    <div id="avatar-description">
+      <div class="name-wrapper">
+        <h1 class="name">Luavis</h1>
+        <ul class="links">
+          {% if site.github_username %}
+            <li>
+              <a href="https://github.com/{{ site.github_username }}">
+                <img src="{{ "static/image/github-social-logo.png" | prepend: site.baseurl }}" alt="github">
+              </a>
+            </li>
+          {% endif %}
+          {% if site.facebook_username %}
+            <li>
+              <a href="https://facebook.com/{{ site.facebook_username }}">
+                <img src="{{ "static/image/facebook-social-logo.png" | prepend: site.baseurl }}" alt="facebook">
+              </a>
+            </li>
+          {% endif %}
+            <li>
+              <a href="{{ site_url }}/feed.xml" rel="alternate" type="application/rss+xml">
+                <img src="{{ "static/image/rss-social-logo.png" | prepend: site.baseurl }}" alt="rss">
+              </a>
+            </li>
+        </ul>
       </div>
-    </a>
-    <div>
-      <a href="{{ site.url }}">{{ site.nickname }} &copy; {{ site.copyright_year }}</a><br>
-      <a href="{{ site_url }}/readme">README</a>
+      <p class="description"><a href="{{ site_url }}/about">Profile</a> | <a href="{{ site_url }}/readme">About the blog</a></p>
     </div>
   </div>
 </footer>

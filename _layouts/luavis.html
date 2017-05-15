@@ -1,11 +1,10 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="ko">
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <meta property="og:title" content="{% if page.title %}{{ page.title }}{% else %}{{ site.title }}{% endif %}">
+    <meta property="og:title" content="{{ site.title }}{% if page.title %} - {{ page.title }}{% else %}{{ site.title }}{% endif %}">
     <meta property="og:type" content="blog">
-
     <link rel="alternate" type="application/rss+xml" title="{{ page.title }}" href="{{ "feed.xml" | prepend: site.baseurl }}" />
     <title>{{ site.title }} {% if page.title %} - {{ page.title }} {% endif %}</title>
     {% if page.keywords %}
@@ -15,28 +14,52 @@
       <meta name="description" content="{{ page.description }}">
     {% endif %}
     <meta name="author" content="Luavis">
-    <link rel="stylesheet" href="{{ "css/normalize.css" | prepend: site.baseurl }}">
-    <link rel="stylesheet" href="{{ "css/main.css?4" | prepend: site.baseurl }}">
-    <link rel="stylesheet" href="{{ "css/pygment_trac.css" | prepend: site.baseurl }}">
-    <link rel="stylesheet" href="{{ "css/font-awesome.min.css" | prepend: site.baseurl }}">
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-
+    <link rel="stylesheet" href="{{ "static/css/normalize.css" | prepend: site.baseurl }}">
+    <link rel="stylesheet" href="{{ "static/css/main.css?5" | prepend: site.baseurl }}">
+    <link rel="stylesheet" href="{{ "static/css/pygment_trac.css" | prepend: site.baseurl }}">
+    <script>
+    // {{ site.url }}
+      var pageURL = "http://google.com{{page.url}}";
+      var isHome = '{{page.url}}' == '/';
+    </script>
   </head>
   <body>
     <div id="blog-title">
       <h1><a href="{{ site.baseurl }}">{{ site.title }}</a></h1>
-      <i> {{ site.description}} </i>
+      <p> {{ site.description}} </p>
+      <div id="post-share-link">
+        <ul class="links">
+          <li>
+            <a href="#" class="share-link" data-type="facebook">
+              <img src="{{ "static/image/facebook-ontop-logo.png" | prepend: site.baseurl }}" alt="github">
+            </a>
+          </li>
+          <li>
+            <a href="#" class="share-link" data-type="twitter">
+              <img src="{{ "static/image/twitter-ontop-logo.png" | prepend: site.baseurl }}" alt="facebook">
+            </a>
+          </li>
+          <li>
+            <a href="#" class="share-link" data-type="link">
+              <img src="{{ "static/image/link-ontop-logo.png" | prepend: site.baseurl }}" alt="rss">
+            </a>
+          </li>
+        </ul>
+      </div>
     </div>
-    <div class="wrapper">
-      {% include header.html %}
-      <section class="main-content-wrapper">
-        {{ content }}
-      </section>
+    <div id="scroll-space">
+      <div class="wrapper">
+        <section class="main-content-wrapper">
+          {{ content }}
+        </section>
+        <div id="triangle"></div>
+        {% include footer.html %}
+      </div>
     </div>
-    {% include footer.html %}
 
-    <script src="{{ "js/jquery.min.js" | prepend: site.baseurl }}"></script>
-    <script src="{{ "js/app.js" | prepend: site.baseurl }}"></script>
+    <script src="{{ "static/js/jquery.min.js" | prepend: site.baseurl }}"></script>
+    <script src="{{ "static/js/app.js" | prepend: site.baseurl }}"></script>
     <!--[if lt IE 9]>
       <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->

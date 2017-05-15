@@ -2,12 +2,31 @@
 layout: luavis
 ---
 <div class="post">
-
   <header class="post-header">
-    <a href="{{ page.url }}"><h1 class="post-title">{{ page.title }}</h1></a>
+    <div class="share">
+      <p>Share this post</p>
+      <ul class="links">
+        <li>
+          <a href="#" class="share-link" data-type="facebook">
+            <img src="{{ "static/image/facebook-logo.png" | prepend: site.baseurl }}" alt="github">
+          </a>
+        </li>
+        <li>
+          <a class="share-link" data-type="twitter">
+            <img src="{{ "static/image/twitter-logo.png" | prepend: site.baseurl }}" alt="facebook">
+          </a>
+        </li>
+        <li>
+          <a class="share-link" data-type="link">
+            <img src="{{ "static/image/link-logo.png" | prepend: site.baseurl }}" alt="rss">
+          </a>
+        </li>
+      </ul>
+    </div>
     <p class="post-meta">{{ page.date | date: "%b %-d, %Y" }}{% if page.author %} • {{ page.author }}{% endif %}{% if page.meta %} • {{ page.meta }}{% endif %}</p>
+    <h1 class="post-title"><a href="{{ page.url }}">{{ page.title }}</a></h1>
+    <a href="{{site.url}}{{page.url}}" id="page-link">{{site.url}}{{page.url}}</a>
   </header>
-
   <article class="post-content">
     {{ content }}
   </article>
@@ -21,5 +40,4 @@ layout: luavis
   })();
   </script>
   <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-
 </div>

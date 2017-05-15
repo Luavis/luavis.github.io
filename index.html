@@ -1,26 +1,31 @@
 ---
 layout: luavis
 ---
-
+<style>
+  .share-link {
+    display: none !important;
+  }
+</style>
 <div class="home">
-
-  <h1>Posts</h1>
-  <div id="post-list-container" class="clearfix">
-    <div id="time-line-circle" class="circle bg-orange">
-      <div class="circle-sm bg-white circle-center"></div>
-    </div>
-    <div class="f-left">
-        <ul class="post-list">
-          {% for post in site.posts %}
-            <li>
-              <span class="post-meta">{{ post.date | date: "%b %-d, %Y" }}</span>
-
-              <h2>
-                <a class="post-link" href="{{ post.url }}">{{ post.title }}</a>
-              </h2>
-            </li>
-          {% endfor %}
-        </ul>
-    </div>
+  <div class="subscribe share">
+    <a href="{{ site_url }}/feed.xml" rel="alternate" type="application/rss+xml">
+      <span>Share this feed</span>
+      <img src="{{ "static/image/rss-logo.png" | prepend: site.baseurl }}" alt="rss">
+    </a>
   </div>
+  <ul class="post-list">
+    {% for post in site.posts %}
+      <li>
+        <div>
+          <h2 class="title">
+            <a href="{{ post.url }}">{{ post.title }}</a>
+          </h2>
+          <span class="date">{{ post.date | date: "%b %-d, %Y" }}</span>
+        </div>
+        <p class="post-expect">
+          {{ post.content | strip_html | truncatewords: 50 }}
+        </p>
+      </li>
+    {% endfor %}
+  </ul>
 </div>
