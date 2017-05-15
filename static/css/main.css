@@ -137,6 +137,12 @@ h1, h2, h3, h4, h5, h6, p, a {
   margin-top: -9px;
 }
 
+@media screen and (max-width: 510px) {
+  #post-share-link {
+    display: none !important;
+  }
+}
+
 #post-share-link .links {
     float: right;
 }
