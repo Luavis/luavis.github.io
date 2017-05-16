@@ -68,6 +68,26 @@ h1, h2, h3, h4, h5, h6, p, a {
   margin-top: 0px;
 }
 
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+
+th {
+  text-align: left;
+  padding: 5px 10px;
+  border-bottom: 1px solid #434343;
+  font-family: "나눔고딕", "NanumGothic", "Nanum Gothic", "Helvetica Neue", Helvetica, Arial, sans-serif !important;
+  font-weight: bold;
+}
+
+td {
+  text-align: left;
+  padding: 5px 10px;
+  border-bottom: 1px solid #434343;
+}
+
 
 #scroll-space {
   -webkit-overflow-scrolling: touch;
@@ -282,10 +302,20 @@ h1, h2, h3, h4, h5, h6, p, a {
   }
 }
 
+.post-content img {
+  display: block;
+  margin: 0 auto;
+  width: 100%;
+}
+
 pre {
   background: #263238;
   border-radius: 2px;
   padding: 20px;
+}
+
+#disqus_thread {
+  margin-top: 85px;
 }
 
 .footer {
