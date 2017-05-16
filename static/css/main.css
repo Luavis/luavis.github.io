@@ -128,6 +128,16 @@ h1, h2, h3, h4, h5, h6, p, a {
   top: 245px;
 }
 
+@media screen and (max-width: 560px) {
+  #blog-title h1 a {
+    font-size: 32px;
+    top: 135px;
+  }
+  #blog-title p {
+    top: 200px;
+  }
+}
+
 #post-share-link {
   display: none;
   width: 1000px;
@@ -137,7 +147,7 @@ h1, h2, h3, h4, h5, h6, p, a {
   margin-top: -9px;
 }
 
-@media screen and (max-width: 510px) {
+@media screen and (max-width: 560px) {
   #post-share-link {
     display: none !important;
   }
@@ -266,7 +276,7 @@ h1, h2, h3, h4, h5, h6, p, a {
   font-size: 32px;
 }
 
-@media screen and (max-width: 510px) {
+@media screen and (max-width: 560px) {
   .post .post-title a {
     font-size: 28px;
   }
