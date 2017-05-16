@@ -19,8 +19,7 @@
     <link rel="stylesheet" href="{{ "static/css/main.css?5" | prepend: site.baseurl }}">
     <link rel="stylesheet" href="{{ "static/css/pygment_trac.css" | prepend: site.baseurl }}" media="screen">
     <script>
-    // {{ site.url }}
-      var pageURL = "http://google.com{{page.url}}";
+      var pageURL = "{{ site.url }}{{page.url}}";
       var isHome = '{{page.url}}' == '/';
     </script>
   </head>
