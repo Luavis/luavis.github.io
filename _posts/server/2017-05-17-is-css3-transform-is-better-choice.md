@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "CSS3 tranfrom은 진짜 좋을까?"
+title:  "CSS3 transfrom은 진짜 좋을까?"
 date:   2017-05-17 02:25:00 +09:00
 categories: server
 description: "CSS3 transform은 정말 좋고 우리는 이걸 써야할까?"
