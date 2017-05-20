@@ -8,7 +8,7 @@ keywords: pyetst, fixture
 
 ---
 
-![pytest]({{ site_url }}/assets/pytest.png)
+<img src="{{ site_url }}/assets/pytest.png" class="sm-img">
 
 우리가 흔히 사용하는 라이브러리에서는 일반적으로  unit test기반의 테스팅 파일을 설치시 정상적인 설치가 되었는지 또 라이브러리를 PR할 시에 이 라이브러리의 확장이 버그 없이 확장된것인지를 확인해주기 위해서 함께 업로드해 준다. python에서는 보통 Pytest를 사용하는데, 그 중 Fixture 기능에대해서 정리해보기 위해 Pytest 공식 사이트의 latest 버전의(2.4) fixture 기능에 대해 나와있는 [페이지](https://pytest.org/latest/fixture.html)를 번역해 보기로 했다.
 

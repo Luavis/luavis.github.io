@@ -8,7 +8,7 @@ keywords: pyetst, easy to start
 
 ---
 
-![pytest]({{ site_url }}/assets/pytest.png)
+<img src="{{ site_url }}/assets/pytest.png" class="sm-img">
 
 *이 외의 pytest 관련 문서*
 

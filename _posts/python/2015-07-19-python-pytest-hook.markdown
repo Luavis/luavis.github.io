@@ -8,7 +8,7 @@ keywords: pyetst, hook
 
 ---
 
-![pytest]({{ site_url }}/assets/pytest.png)
+<img src="{{ site_url }}/assets/pytest.png" class="sm-img">
 
 이번 문서에서는 Pytest의 hook 기능에 대해서 알아보고자 Pytest 공식 사이트의 latest 버전의(2.4) [hook reference 페이지](https://pytest.org/latest/plugins.html#pytest-hook-reference)를 번역해 보기로 했다.
 
