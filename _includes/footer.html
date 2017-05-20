@@ -1,32 +1,34 @@
 <footer class="footer">
   <div id="avatar-wrapper">
-    <img src="https://avatars3.githubusercontent.com/u/1534596?v=3&amp;s=460" id="avatar-image" alt="avatar" width="148">
-    <div id="avatar-description">
-      <div class="name-wrapper">
-        <h1 class="name">Luavis</h1>
-        <ul class="links">
-          {% if site.github_username %}
-            <li>
-              <a href="https://github.com/{{ site.github_username }}">
-                <img src="{{ "static/image/github-social-logo.png" | prepend: site.baseurl }}" alt="github">
-              </a>
-            </li>
-          {% endif %}
-          {% if site.facebook_username %}
-            <li>
-              <a href="https://facebook.com/{{ site.facebook_username }}">
-                <img src="{{ "static/image/facebook-social-logo.png" | prepend: site.baseurl }}" alt="facebook">
-              </a>
-            </li>
-          {% endif %}
-            <li>
-              <a href="{{ site_url }}/feed.xml" rel="alternate" type="application/rss+xml">
-                <img src="{{ "static/image/rss-social-logo.png" | prepend: site.baseurl }}" alt="rss">
-              </a>
-            </li>
-        </ul>
+    <div id="avatar">
+      <img src="https://avatars3.githubusercontent.com/u/1534596?v=3&amp;s=460" id="avatar-image" alt="avatar" width="148">
+      <div id="avatar-description">
+        <div class="name-wrapper">
+          <h1 class="name">Luavis</h1>
+          <ul class="links">
+            {% if site.github_username %}
+              <li>
+                <a href="https://github.com/{{ site.github_username }}">
+                  <img src="{{ "static/image/github-social-logo.png" | prepend: site.baseurl }}" alt="github">
+                </a>
+              </li>
+            {% endif %}
+            {% if site.facebook_username %}
+              <li>
+                <a href="https://facebook.com/{{ site.facebook_username }}">
+                  <img src="{{ "static/image/facebook-social-logo.png" | prepend: site.baseurl }}" alt="facebook">
+                </a>
+              </li>
+            {% endif %}
+              <li>
+                <a href="{{ site_url }}/feed.xml" rel="alternate" type="application/rss+xml">
+                  <img src="{{ "static/image/rss-social-logo.png" | prepend: site.baseurl }}" alt="rss">
+                </a>
+              </li>
+          </ul>
+        </div>
+        <p class="description"><a href="{{ site_url }}/about">Profile</a> | <a href="{{ site_url }}/readme">About the blog</a></p>
       </div>
-      <p class="description"><a href="{{ site_url }}/about">Profile</a> | <a href="{{ site_url }}/readme">About the blog</a></p>
     </div>
   </div>
   <div id="copyright">

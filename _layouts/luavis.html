@@ -26,32 +26,33 @@
     </script>
   </head>
   <body>
-    <div id="blog-t" style="height: 75px; width: 100%"></div>
     <div id="wrapper">
-      <div id="blog-title">
-        <h1><a href="{{ site.baseurl }}">{{ site.title }}</a></h1>
-        <p> {{ site.description}} </p>
-        <div id="post-share-link">
-          <ul class="links">
-            <li>
-              <a href="#" class="share-link" data-type="facebook">
-                <img src="{{ "static/image/facebook-ontop-logo.png" | prepend: site.baseurl }}" alt="github">
-              </a>
-            </li>
-            <li>
-              <a href="#" class="share-link" data-type="twitter">
-                <img src="{{ "static/image/twitter-ontop-logo.png" | prepend: site.baseurl }}" alt="facebook">
-              </a>
-            </li>
-            <li>
-              <a href="#" class="share-link" data-type="link">
-                <img src="{{ "static/image/link-ontop-logo.png" | prepend: site.baseurl }}" alt="rss">
-              </a>
-            </li>
-          </ul>
+      <div id="blog-title-wrapper">
+        <div id="blog-title">
+          <h1><a href="{{ site.baseurl }}">{{ site.title }}</a></h1>
+          <p> {{ site.description}} </p>
+          <div id="post-share-link">
+            <ul class="links">
+              <li>
+                <a href="#" class="share-link" data-type="facebook">
+                  <img src="{{ "static/image/facebook-ontop-logo.png" | prepend: site.baseurl }}" alt="github">
+                </a>
+              </li>
+              <li>
+                <a href="#" class="share-link" data-type="twitter">
+                  <img src="{{ "static/image/twitter-ontop-logo.png" | prepend: site.baseurl }}" alt="facebook">
+                </a>
+              </li>
+              <li>
+                <a href="#" class="share-link" data-type="link">
+                  <img src="{{ "static/image/link-ontop-logo.png" | prepend: site.baseurl }}" alt="rss">
+                </a>
+              </li>
+            </ul>
+          </div>
         </div>
       </div>
-      <div style="height: 200px; margin-top: 84px;">
+      <div id="triangle-wrapper">
         <div id="triangle"></div>
       </div>
       <section class="main-content-wrapper">

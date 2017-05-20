@@ -1,4 +1,4 @@
-@charset 'utf-8';
+@charset "utf-8";
 
 @font-face {
     font-family: 'bitstream_vera_sans_monoroman';
@@ -46,8 +46,7 @@
 }
 
 html {
-  background: #51a9b7;
-  overflow-y: hidden;
+
 }
 
 body {
@@ -84,23 +83,45 @@ td {
   border-bottom: 1px solid #434343;
 }
 
+#triangle-wrapper{
+  height: 200px;
+  margin-top: 159px;
+  z-index: -10;
+}
+
 #triangle {
   width: 0;
   height: 0;
   border-style: solid;
-  border-width: 0 0 200px 3000px;
+  border-width: 0;
+  border-left-width: 100vw;
   border-color: transparent transparent #ffffff transparent;
+  will-change: transform;
 }
 
-#blog-title {
-  background: white url(/static/image/gnb_background.jpg) no-repeat;
-  background-position: center;
+#wrapper.overlay #triangle {
+  border-bottom-width: 0px !important;
+}
+
+#blog-title-wrapper {
+  background: #51a9b7 url(/static/image/gnb_background.jpg) no-repeat;
+  background-position: top center;
   position: fixed;
   height: 359px;
   width: 100%;
-  z-index: -9999;
+  z-index: -1000;
   top: 0;
-  will-change: transform;
+  will-change: scroll-position;
+}
+
+#blog-title {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+#wrapper.overlay #blog-title-wrapper {
+  height: 75px;
+  z-index: 9999;
 }
 
 #blog-title h1 {
@@ -110,15 +131,18 @@ td {
   padding: 0 25px;
   width: 100%;
   padding-top: 160px;
+  transform-origin: left top;
+  will-change: transform;
+}
+
+#wrapper.overlay #blog-title h1 {
+  transform: translate(0px, -80px) scale(0.6, 0.6) !important;
 }
 
 #blog-title h1 a {
   font-size: 42px;
   color: white;
   text-decoration: none;
-  /*position: absolute;
-  z-index: 9999;
-  top: 175px;*/
 }
 
 #blog-title p {
@@ -128,6 +152,11 @@ td {
   padding: 0 25px;
   font-size: 18px;
   color: #d5f3fc;
+}
+
+#wrapper.overlay #blog-title p {
+  visibility: hidden;
+  opacity: 0 !important;
 }
 
 @media screen and (max-width: 560px) {
@@ -149,7 +178,10 @@ td {
   display: none;
   position: relative;
   top: -252px;
+}
 
+#wrapper.overlay #post-share-link {
+  display: block;
 }
 
 @media screen and (max-width: 560px) {
@@ -174,6 +206,11 @@ td {
   z-index: 9999;
 }
 
+#wrapper.overlay .share {
+  opacity: 0;
+  display: none;
+}
+
 .share p {
   margin-bottom: 0;
   font-size: 12px;
@@ -188,15 +225,6 @@ td {
 
 #wrapper {
   position: relative;
-  height: 100vh;
-  -webkit-overflow-scrolling: touch;
-  overflow-x: hidden;
-  overflow-y: scroll;
-}
-#wrapper:after {
-  content: ' ';
-  display: block;
-  height: 75px;
 }
 
 .main-content-wrapper {
@@ -312,7 +340,11 @@ pre {
 
 #disqus_thread {
   margin-top: 85px;
-  margin-bottom: 85px;
+}
+
+.footer {
+  position: relative;
+  padding-top: 167px;
 }
 
 .footer #avatar-wrapper {
@@ -320,8 +352,11 @@ pre {
   margin: 0 auto;
   max-width: 1000px;
   padding: 0 25px;
-  position: relative;
-      top: -69px;
+}
+
+#avatar {
+  position: absolute;
+  top: 60px;
 }
 
 .footer #avatar-image {
@@ -431,14 +466,6 @@ pre {
   #blog-title p {
     color: #404040;
     position: static;
-  }
-  #scroll-space {
-    position: static;
-    padding-top: 0;
-    margin-top: 0;
-    overflow-x: hidden;
-    overflow-y: hidden;
-    height: initial;
   }
   .share {
     display: none;

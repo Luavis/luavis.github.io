@@ -1,8 +1,17 @@
 var TRI_HEIGHT = 200;
+var isRender = false;
+var triangle = null;
+var blogTitle = null;
+var blogTitleText = null;
+var blogDescription = null;
+var shares = null;
+var share = null;
 
-function rerenderView(){
+
+function rerenderView() {
+    isRender = true;
     var triWidth = $(window).width();
-    var originalPosition = $('#wrapper').scrollTop();
+    var originalPosition = $(window).scrollTop();
     var position = originalPosition / 1.4;
     var titleMaxTop = -80;
     var titleMaxScale = 0.6;
@@ -12,41 +21,41 @@ function rerenderView(){
         titleMaxSize = 32;
     }
 
-    if(triHeight < 0)
-        triHeight = 0;
-
-    $('#triangle').css({
-        'border-width': position + 'px 0px ' + triHeight + 'px  ' + triWidth + 'px'
-    });
-
-    titletop = -1 * position;
-    if(titletop < titleMaxTop)
-        titletop = titleMaxTop;
-    titleScale = (TRI_HEIGHT - originalPosition / 3) / TRI_HEIGHT;
-    if(titleScale < titleMaxScale) titleScale = titleMaxScale;
-
-    $('#blog-title h1').css({
-        'transform': 'translate(0, ' + titletop + 'px) scale(' + titleScale + ', ' + titleScale + ')',
-        'transform-origin': 'left top'
-    });
-
-    if(originalPosition < 80) {
-        $('.share').css('opacity', 1 - originalPosition / 80);
-        $('#post-share-link').css('display', 'none');
+    if(originalPosition > 284) {
+        $('#wrapper').addClass('overlay');
     }
     else {
-        $('.share').css('opacity', '0');
-        $('#post-share-link').css('display', 'block');
+        $('#wrapper').removeClass('overlay');
+        if(triHeight > 0) {
+            triangle.css({
+                'transform': 'translate(0, ' + (position + 1) + 'px)',
+                'border-bottom-width': triHeight + 'px',
+            });
+        }
+
+        var titletop = -1 * position;
+        if(titletop < titleMaxTop) titletop = titleMaxTop;
+        titleScale = (TRI_HEIGHT - originalPosition / 3) / TRI_HEIGHT;
+        if(titleScale < titleMaxScale) titleScale = titleMaxScale;
+
+        blogTitleText.css({
+            'transform': 'translate(0, ' + titletop + 'px) scale(' + titleScale + ', ' + titleScale + ')',
+        });
+
+        blogTitle
+            .css('background-position-y', -0.3 * originalPosition + 'px')
+
+        var opacity = originalPosition < 80 ? 1 - originalPosition / 80 : 0;
+        share.css('opacity', opacity);
+
+        blogDescription.css({
+            opacity: opacity,
+            transform: 'translate(0, ' + titletop + 'px)'
+        });
     }
 
-    var opacity = (TRI_HEIGHT - originalPosition) / TRI_HEIGHT;
-    if(opacity < 0)
-        opacity = 0;
 
-    $('#blog-title p').css({
-        opacity: opacity,
-        'transform': 'translate(0, ' + titletop + 'px)'
-    });
+    isRender = false;
 }
 
 $('.share-link').click(function (){
@@ -71,8 +80,29 @@ $('.share-link').click(function (){
         alert('브라우저가 링크 복사를 지원하지 않습니다.');
       }
     }
-})
+});
 
-$('#wrapper').on('scroll resize', rerenderView);
-// $(window).on('scroll resize', rerenderView);
-$(rerenderView);
+$('#triangle-wrapper').click(function (e) {
+    $(this).hide();
+    console.log($(document.elementFromPoint(e.clientX, e.clientY)));
+    $(document.elementFromPoint(e.clientX, e.clientY)).trigger("click");
+    $(this).show();
+});
+
+$(window).on('scroll resize', function() {
+    if(isRender) return;
+    if(requestAnimationFrame)
+        requestAnimationFrame(rerenderView);
+    else
+        rerenderView();
+});
+
+$(function() {
+    blogDescription = $('#blog-title p');
+    blogTitleText = $('#blog-title h1');
+    blogTitle = $('#blog-title-wrapper');
+    triangle = $('#triangle');
+    shares = $('#post-share-link, .share');
+    share = $('.share');
+    rerenderView();
+});
