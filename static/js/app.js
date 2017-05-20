@@ -31,6 +31,7 @@ function rerenderView() {
             triangle.css({
                 'transform': 'translate(0, ' + (position + 1) + 'px)',
                 'border-bottom-width': triHeight + 'px',
+                'border-left-width': triWidth + 'px',
             });
         }
 
