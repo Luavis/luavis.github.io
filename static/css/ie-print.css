@@ -10,7 +10,8 @@ a {
 }
 #blog-title {
   position: static;
-  margin-bottom: 60px;
+  margin-bottom: 50px;
+  height: 145px;
 }
 #blog-title h1 {
   background: none;;
