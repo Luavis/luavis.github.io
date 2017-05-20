@@ -37,6 +37,10 @@ a {
 .footer .name-wrapper .links {
   display: none;
 }
+/* IE6 ignore avatar */
+* html #avatar {
+  display: none;
+}
 .footer #avatar-image {
   display: none;
 }
