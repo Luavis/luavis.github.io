@@ -144,10 +144,10 @@ td {
 #blog-title h1 {
   box-sizing: border-box;
   margin: 0 auto;
-  width: 1000px !ie;
   max-width: 1000px;
   padding: 0 25px;
   width: 100%;
+  width: 1000px !ie;
   padding-top: 160px;
   transform-origin: left top;
   will-change: transform;
@@ -426,9 +426,9 @@ pre {
 
 .footer #copyright p {
   color: #898b90;
-  width: 1000px !ie;
   max-width: 1000px;
   width: 100%;
+  width: 1000px !ie;
   box-sizing: border-box;
   padding: 0 25px;
   padding-top: 28px;;
