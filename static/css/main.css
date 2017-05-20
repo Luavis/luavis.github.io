@@ -83,6 +83,14 @@ td {
   border-bottom: 1px solid #434343;
 }
 
+pre {
+  background: #263238;
+  border-radius: 2px;
+  padding: 20px;
+  color: white;
+  overflow: auto;
+}
+
 .clearfix:after {
    content: " ";
    visibility: hidden;
@@ -223,6 +231,11 @@ td {
   top: -100px;
   z-index: 200;
 }
+@media screen and (max-width: 1000px) {
+  .share {
+    right: 27px;
+  }
+}
 
 #wrapper.overlay .share {
   opacity: 0;
@@ -302,6 +315,18 @@ td {
   color: #5f5f5f;
 }
 
+@media screen and (max-width: 560px) {
+  .home .title {
+    display: block;
+    margin-bottom: 3px;
+  }
+
+  .home .date {
+    display: block;
+    margin-bottom: 15px;
+  }
+}
+
 .home .title a {
   text-decoration: none;
 }
@@ -349,12 +374,6 @@ td {
   display: block;
   margin: 0 auto;
   width: 100%;
-}
-
-pre {
-  background: #263238;
-  border-radius: 2px;
-  padding: 20px;
 }
 
 #disqus_thread {
@@ -443,6 +462,14 @@ pre {
 }
 
 @media screen and (max-width: 560px) {
+  .footer #avatar-wrapper {
+     padding: 0;
+  }
+  .footer #avatar {
+      top: 92px;
+      text-align: center;
+      width: 100%;
+  }
   .footer #avatar-image {
     display: block;
     position: static;
