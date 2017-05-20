@@ -1,7 +1,7 @@
 var TRI_HEIGHT = 200;
 var isRender = false;
 var triangle = null;
-var blogTitle = null;
+var blogBackground = null;
 var blogTitleText = null;
 var blogDescription = null;
 var shares = null;
@@ -42,7 +42,7 @@ function rerenderView() {
             'transform': 'translate(0, ' + titletop + 'px) scale(' + titleScale + ', ' + titleScale + ')',
         });
 
-        blogTitle
+        blogBackground
             .css('background-position-y', -0.3 * originalPosition + 'px')
 
         var opacity = originalPosition < 80 ? 1 - originalPosition / 80 : 0;
@@ -100,7 +100,7 @@ $(window).on('scroll resize', function() {
 $(function() {
     blogDescription = $('#blog-title p');
     blogTitleText = $('#blog-title h1');
-    blogTitle = $('#blog-title-wrapper');
+    blogBackground = $('#blog-background-wrapper');
     triangle = $('#triangle');
     shares = $('#post-share-link, .share');
     share = $('.share');

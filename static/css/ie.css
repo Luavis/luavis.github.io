@@ -1,0 +1,51 @@
+html, body, code, p, pre {
+  color: #333 !important;
+  background: white;
+}
+a {
+  text-decoration: none;
+}
+#blog-background-wrapper {
+  display: none;
+}
+#blog-title {
+  position: static;
+  margin-bottom: 60px;
+}
+#blog-title h1 {
+  background: none;;
+  padding-top: 20px;
+}
+#blog-title h1 a {
+  border-bottom: 1px solid #404040;
+  color: #404040;
+  position: static;
+}
+#blog-title p {
+  color: #404040;
+  position: static;
+}
+#triangle-wrapper {
+  display: none;
+}
+.share {
+  display: none;
+}
+.footer #copyright {
+  background: none;
+}
+.footer .name-wrapper .links {
+  display: none;
+}
+.footer #avatar-image {
+  display: none;
+}
+#wrapper {
+  margin-bottom: 0;
+}
+#disqus_thread {
+  display: none;
+}
+noscript {
+  display: none;
+}

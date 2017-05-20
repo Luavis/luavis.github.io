@@ -83,6 +83,14 @@ td {
   border-bottom: 1px solid #434343;
 }
 
+.clearfix:after {
+   content: " ";
+   visibility: hidden;
+   display: block;
+   height: 0;
+   clear: both;
+}
+
 #triangle-wrapper{
   height: 200px;
   margin-top: 159px;
@@ -95,6 +103,7 @@ td {
   border-style: solid;
   border-width: 0;
   border-left-width: 100vw;
+  border-bottom-width: 200px;
   border-color: transparent transparent #ffffff transparent;
   will-change: transform;
 }
@@ -103,7 +112,14 @@ td {
   border-bottom-width: 0px !important;
 }
 
-#blog-title-wrapper {
+#blog-title {
+  width: 100%;
+  position: fixed;
+  top: 0;
+  z-index: 200;
+}
+
+#blog-background-wrapper {
   background: #51a9b7 url(/static/image/gnb_background.jpg) no-repeat;
   background-position: top center;
   position: fixed;
@@ -111,17 +127,17 @@ td {
   width: 100%;
   z-index: -1000;
   top: 0;
+}
+
+#blog-background {
+  max-width: 1000px;
+  margin: 0 auto;
   will-change: scroll-position;
 }
 
-#blog-title {
-  max-width: 1000px;
-  margin: 0 auto;
-}
-
-#wrapper.overlay #blog-title-wrapper {
+#wrapper.overlay #blog-background-wrapper {
   height: 75px;
-  z-index: 9999;
+  z-index: 100;
 }
 
 #blog-title h1 {
@@ -174,10 +190,8 @@ td {
   margin: 0 auto;
   padding: 0 25px;
   box-sizing: border-box;
-  padding-top: 10px;
+  padding-top: 23px;
   display: none;
-  position: relative;
-  top: -252px;
 }
 
 #wrapper.overlay #post-share-link {
@@ -203,7 +217,7 @@ td {
   position: absolute;
   right: 0;
   top: -100px;
-  z-index: 9999;
+  z-index: 200;
 }
 
 #wrapper.overlay .share {
@@ -438,54 +452,5 @@ pre {
     position: absolute;
     bottom: 8px;
     text-align: center;
-  }
-}
-
-
-@media print {
-  html, body, code, p, pre {
-    color: #333 !important;
-    background: white;
-  }
-  body {
-    overflow-y: scroll;
-    overflow-x: scroll;
-  }
-  a {
-    text-decoration: none;
-  }
-  #blog-title {
-    background: none;
-    height: 200px;
-  }
-  #blog-title h1 a {
-    border-bottom: 1px solid #404040;
-    color: #404040;
-    position: static;
-  }
-  #blog-title p {
-    color: #404040;
-    position: static;
-  }
-  .share {
-    display: none;
-  }
-  .footer #copyright {
-    background: none;
-  }
-  .footer .name-wrapper .links {
-    display: none;
-  }
-  .footer #avatar-image {
-    display: none;
-  }
-  #wrapper {
-    margin-bottom: 0;
-  }
-  #disqus_thread {
-    display: none;
-  }
-  noscript {
-    display: none;
   }
 }
