@@ -26,11 +26,11 @@ Intel기준으로 리얼모드(real mode, 16bit)에서 보호모드(protect mode
 
 일반적으로 C언어를 배우면 C언어 책에 전반부에 나오는 흔한 그림입니다. 대학에서 프로그래밍을 배웠다면 한번쯤은 볼 그림입니다.
 
-![](/assets/mem_map.png)
+<img src="/assets/mem_map.png" class="sm-img">
 
 일반적인 운영체제 위에서 동작하는 프로그램들이라면 위와같이 heap, data, text 와 같은 형식으로 메모리를 나누어서 영역을 할당할 것입니다. 리눅스라면 0x0000000000000000  ~ 0x00007FFFFFFFFFFF 까지 48bit의 영역만을 사용합니다. (따라서 한 프로세스의 가용메모리는 128TB)
 
-![](/assets/virtual_address.png)
+<img src="/assets/virtual_address.png" class="sm-img">
 
 한 프로세스가 전체 메모리를 바라보는 시점으로 보면, 위와같습니다. higher half 영역은 커널의 가상메모리 영역이고(이 영역도 128TB다.), lower half는 위에서 말한 48bit의 영역입니다, 가운데에 있는 non-canonical address 영역은 할당이 될 수 없는 영역입니다.
 
@@ -51,7 +51,7 @@ page는 가상 메모리에서 4KB 사이즈로 분할 하는 단위입니다.(x
 
 그래서 리눅스 x86커널에서는 세그멘테이션을 매우 제한적으로 사용하고 있으며 보호 모드 접근시에는 모든 프로세스가 같은 segment를 보게 합니다. x86이 아래와 같이 segmentation을 한번 거쳐서 페이징으로 메모리를 바라보고 있기 때문이다. 세그멘테이션 되기 전의 메모리 주소를 논리주소라 하고 세그멘테이션을 통하여 참조한 주소를 선형주소 이를 페이징 기법을 이용하여 물리주소로 변환합니다.
 
-![](/assets/x86_memview.jpg)
+<img src="/assets/x86_memview.jpg">
 
 페이징의 기본 목표는 우선 가상메모리 주소를 실제 물리주소에 할당해주는 것입니다. 우선 아래표를 보자.
 

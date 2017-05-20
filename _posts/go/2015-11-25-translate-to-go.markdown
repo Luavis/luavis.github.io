@@ -8,7 +8,7 @@ keywords: go, google, golang
 
 ---
 
-![](/assets/go_icon.png)
+<img src="/assets/go_icon.png" class="sm-img">
 __마스코트가 참 적당하게 생겼다..__
 
 ## Golang을 배워보고 싶어졌습니다!
@@ -73,7 +73,7 @@ const (
 )
 {% endhighlight %}
 
-이런 형식으로 표기하게 됩니다. 이와 반대로 변수를 선언할 때에는 
+이런 형식으로 표기하게 됩니다. 이와 반대로 변수를 선언할 때에는
 
 {% highlight go linenos %}
 
@@ -186,7 +186,7 @@ Go lang은 module의 install path를 ```$GOPATH```를 이용해서 특정지점�
 $go get github.com/headzoo/surf
 ```
 
-이렇게 command를 사용하여 설치가 가능합니다. 그리고 설치한 외부 모듈은 
+이렇게 command를 사용하여 설치가 가능합니다. 그리고 설치한 외부 모듈은
 
 {% highlight go linenos %}
 

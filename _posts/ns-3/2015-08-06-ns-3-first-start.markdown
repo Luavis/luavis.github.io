@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "NS-3 First satrt"
+title:  "NS-3 First start"
 date:   2015-08-06 11:12:00
 categories: ns-3
 description: ns-3 시작하기
