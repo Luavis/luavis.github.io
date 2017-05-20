@@ -2,9 +2,9 @@ var TRI_HEIGHT = 200;
 
 function rerenderView(){
     var triWidth = $(window).width();
-    var originalPosition = $('#scroll-space').scrollTop();
+    var originalPosition = $('#wrapper').scrollTop();
     var position = originalPosition / 1.4;
-    var titleMaxTop = -160;
+    var titleMaxTop = -80;
     var titleMaxScale = 0.6;
     var triHeight = TRI_HEIGHT - position;
 
@@ -16,17 +16,16 @@ function rerenderView(){
         triHeight = 0;
 
     $('#triangle').css({
-        'top': -1 * (TRI_HEIGHT - 1) + 'px',
         'border-width': position + 'px 0px ' + triHeight + 'px  ' + triWidth + 'px'
     });
 
     titletop = -1 * position;
     if(titletop < titleMaxTop)
         titletop = titleMaxTop;
-    titleScale = (TRI_HEIGHT - originalPosition / 10) / TRI_HEIGHT;
+    titleScale = (TRI_HEIGHT - originalPosition / 3) / TRI_HEIGHT;
     if(titleScale < titleMaxScale) titleScale = titleMaxScale;
 
-    $('#blog-title h1 a').css({
+    $('#blog-title h1').css({
         'transform': 'translate(0, ' + titletop + 'px) scale(' + titleScale + ', ' + titleScale + ')',
         'transform-origin': 'left top'
     });
@@ -74,6 +73,6 @@ $('.share-link').click(function (){
     }
 })
 
-$('#scroll-space').on('scroll resize', rerenderView);
-$(window).on('scroll resize', rerenderView);
+$('#wrapper').on('scroll resize', rerenderView);
+// $(window).on('scroll resize', rerenderView);
 $(rerenderView);

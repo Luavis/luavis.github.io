@@ -46,8 +46,8 @@
 }
 
 html {
-  height: 100%;
-  background: #67a6b8;
+  background: #51a9b7;
+  overflow-y: hidden;
 }
 
 body {
@@ -56,10 +56,6 @@ body {
   font-weight: normal;
   color: #404040;
   position: relative;
-  padding-bottom: 216px;
-  height: 100%;
-  overflow: hidden;
-      height: 100%;
 }
 
 h1, h2, h3, h4, h5, h6, p, a {
@@ -88,36 +84,23 @@ td {
   border-bottom: 1px solid #434343;
 }
 
-
-#scroll-space {
-  -webkit-overflow-scrolling: touch;
-  overflow-x: hidden;
-  overflow-y: scroll;
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  padding-top: 284px;
-  margin-top: 75px;
-  height: 100%;
-}
-
 #triangle {
   width: 0;
   height: 0;
   border-style: solid;
   border-width: 0 0 200px 3000px;
   border-color: transparent transparent #ffffff transparent;
-  position: absolute;
-  right: 0;
-  z-index: 10;
-  top: -200px;
 }
 
 #blog-title {
   background: white url(/static/image/gnb_background.jpg) no-repeat;
   background-position: center;
+  position: fixed;
   height: 359px;
+  width: 100%;
+  z-index: -9999;
+  top: 0;
+  will-change: transform;
 }
 
 #blog-title h1 {
@@ -126,15 +109,16 @@ td {
   max-width: 1000px;
   padding: 0 25px;
   width: 100%;
+  padding-top: 160px;
 }
 
 #blog-title h1 a {
   font-size: 42px;
   color: white;
   text-decoration: none;
-  position: absolute;
+  /*position: absolute;
   z-index: 9999;
-  top: 175px;
+  top: 175px;*/
 }
 
 #blog-title p {
@@ -144,8 +128,6 @@ td {
   padding: 0 25px;
   font-size: 18px;
   color: #d5f3fc;
-  position: relative;
-  top: 245px;
 }
 
 @media screen and (max-width: 560px) {
@@ -159,12 +141,15 @@ td {
 }
 
 #post-share-link {
-  display: none;
   width: 1000px;
   margin: 0 auto;
   padding: 0 25px;
   box-sizing: border-box;
-  margin-top: -9px;
+  padding-top: 10px;
+  display: none;
+  position: relative;
+  top: -252px;
+
 }
 
 @media screen and (max-width: 560px) {
@@ -201,18 +186,29 @@ td {
   display: inline-block;
 }
 
-.wrapper {
-  background: white;
+#wrapper {
   position: relative;
-  margin-bottom: 576px;
+  height: 100vh;
+  -webkit-overflow-scrolling: touch;
+  overflow-x: hidden;
+  overflow-y: scroll;
+}
+#wrapper:after {
+  content: ' ';
+  display: block;
+  height: 75px;
 }
 
 .main-content-wrapper {
+  background: white;
+}
+
+.home, .post {
   box-sizing: border-box;
   margin: 0 auto;
   max-width: 1000px;
   padding: 0 25px;
-  padding-bottom: 350px;
+  background-color: white;
 }
 
 .home {
@@ -316,13 +312,7 @@ pre {
 
 #disqus_thread {
   margin-top: 85px;
-}
-
-.footer {
-  position: absolute;
-  bottom: 0;
-  right: 0;
-  left: 0;
+  margin-bottom: 85px;
 }
 
 .footer #avatar-wrapper {
@@ -377,11 +367,7 @@ pre {
   height: 114px;
   font-size: 12px;
   background-color: #f2f2f2;
-  position: absolute;
-  bottom: 0;
-  right: 0;
-  left: 0;
-  margin: 0;
+  width: 100%;
 }
 
 .footer #copyright p {
@@ -466,7 +452,7 @@ pre {
   .footer #avatar-image {
     display: none;
   }
-  .wrapper {
+  #wrapper {
     margin-bottom: 0;
   }
   #disqus_thread {
