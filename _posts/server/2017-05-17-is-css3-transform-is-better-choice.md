@@ -5,6 +5,7 @@ date:   2017-05-17 02:25:00 +09:00
 categories: server
 description: "CSS3 transform은 정말 좋고 우리는 이걸 써야할까?"
 keywords: "CSS3, transform, IE, Internet explorer, position, animation"
+image: /assets/js-html-pipline.jpg
 ---
 
 이번에 블로그 디자인을 리뉴얼하면서 스크롤 이벤트에 따른 애니메이션이 들어가게되었고, 이를 위해서는 JS를 이용한 애니메이션기법 외에는 답이 없다는 판단을 했습니다. 따라서 JS를 이용한 고전적인 event를 받고 이를 top값을 바꿔 움직이는 애니메이션을 구현했습니다. transform을 이용하면 조금 더 간단하고 성능도 우월한 개발이 가능하지 않을까 생각하여, 코드를 수정해서 퍼포먼스를 비교해봤습니다.
