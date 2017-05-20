@@ -57,19 +57,19 @@ body {
   position: relative;
 }
 
-h1, h2, h3, h4, h5, h6, p, a {
+.wrapper h1, h2, h3, h4, h5, h6, p, a {
   font-family: "나눔고딕",NanumGothic,"Nanum Gothic","맑은 고딕","Malgun Gothic","돋움",dotum,AppleSDGothic,sans-serif;
   color: #404040;
   margin-top: 0px;
 }
 
-table {
+.wrapper table {
   width: 100%;
   border-collapse: collapse;
   margin-bottom: 20px;
 }
 
-th {
+.wrapper th {
   text-align: left;
   padding: 5px 10px;
   border-bottom: 1px solid #434343;
@@ -77,11 +77,16 @@ th {
   font-weight: bold;
 }
 
-td {
+.wrapper td {
   text-align: left;
   padding: 5px 10px;
   border-bottom: 1px solid #434343;
 }
+
+.wrapper pre, code {
+  font-family: bitstream_vera_sans_monoroman, sans-serif;
+}
+
 
 pre {
   background: #263238;
@@ -89,6 +94,20 @@ pre {
   padding: 20px;
   color: white;
   overflow: auto;
+}
+
+figure pre {
+  padding: 0;
+}
+
+figure pre .lineno {
+  padding: 0 20px;
+  border-right: 1px solid white;
+  margin-right: 20px;
+}
+
+figure .code pre {
+  padding-right: 20px;
 }
 
 .clearfix:after {
