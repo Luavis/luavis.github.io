@@ -6,6 +6,7 @@ var blogTitleText = null;
 var blogDescription = null;
 var shares = null;
 var share = null;
+var isIE = document.all && !window.atob;
 
 
 function rerenderView() {
@@ -82,14 +83,8 @@ $('.share-link').click(function (){
     }
 });
 
-$('#triangle-wrapper').click(function (e) {
-    $(this).hide();
-    console.log($(document.elementFromPoint(e.clientX, e.clientY)));
-    $(document.elementFromPoint(e.clientX, e.clientY)).trigger("click");
-    $(this).show();
-});
-
 $(window).on('scroll resize', function() {
+    if(isIE) return;
     if(isRender) return;
     if(requestAnimationFrame)
         requestAnimationFrame(rerenderView);
@@ -98,6 +93,7 @@ $(window).on('scroll resize', function() {
 });
 
 $(function() {
+    if(isIE) return;
     blogDescription = $('#blog-title p');
     blogTitleText = $('#blog-title h1');
     blogBackground = $('#blog-background-wrapper');
