@@ -1,0 +1,52 @@
+pre, code {
+  font-family: bitstream_vera_sans_monoroman, sans-serif;
+}
+
+.gist td {
+  border-bottom: 0;
+}
+
+pre {
+  background: #263238;
+  border-radius: 2px;
+  padding: 20px;
+  color: white;
+}
+
+p > .highlighter-rouge {
+  background: #efefef;
+  padding: 1px 3px;
+}
+
+.highlighter-rouge > pre {
+  overflow: auto;
+}
+
+figure code > table {
+  width: auto;
+  margin-bottom: 0;
+}
+
+figure > pre {
+  padding: 0;
+  overflow: auto;
+}
+
+figure > pre .lineno {
+  padding: 0 20px;
+  border-right: 1px solid white;
+  margin-right: 5px;
+}
+
+figure .code pre {
+  padding: 0;
+  padding-right: 20px;
+}
+
+.clearfix:after {
+   content: " ";
+   visibility: hidden;
+   display: block;
+   height: 0;
+   clear: both;
+}

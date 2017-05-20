@@ -1,0 +1,36 @@
+@media screen and (max-width: 560px) {
+  .post-content > table {
+    display: table;
+    width: 100%;
+  }
+
+  .post-content > table thead,
+  .post-content > table tbody {
+    width: 100%;
+  }
+
+  .post-content > table thead {
+    overflow-y: scroll;
+    display: table;
+    table-layout: fixed;
+    width: -webkit-calc(100% - 16px);
+    width: -moz-calc(100% - 16px);
+    width: calc(100% - 16px); /* assuming scrollbar width as 16px */
+  }
+
+  .post-content > table tbody {
+    overflow: auto;
+    max-height: 300px;
+    display: block;
+  }
+
+  .post-content > table tr {
+    width: 100%;
+    text-align: left;
+    display: table;
+    table-layout: fixed;
+  }
+  .post-content > table td {
+    word-break: break-all;
+  }
+}

@@ -45,10 +45,6 @@
        url(//fonts.gstatic.com/ea/nanumgothic/v5/NanumGothic-ExtraBold.ttf) format('truetype');
 }
 
-html {
-
-}
-
 body {
   margin: 0px;
   font: 16px/1.8 "나눔고딕",NanumGothic,"Nanum Gothic","맑은 고딕","Malgun Gothic","돋움",dotum,AppleSDGothic,sans-serif;
@@ -57,19 +53,20 @@ body {
   position: relative;
 }
 
-.wrapper h1, h2, h3, h4, h5, h6, p, a {
+h1, h2, h3, h4, h5, h6, p, a {
   font-family: "나눔고딕",NanumGothic,"Nanum Gothic","맑은 고딕","Malgun Gothic","돋움",dotum,AppleSDGothic,sans-serif;
   color: #404040;
   margin-top: 0px;
 }
 
-.wrapper table {
+
+table {
   width: 100%;
   border-collapse: collapse;
   margin-bottom: 20px;
 }
 
-.wrapper th {
+th {
   text-align: left;
   padding: 5px 10px;
   border-bottom: 1px solid #434343;
@@ -77,45 +74,15 @@ body {
   font-weight: bold;
 }
 
-.wrapper td {
+td {
   text-align: left;
   padding: 5px 10px;
   border-bottom: 1px solid #434343;
 }
 
-.wrapper pre, code {
-  font-family: bitstream_vera_sans_monoroman, sans-serif;
-}
-
-
-pre {
-  background: #263238;
-  border-radius: 2px;
-  padding: 20px;
-  color: white;
-  overflow: auto;
-}
-
-figure pre {
-  padding: 0;
-}
-
-figure pre .lineno {
-  padding: 0 20px;
-  border-right: 1px solid white;
-  margin-right: 20px;
-}
-
-figure .code pre {
-  padding-right: 20px;
-}
-
-.clearfix:after {
-   content: " ";
-   visibility: hidden;
-   display: block;
-   height: 0;
-   clear: both;
+iframe {
+  max-width: 560px;
+  width: 100%;
 }
 
 #triangle-wrapper{
@@ -393,6 +360,20 @@ figure .code pre {
   display: block;
   margin: 0 auto;
   width: 100%;
+}
+
+.post-content img.md-img {
+  width: 300px;
+  margin: 0;
+}
+
+.post-content img.sm-img {
+  width: 200px;
+  margin: 0;
+}
+
+.post-content img.xm-img {
+  width: 100px;
 }
 
 #disqus_thread {
