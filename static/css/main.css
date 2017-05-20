@@ -130,6 +130,7 @@ td {
 }
 
 #blog-background {
+  width: 1000px !ie;
   max-width: 1000px;
   margin: 0 auto;
   will-change: scroll-position;
@@ -143,6 +144,7 @@ td {
 #blog-title h1 {
   box-sizing: border-box;
   margin: 0 auto;
+  width: 1000px !ie;
   max-width: 1000px;
   padding: 0 25px;
   width: 100%;
@@ -164,6 +166,7 @@ td {
 #blog-title p {
   box-sizing: border-box;
   margin: 0 auto;
+  width: 1000px !ie;
   max-width: 1000px;
   padding: 0 25px;
   font-size: 18px;
@@ -248,6 +251,7 @@ td {
 .home, .post {
   box-sizing: border-box;
   margin: 0 auto;
+  width: 1000px !ie;
   max-width: 1000px;
   padding: 0 25px;
   background-color: white;
@@ -364,6 +368,7 @@ pre {
 .footer #avatar-wrapper {
   box-sizing: border-box;
   margin: 0 auto;
+  width: 1000px !ie;
   max-width: 1000px;
   padding: 0 25px;
 }
@@ -421,6 +426,7 @@ pre {
 
 .footer #copyright p {
   color: #898b90;
+  width: 1000px !ie;
   max-width: 1000px;
   width: 100%;
   box-sizing: border-box;
