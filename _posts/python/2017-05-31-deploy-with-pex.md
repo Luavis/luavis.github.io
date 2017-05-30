@@ -3,7 +3,7 @@ layout: post
 title:  "Pex를 이용한 배포"
 date:   2017-05-31 01:39:00 +09:00
 categories: python
-description: Pex를 이용해서 애플리케이션을 배포하는 방법
+description: Pex를 이용해서 python 애플리케이션을 배포하는 방법
 keywords: python, pex, deploy, flask
 
 ---
