@@ -57,8 +57,12 @@ h1, h2, h3, h4, h5, h6, p, a {
   font-family: "나눔고딕",NanumGothic,"Nanum Gothic","맑은 고딕","Malgun Gothic","돋움",dotum,AppleSDGothic,sans-serif;
   color: #404040;
   margin-top: 0px;
+  word-break: break-all;
 }
 
+code {
+  word-break: break-all;
+}
 
 table {
   width: 100%;
