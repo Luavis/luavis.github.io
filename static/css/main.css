@@ -85,6 +85,12 @@ iframe {
   width: 100%;
 }
 
+blockquote {
+  border-left: 4px solid #404040;
+  margin: 40px 0;
+  padding-left: 20px;
+}
+
 #triangle-wrapper{
   height: 200px;
   margin-top: 159px;
