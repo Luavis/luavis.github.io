@@ -22,7 +22,6 @@ import matplotlib.pyplot as plt
 
 ```python
 s = np.random.normal(loc=0, scale=1.0, size=1000)
-# plt.plot(range(1000), s, 'ro')
 _ = plt.hist(s, 30, normed=True)
 ```
 
@@ -290,7 +289,6 @@ b = Variable(tf.zeros(shape=[1]), name="biases")
 ```python
 # hypothesis linear regression
 
-# y = w1 * orgs[:, 0]  + b
 t_sigmoid = lambda xs: 1 / (1 + tf.exp(-1 * xs))
 dy = -orgs[:, 2] * tf.log(t_sigmoid(w1 * orgs[:, 0] + w2 * orgs[:, 1] + b)) - \
     (1 - orgs[:, 2]) * tf.log(1 - t_sigmoid(w1 * orgs[:, 0] + w2 * orgs[:, 1] + b))
