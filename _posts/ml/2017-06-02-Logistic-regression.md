@@ -317,7 +317,6 @@ for step in range(10000):
     b_r = sess.run(b)
 print(w1_r, w2_r, b_r)
 fig = plt.figure(1, figsize=(20, 20))
-# fig.add_subplot(5, 2, step + 1)
 plt.plot(bound_x, (-w1_r * bound_x - b_r) / w2_r, label='predict')
 plt.plot(zs[:, 0], zs[:, 1], 'ro', label='data_0')
 plt.plot(os[:, 0], os[:, 1], 'g^', label='data_1')
