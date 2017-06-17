@@ -2,11 +2,11 @@
 
 @font-face {
     font-family: 'bitstream_vera_sans_monoroman';
-    src: url('../fonts/VeraMono-webfont.eot');
-    src: url('../fonts/VeraMono-webfont.eot?#iefix') format('embedded-opentype'),
-         url('../fonts/VeraMono-webfont.woff') format('woff'),
-         url('../fonts/VeraMono-webfont.ttf') format('truetype'),
-         url('../fonts/VeraMono-webfont.svg#bitstream_vera_sans_monoroman') format('svg');
+    src: url('/static/fonts/VeraMono-webfont.eot');
+    src: url('/static/fonts/VeraMono-webfont.eot?#iefix') format('embedded-opentype'),
+         url('/static/fonts/VeraMono-webfont.woff') format('woff'),
+         url('/static/fonts/VeraMono-webfont.ttf') format('truetype'),
+         url('/static/fonts/VeraMono-webfont.svg#bitstream_vera_sans_monoroman') format('svg');
     font-weight: normal;
     font-style: normal;
 
