@@ -39,7 +39,7 @@
   <body>
     <div id="wrapper">
       <div id="blog-title">
-        <h1><a href="{{ site.baseurl }}/">{{ site.title }}</a></h1>
+        <h1><a href="/{{ site.baseurl }}">{{ site.title }}</a></h1>
         <p>{{ site.description}}</p>
       </div>
       <div id="blog-background-wrapper">
@@ -48,17 +48,17 @@
             <ul class="links">
               <li>
                 <a href="#" class="share-link" data-type="facebook">
-                  <img src="{{ "static/image/facebook-ontop-logo.png" | prepend: site.baseurl }}" alt="github">
+                  <img src="{{ "/static/image/facebook-ontop-logo.png" | prepend: site.baseurl }}" alt="github">
                 </a>
               </li>
               <li>
                 <a href="#" class="share-link" data-type="twitter">
-                  <img src="{{ "static/image/twitter-ontop-logo.png" | prepend: site.baseurl }}" alt="facebook">
+                  <img src="{{ "/static/image/twitter-ontop-logo.png" | prepend: site.baseurl }}" alt="facebook">
                 </a>
               </li>
               <li>
                 <a href="#" class="share-link" data-type="link">
-                  <img src="{{ "static/image/link-ontop-logo.png" | prepend: site.baseurl }}" alt="rss">
+                  <img src="{{ "/static/image/link-ontop-logo.png" | prepend: site.baseurl }}" alt="rss">
                 </a>
               </li>
             </ul>
