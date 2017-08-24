@@ -13,7 +13,7 @@ image: /assets/js-html-pipline.jpg
 
 ## 크롬의 렌더링 순서
 
-일반적인 브라우저에서 렌더링 순서를 다시 한번 살펴보았습니다. 우선 HTML DOM 파싱을 진행하고, `Recalculate style`(CSS 파싱)을 진행합니다. 이 과정을 크롬의 Devtools로 보면 `Parse HTML`이라는 과정으로 묶어서 나옵니다. 이 과정을 통해 얻은 DOM과 CSSDOM을 통해서 css 설정을 입힌 `Render Tree`를 작성합니다. `Render Tree`를 얻으면 비로소 `Layout`(레이아웃)을 계산할 수 있게 됩니다. 어떤 element(요소)를 어디에 배치할지 너비, 높이를 얼마를 갖을지 계산합니다. 이 과정은 각 요소를 배치하는 과정이고 레이아웃 과정이 끝나면 `paint`가 시작됩니다. 페인팅 과정을 통해서야 우리가 의도한 디자인이 픽셀들을 갖고(Rasterize) 화면에 그려지게 됩니다. 그런 뒤 opacit
+일반적인 브라우저에서 렌더링 순서를 다시 한번 살펴보았습니다. 우선 HTML DOM 파싱을 진행하고, `Recalculate style`(CSS 파싱)을 진행합니다. 이 과정을 크롬의 Devtools로 보면 `Parse HTML`이라는 과정으로 묶어서 나옵니다. 이 과정을 통해 얻은 DOM과 CSSDOM을 통해서 css 설정을 입힌 `Render Tree`를 작성합니다. `Render Tree`를 얻으면 비로소 `Layout`(레이아웃)을 계산할 수 있게 됩니다. 어떤 element(요소)를 어디에 배치할지 너비, 높이를 얼마를 갖을지 계산합니다. 이 과정은 각 요소를 배치하는 과정이고 레이아웃 과정이 끝나면 `paint`가 시작됩니다. 페인팅 과정을 통해서야 우리가 의도한 디자인이 픽셀들을 갖고(Rasterize) 화면에 그려지게 됩니다.
 
 정리해보면, 아래와 같습니다.
 
