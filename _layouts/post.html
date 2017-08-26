@@ -30,7 +30,9 @@ layout: luavis
   <article class="post-content">
     {{ content }}
   </article>
+  <div class="fb-like" data-href="https://developers.facebook.com/docs/plugins/" data-layout="standard" data-action="like" data-size="large" data-show-faces="true" data-share="true"></div>
   <div id="disqus_thread"></div>
+  <div id="fb-root"></div>
   <!--[if !IE]><!-->
   <script>
   (function() { // DON'T EDIT BELOW THIS LINE
@@ -41,5 +43,12 @@ layout: luavis
   })();
   </script>
   <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  <script>(function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/ko_KR/sdk.js#xfbml=1&version=v2.10&appId=122734901709154";
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));</script>
   <!--<![endif]-->
 </div>

@@ -386,8 +386,9 @@ blockquote {
   width: 100px;
 }
 
-#disqus_thread {
-  margin-top: 85px;
+.fb-like {
+  margin-top: 85px !important;
+  display: block !important;
 }
 
 .footer {
