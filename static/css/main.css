@@ -141,9 +141,11 @@ blockquote {
   will-change: scroll-position;
 }
 
-#wrapper.overlay #blog-background-wrapper {
-  height: 75px;
-  z-index: 100;
+@media screen and (min-width: 560px) {
+  #wrapper.overlay #blog-background-wrapper {
+    height: 75px;
+    z-index: 100;
+  }
 }
 
 #blog-title h1 {
@@ -167,6 +169,13 @@ blockquote {
   color: white;
   text-decoration: none;
 }
+
+@media screen and (max-width: 560px) {
+  #wrapper.overlay #blog-title h1 a {
+    font-size: 0;
+  }
+}
+
 
 #blog-title p {
   box-sizing: border-box;

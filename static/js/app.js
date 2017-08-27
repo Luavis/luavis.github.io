@@ -15,13 +15,9 @@ function appmain() {
         var triWidth = $(window).width();
         var originalPosition = $(window).scrollTop();
         var position = originalPosition / 1.4;
-        var titleMaxTop = -80;
+        var titleMaxTop = triWidth < 560 ? -120 : -80;
         var titleMaxScale = 0.6;
         var triHeight = TRI_HEIGHT - position;
-
-        if(triWidth <= 560) {
-            titleMaxSize = 32;
-        }
 
         if(originalPosition > 284) {
             $('#wrapper').addClass('overlay');
@@ -85,17 +81,17 @@ function appmain() {
         }
     });
 
-    $(window).on('scroll resize', function() {
-        if(isIE) return;
-        if(isRender) return;
-        if(requestAnimationFrame)
-            requestAnimationFrame(rerenderView);
-        else
-            rerenderView();
-    });
-
     $(function() {
         if(isIE) return;
+        $(window).on('scroll resize', function() {
+            if(isIE) return;
+            if(isRender) return;
+            if(requestAnimationFrame)
+                requestAnimationFrame(rerenderView);
+            else
+                rerenderView();
+        });
+
         blogDescription = $('#blog-title p');
         blogTitleText = $('#blog-title h1');
         blogBackground = $('#blog-background-wrapper');
