@@ -4,7 +4,7 @@ description: 생계코딩 이야기
 email: me@luav.is
 timezone: Asia/Seoul
 # baseurl: ""  # the subpath of your site, e.g. /blog/
-url: "http://b.luavis.kr" # the base hostname & protocol for your site
+url: "https://b.luavis.kr" # the base hostname & protocol for your site
 facebook_username: luavis
 github_username:  luavis
 nickname: Luavis
