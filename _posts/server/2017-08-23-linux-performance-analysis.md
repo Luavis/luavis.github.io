@@ -30,7 +30,9 @@ $ sar -n DEV 1
 $ sar -n TCP,ETCP 1
 $ top
 ```
-일부 커맨드는 sysstat package를 설치해야만한다.
+일부 커맨드는 sysstat package를 설치해야만한다. 이 측정법은 [USE Method](http://www.brendangregg.com/usemethod.html)라고 불리는 병목현상이 생기는 위치를 찾는 방법의 일부분이다. USE는 CPU, memory, disk등의 모든 자원에 대해서 Utilization, saturation, error를 측정하는 방법이다.
+
+아래 각각의 커맨드에 대한 설명에 붙어 있는 예제는 넷플릭스가 production 상태의 서버에서 측정한 값이다. 각 커맨드에 대한 더 많은 설명은 man 페이지를 이용해서 찾으면 된다.
 
 ## 1. uptime
 
@@ -155,8 +157,8 @@ block device(HDD, SSD, ...)가 어떻게 동작하는지 이해하기 좋은 툴
 
 **확인해봐야할 항목**
 
-* r/s, w/s rkB/s, wkB/s: read 요청과 write 요청, read kB/s, write kB/s를 나타냅니다. 어떤 요청이 가장 많이 들어오는지 확인해볼 수 있는 중요한 지표입니다. 성능 문제는 생각보다 과도한 요청때문에 발생하는 경우도 있기 때문입니다.
-* await: I/O처리 평균 시간을 밀리초로 표현한 값입니다. application한테는 I/O요청을 queue하고 서비스를 받는데 걸리는 시간이기 때문에 application이 이 시간동안 대기하게 됩니다. 일반적인 장치의 요청 처리 시간보다 긴 경우에는 블럭장치 자체의 문제가 있거나 장치가 포화된 상태임을 알 수 있습니다.
+* r/s, w/s rkB/s, wkB/s: read 요청과 write 요청, read kB/s, write kB/s를 나타낸다. 어떤 요청이 가장 많이 들어오는지 확인해볼 수 있는 중요한 지표다. 성능 문제는 생각보다 과도한 요청때문에 발생하는 경우도 있기 때문이다.
+* await: I/O처리 평균 시간을 밀리초로 표현한 값이다. application한테는 I/O요청을 queue하고 서비스를 받는데 걸리는 시간이기 때문에 application이 이 시간동안 대기하게 된다. 일반적인 장치의 요청 처리 시간보다 긴 경우에는 블럭장치 자체의 문제가 있거나 장치가 포화된 상태임을 알 수 있다.
 
 
 ## 7. free -m
@@ -169,6 +171,15 @@ Mem:        245998      24545     221453         83         59        541
 Swap:            0          0          0
 
 ```
+
+**확인해봐야할 항목**
+
+* buffers: Block 장치 I/O의 buffer 캐시, 사용량
+* cached: 파일 시스템에서 사용되는 [page cache](https://brunch.co.kr/@alden/25)의 양
+
+위 값들이 0에 가까워 지면 안된다. 이는 곧 높은 Disk I/O가 발생하고 있음을 의미한다(iostat으로 확인 가능). 위 예제는 각각 59MB, 541MB로 괜찮은 정도에 속한다.
+
+"“-/+ buffers/cache"는 사용중인 메모리와 여유 메모리의 양을 나타낸다. 리눅스는 빠르게 다시 애플리케이션에 메모리가 할당될 수 있도록 캐시메모리를 사용한다. 따라서 캐시 메모리도 여유 메모리에 포함되어 보여야한다. 캐시메모리 또한 여유메모리로 계산하지 않는 착각으로 인해서 [linuxatemyram](http://www.linuxatemyram.com/)란 사이트까지 있다.
 
 ## 8. sar -n DEV 1
 
