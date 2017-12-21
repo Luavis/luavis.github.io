@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "COW(Copy-on-write) 기반의 Python garbage collection"
+title:  "COW(Copy-on-write)가 발생하는 Python garbage collection"
 date:   2017-12-21 13:27:00 +09:00
 categories: python
 description: Copy-on-write가 발생하는 Python GC의 공유 메모리상에서 생기는 문제점을 해결하는 과정, Instagram이 GC를 없앤 이유 속편
