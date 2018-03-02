@@ -8,8 +8,8 @@ url: "https://b.luavis.kr" # the base hostname & protocol for your site
 facebook_username: luavis
 github_username:  luavis
 nickname: Luavis
-designed_by: Aiden
-designed_by_url: https://www.facebook.com/profile.php?id=100008558805579
+designed_by: shydah
+designed_by_url: https://github.com/shydah
 since_year: 2015
 copyright_year: 2018
 include: ["_categories", "_pages"]
