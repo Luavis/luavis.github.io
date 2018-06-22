@@ -18,7 +18,7 @@ p > .highlighter-rouge {
   padding: 1px 3px;
 }
 
-.highlighter-rouge > pre {
+.highlighter-rouge > div.highlight {
   overflow: auto;
 }
 
