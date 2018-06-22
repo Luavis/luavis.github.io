@@ -264,7 +264,9 @@ blockquote {
 }
 
 .main-content-wrapper {
+  position: relative;
   background: white;
+  z-index: 500;
 }
 
 .home, .post {
