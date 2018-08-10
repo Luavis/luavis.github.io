@@ -16,7 +16,7 @@ keywords: "Typescript, static type, static typing typing, duck typing, bug densi
 
 ## static type은 만병통치약인가?
 
-Typescript의 인기는 폭발적으로 증가해왔습니다. 저는 Typescript와 static type을 좋아합니다.(역자 역시 회사 사내 프로젝트를 Typescript로 진행했고 typing을 선호합니다.) 하지만 Typescript를 단순히 타입 시스템 때문에 사용하는 것이 아니라 다른 훌륭한 기능 때문에 사용합니다. Typescript는 명칭적 타이핑(Nominal)보다는 구조적 타이핑(Structural)에 가깝습니다.([Nominal typing과 Structural typing의 차이에 대해서](https://medium.com/@thejameskyle/type-systems-structural-vs-nominal-typing-explained-56511dd969f4)) 이 말인즉슨 타입의 이름이나 식별자를 기반으로 한 타입 시스템이라기 보다는 duck typing이 자동화되어 동작하는것에 가깝다는 의미입니다. 이는 Javascript와 같은 동적인 언어의 장점을 잘 살린 부분입니다.
+Typescript의 인기는 폭발적으로 증가해왔습니다. 저는 Typescript와 static type을 좋아합니다.(사내 프로젝트를 Typescript로 진행했고 typing을 선호합니다.) 하지만 Typescript를 단순히 타입 시스템 때문에 사용하는 것이 아니라 다른 훌륭한 기능 때문에 사용합니다. Typescript는 명칭적 타이핑(Nominal)보다는 구조적 타이핑(Structural)에 가깝습니다.([Nominal typing과 Structural typing의 차이에 대해서](https://medium.com/@thejameskyle/type-systems-structural-vs-nominal-typing-explained-56511dd969f4)) 이 말인즉슨 타입의 이름이나 식별자를 기반으로 한 타입 시스템이라기 보다는 duck typing이 자동화되어 동작하는것에 가깝다는 의미입니다. 이는 Javascript와 같은 동적인 언어의 장점을 잘 살린 부분입니다.
 
 사람들이 오해하는 것 중에 하나가 Typescript가 실제로 해결할 수 없는 문제를 해결해 줄 것이라 믿는 것 입니다.
 
