@@ -16,13 +16,13 @@ keywords: "Typescript, static type, static typing typing, duck typing, bug densi
 
 ## static type은 만병통치약인가?
 
-Typescript의 인기는 폭발적으로 증가해왔습니다. 저는 Typescript와 static type을 좋아합니다.(역자 역시 회사 사내 프로젝트를 Typescript로 진행했고 typing을 선호합니다.) 하지만 Typescript를 단순히 타입 시스템 때문에 사용하는 것이 아니라 다른 훌륭한 기능 때문에 사용합니다. Typescript는 명칭적 타이핑(Nominal)보다는 구조적 타이핑(Structural)에 가깝습니다.([Nominal typing과 Structural typing의 차이에대 해서](https://medium.com/@thejameskyle/type-systems-structural-vs-nominal-typing-explained-56511dd969f4)) 이 말인즉슨 타입의 이름이나 식별자를 기반으로 한 타입 시스템이라기 보다는 duck typing이 자동화되어 동작하는것에 가깝다는 의미입니다. 이는 Javascript와 같은 동적인 언어의 장점을 잘 살린 부분입니다.
+Typescript의 인기는 폭발적으로 증가해왔습니다. 저는 Typescript와 static type을 좋아합니다.(역자 역시 회사 사내 프로젝트를 Typescript로 진행했고 typing을 선호합니다.) 하지만 Typescript를 단순히 타입 시스템 때문에 사용하는 것이 아니라 다른 훌륭한 기능 때문에 사용합니다. Typescript는 명칭적 타이핑(Nominal)보다는 구조적 타이핑(Structural)에 가깝습니다.([Nominal typing과 Structural typing의 차이에 대해서](https://medium.com/@thejameskyle/type-systems-structural-vs-nominal-typing-explained-56511dd969f4)) 이 말인즉슨 타입의 이름이나 식별자를 기반으로 한 타입 시스템이라기 보다는 duck typing이 자동화되어 동작하는것에 가깝다는 의미입니다. 이는 Javascript와 같은 동적인 언어의 장점을 잘 살린 부분입니다.
 
 사람들이 오해하는 것 중에 하나가 Typescript가 실제로 해결할 수 없는 문제를 해결해 줄 것이라 믿는 것 입니다.
 
-Typescript의 가장 강한 강점으로 소개하는 내용은 "큰 스케일의 웹 애플리케이션은 static type 없이는 힘들다." 입니다. Typesciprt를 통해 static type을 사용하면 `jump to definition`이나 `automatic refactoring`과 같은 기능을 사용할 수 있도록 만들어줍니다. 그리고 이런 툴들은 우리의 생산성이 높아진 것처럼 느끼게 해줍니다.(그리고 실제로도 더 생산적이게 만들어 줍니다.)
+Typescript의 가장 강한 강점으로 소개하는 내용은 "대규모의 웹 애플리케이션은 static type 없이는 힘들다." 입니다. Typesciprt를 통해 static type을 사용하면 `jump to definition`이나 `automatic refactoring`과 같은 기능을 사용할 수 있도록 만들어줍니다. 그리고 이런 기능은 우리의 생산성이 높아진 것처럼 느끼게 해줍니다.(그리고 실제로도 더 생산적이게 만들어 줍니다.)
 
-하지만 많은 사람들은 static type을 사용하면 애플리케이션의 버그가 줄어드는데에 도움을 줄 것이라고 믿습니다. static type을 사용하면 중대한 버그는 잡을 수 있습니다. 이는 부정하기 힘든 사실입니다. 하지만 정말로 static type은 전반적으로 버그율을 잡을 수 있을까요?
+하지만 많은 사람들은 static type을 사용하면 애플리케이션의 버그가 줄어드는데에 도움을 줄 것이라고 믿습니다. static type을 사용하면 중대한 버그는 잡을 수 있습니다. 이는 부정하기 힘든 사실입니다. 하지만 정말로 static type은 전반적으로 버그율을 낮추는데 도움이 될까요?
 
 ## static type은 거짓된 안정감을 줍니다.
 
@@ -40,7 +40,7 @@ Typescript의 가장 강한 강점으로 소개하는 내용은 "큰 스케일�
 
 > 이 관계들은 통계적으로는 **중요하지만 영향도는 좀 적었다.**
 
-사실 나는 static type이 버그를 줄이는데 중대한 역할을 한 경험적 증거를 인지하지 않았다. 따라서 개발자가 사용할 수 있는 멋진 개발툴을 사용해 static type은 실제로 전반적인 버그를 잡는데에 도움이 되지 않습니다.
+제게도 static type이 버그를 줄이는데 중대한 역할을 한 경험적 증거가 없습니다. 개발자가 사용할 수 있는 멋진 개발툴과 static type은 실제로 전반적인 버그를 잡는데에 도움이 되지 않습니다.
 
 ## 타입의 정확도는 프로그램의 정확도를 보장하지 않습니다.
 
@@ -71,7 +71,7 @@ Typescript의 장점 중 하나는 이런 충돌이 생긴다 하더라도, 컴�
 
 그리고 제게는 이 부분이 굉장히 걱정하는 부분입니다. Javascript를 가르치는 입장에서 많은 개발자들이 사용하는 다양한 개발툴과 개발 프레임워크에 적용가능한 것을 가르치고 싶습니다. 여러분은 이런 점을 걱정하지 않겠지만, 여러분의 코드는 다른 개발자에게도 읽고 배우기 쉬워야하고 무엇보다 그 코드에 기여하기 쉬워야합니다. 당신 혼자는 Typescript에 적응했을지 모르지만 그 외의 다른 사람들은 Typescript에 적응하기 어려울 수 있습니다.
 
-지금 당장에는 엄청난 속도로 Typescript가 성장해나가고 있지만, 전체 Javascript의 환경에 비해서는 아직 작습니다. 심지어 jQuery보다도. 물론 성장해 나아가는 속도는 놀랍고, Javascript로 컴파일 가능한 대체제(Coffeescript와 같은) 중에서는 지배적인 위치에 다달았습니다.
+지금 당장에는 엄청난 속도로 Typescript가 성장해나가고 있지만, 전체 Javascript의 환경에 비해서는 아직 작습니다. 심지어 jQuery보다도. 물론 성장해 나아가는 속도는 놀랍고, Javascript로 컴파일 가능한 대체제(Coffeescript, ...) 중에서는 지배적인 위치에 다달았습니다.
 
 어떤 도구는 단점을 알고도 사용하기에 가치있지만, Typescript는 제게는 지금 당장 사용하기엔 올바르지 않은것 같습니다. 하지만 MS의 Code와 Typescript의 궁합은 한 번쯤은 사용해봐도 좋습니다. 맘에 들것을 확신합니다.
 
