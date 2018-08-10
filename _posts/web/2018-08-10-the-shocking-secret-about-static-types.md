@@ -32,7 +32,7 @@ Typescript의 가장 강한 강점으로 소개하는 내용은 "대규모의 �
 
 > 확실히 말하기는 힘들지만 위 차트에서는 강력한 타입언어가 우리가 버그를 덜 만들도록 만들어 준다고 확신하기는 어렵다. -  Daniel Lebrero, "The Broken Promise of Static Typing"
 
-좀 더 권위있는 연구에서는 Static types이 조금 더 도움이 된다고 이야기하고 있습니다: "A Large Scale Study of Programming Languages and Code Quality in Github" from Baishakhi Ray, Daryl Posnett, Vladimir Filkov, Premkumar T Devanbu, from UC Davis.
+좀 더 권위있는 연구에서는 Static type이 조금 더 도움이 된다고 이야기하고 있습니다: "A Large Scale Study of Programming Languages and Code Quality in Github" from Baishakhi Ray, Daryl Posnett, Vladimir Filkov, Premkumar T Devanbu, from UC Davis.
 
 > 데이터를 통해서 절차지향 언어보다는 함수형 언어가, 약한 타이핑보다는 강한 타이핑이, 동적 타입보다는 정적 타입이 그리고 unmanaged memory보다는 managed memory가 더 버그를 적게 만든다는 것을 알 수 있다.
 
@@ -79,7 +79,7 @@ Typescript의 장점 중 하나는 이런 충돌이 생긴다 하더라도, 컴�
 
 버그를 줄여주는 점을 강점으로 보기에는
 
-**Static types는 과대평가되어 있습니다.**
+**Static type는 과대평가되어 있습니다.**
 
 그러나 다른 기능들과 함께 보면 static type은 여전히 멋지고 사용하기에 가치가 있습니다.
 결론을 내자면,
