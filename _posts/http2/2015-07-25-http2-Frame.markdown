@@ -8,7 +8,7 @@ keywords: http, http2, rfc 7540, frame
 
 ---
 
-![Http logo]({{ site_url }}/assets/http2-fast-websites.png)
+![HTTP logo]({{ site_url }}/assets/http2-fast-websites.png)
 
 ---
 
