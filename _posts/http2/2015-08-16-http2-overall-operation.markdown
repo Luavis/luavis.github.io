@@ -38,7 +38,7 @@ HTTP/2는 표준에 서론부분에서도 이야기하고 있듯이 의미적인
 
 ### 압축
 
-HTTP header압축에 대해서는 따로 표준을 따로(RFC 7451) 문서로 만둘어 둘 만큼 까다로운 규칙을 가지고 있다, 헤더 압축기능에는 단순히 압축뿐만아니라 key와 value의 쌍에 대한 indexing기능도 포함하고 있어, 헤더의 길이를 매우 줄일 수 있다.
+HTTP header압축에 대해서는 따로 표준을 따로(RFC 7541) 문서로 만둘어 둘 만큼 까다로운 규칙을 가지고 있다, 헤더 압축기능에는 단순히 압축뿐만아니라 key와 value의 쌍에 대한 indexing기능도 포함하고 있어, 헤더의 길이를 매우 줄일 수 있다.
 
 예를 들어 User-agent에 해당하는 값에 대해선 한번의 connection에서 한번 보내게 되면 이 값을 indexing하기로 약속했다면 다음에는 1바이트로 이를 주고 받을 수 있다.
 
@@ -48,7 +48,7 @@ HTTP header압축에 대해서는 따로 표준을 따로(RFC 7451) 문서로 �
 
 표준에서는 기존 브라우저 위에서 동작하던 DOM객체를 이용한 Javascript 소스와 PHP나 dJango RoR등 여러 Web Application Server들의 하위호환을 위해서 이 값을 기존 HTTP/1.1 때와 같은 형식으로 reformat해주고 넘겨줄 것을 의무화하고 있다.
 
-자세한 사항은 HPACK에대해서 매우 자세히 예를들고 있는 이 [포스트]({{ site_url }}/http2/http2-header/)로..
+자세한 사항은 HPACK에대해서 매우 자세히 예를들고 있는 이 [포스트]({{ site_url }}/http2/http2-header)로..
 
 ### Virtual Header
 
