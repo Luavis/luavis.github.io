@@ -45,7 +45,7 @@ Zeppelin은 java를 이용해서 작성했고, 따라서 JDBC를 통해서 Athen
 
 이제 다운로드 받은 jar 파일과 AWS의 credential 디렉토리(AWS의 자격증명 만들기에 대한 설명은 [여기에](https://docs.aws.amazon.com/ko_kr/AmazonS3/latest/dev/AuthUsingAcctOrUserCredentials.html))를 docker-compose.yml을 통해서 zeppelin이 동작 중인 컨테이너와 연결시켜 준다.
 
-```
+```yml
 version: '3'
 
 services:
