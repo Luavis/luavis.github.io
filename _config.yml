@@ -11,7 +11,7 @@ nickname: Luavis
 designed_by: shydah
 designed_by_url: https://github.com/shydah
 since_year: 2015
-copyright_year: 2018
+copyright_year: 2019
 include: ["_categories", "_pages"]
 permalink: "/:categories/:title"
 github: [metadata]

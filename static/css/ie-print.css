@@ -30,13 +30,36 @@
   #triangle-wrapper {
     display: none;
   }
+  .main-content-wrapper {
+    padding: 0;
+  }
   .share {
     display: none;
   }
+  .footer {
+    padding: 20px;
+  }
+  .footer #avatar {
+    position: static;
+    float: left;
+  }
   .footer #copyright {
+    height: 72px;
     background: none;
   }
+  .footer #copyright p {
+    padding: 0;
+  }
+  .footer .name-wrapper .name {
+    font-size: 18px;
+  }
+  .footer .name-wrapper .name::before {
+    content: 'Written by ';
+  }
   .footer .name-wrapper .links {
+    display: none;
+  }
+  .footer .description {
     display: none;
   }
   /* IE6 ignore avatar */
@@ -48,6 +71,9 @@
   }
   #wrapper {
     margin-bottom: 0;
+  }
+  .fb-like {
+    display: none !important;
   }
   #disqus_thread {
     display: none;

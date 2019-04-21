@@ -70,8 +70,8 @@
       </div>
       <section class="main-content-wrapper">
         {{ content }}
+        {% include footer.html %}
       </section>
-      {% include footer.html %}
     </div>
     <!--[if !IE]><!-->
     <script async src="{{ "/static/js/app.js" | prepend: site.baseurl }}"></script>
