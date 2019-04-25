@@ -76,7 +76,7 @@ keywords: http, http2, hpack, header, compression, 압축, 헤더
 
 Header에서 이름은 index된 값을 사용할 예정이지만 그에 반해서 새로운 값을 포함하여 table에 새롭게 indexing을 하고 싶은 경우에는 0번째 비트에 0 1번째 비트에 1을 설정하고 Index영역에 해당 헤더 이름의 index를 integer literal 형식으로 포함시킨다.
 
-하지만 Header의 이름 또한 새롭게 재정의 하여 인덱싱하고 싶은 경우에는 
+하지만 Header의 이름 또한 새롭게 재정의 하여 인덱싱하고 싶은 경우에는
 
 	 0   1   2   3   4   5   6   7
 	+---+---+---+---+---+---+---+---+
@@ -106,7 +106,7 @@ Header에서 이름은 index된 값을 사용할 예정이지만 그에 반해�
 	| Value String (Length octets)  |
 	+-------------------------------+
 
-이미 Index된 header의 이름인 경우에 위와 같이 사용하는 것이고 만약 이미 Index된 헤더의 이름이 아니라면, 
+이미 Index된 header의 이름인 경우에 위와 같이 사용하는 것이고 만약 이미 Index된 헤더의 이름이 아니라면,
 
 	 0   1   2   3   4   5   6   7
 	+---+---+---+---+---+---+---+---+
@@ -495,14 +495,14 @@ HPACK에는 기본적으로 indexing된 header들이 있다. 여기에 통신중
 
 bin		 | semantic
 -----------|-------------------------
-\x41      |   Literal indexed :authority
-\x8a      | length 10 ? with huffman
+\x41      |   Literal indexed idx=1 :authority
+\x8a      | length 10 / with huffman
 \xa0\xe4\x1d\x13\x9d\x09\xb8\xf0\x00\x0f | localhost:8000
 \x82      | :method GET
 \x84      | :path /
 \x87      | :scheme https
 \x53      | Literal indexed accept
-b8      | len 56 / with huffman
+\xb8      | len 56 / with huffman
 \x49\x7c...xf6\x80\x0b\xbd    |  text/html,application/xhtml+xml,appl...
 \x50    |   Literal indexed accept-encoding
 \x8e    | len 14 / with huffman
@@ -510,15 +510,15 @@ b8      | len 56 / with huffman
 \x51    | Literal indexed accept-language
 \xa4    | len 36 / with huffman
 \xea\x75...\x01\x71\x7f | ko-KR,ko;q=0.8,en-US;q=0.6,en;q=0.4,ja;q=0.2
-\x60    | Literal indexed cookie
+\x60    | Literal indexed idx=32 cookie
 \x97    | len 23 / with huffman
 \x8a\x61...\x79\xb6\xff | _ga=GA1.1.1626313285.1438268855
 \x40    | Literal indexed
 \x92    | len 18 / with huffman
 \xb6\xb9...\x25\x1f | upgrade-insecure-requests
 \x01    | len 1 / without huffman
-\x31    |  '1' 
-\x7a    | Literal indexed user-agent idx=58
+\x31    |  '1'
+\x7a    | Literal indexed idx=58 user-agent
 \xdc    | len 92 / with huffman
 \xd0\x7f\x66\xa2...xb6\x5d\x5d\x97\x3f | Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_4) AppleWe...
 
@@ -545,20 +545,20 @@ C4 82 00 84 B9 58 D3 3F 89 62 51 F7 31 0F 52 E6 21 FF 87 53 03 2A 2F 2A C3 C2 C1
 
 bin		 | semantic
 -----------|-------------------------
-\xc4 | Indexed - Add idx=68 (user-agent: Mozilla/5.0...)
-\x82 | idx=4 :method GET
+\xc4 | Indexed - idx=68 (user-agent: Mozilla/5.0...)
+\x82 | idx=2 :method GET
 \x00 | Literal without index
 \x84 | len 4 / with huffman
 \xb9\x58\xd3\x3f | :path
 \x89 | len 9 / with huffman
 \x62\x51\xf7\x31\x0f\x52\xe6\x21\xff | /favicon.ico
-\x87 | Indexed - Add idx=7 :scheme https
-\x53 | Literal Indexed idx=53 accept
+\x87 | Indexed - idx=7 :scheme https
+\x53 | Literal Indexed idx=19 accept
 \x03 | len 3 / without huffman
 \x2a\x2f\x2a | ```*/*```
-\xc3 | Indexed - Add idx=67 (upgrade-insecure-requests: 1)
-\xc2 | Indexed - Add idx=66 cookie: _ga=GA1.1.1626313285.1438268855
-\xc1 | Indexed - Add idx=65 accept-language: ko-KR,ko;q=0.8,en-US;q=0.6,en;q=0.4,ja;q=0.2
+\xc3 | Indexed - idx=67 (upgrade-insecure-requests: 1)
+\xc2 | Indexed - idx=66 cookie: _ga=GA1.1.1626313285.1438268855
+\xc1 | Indexed - idx=65 accept-language: ko-KR,ko;q=0.8,en-US;q=0.6,en;q=0.4,ja;q=0.2
 \x73 | Literal Indexed idx=51 referer
 \x90 | len 16 / with huffman
 \x9d\x29\xad...\x00\x18 | https://localhost:8000/
