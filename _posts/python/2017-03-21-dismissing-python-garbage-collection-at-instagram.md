@@ -56,7 +56,7 @@ Instagram에서 빠르게 실험적으로 CPython interpreter 개조해서 code 
 
 ### Page faults
 
-Instagram은 Copy-on-Write에 대해서 찾아본 결과, Copy-on-Write는 page fault와 관련이 있다는 것을 찾았습니다. 각각의 CoW는 page fault를 발생 시킵니다. 그래서 perftool을 이용해서 production 서버를 다가 켜고 fork되어서 worker process의 PID가 나올때까지 기다리고(...) 아래 커맨드를 이용해서 perftool을 붙여 언제  page fault가 일어나는지 지켜본 뒤 stack trace를 확인했다고 합니다.
+Instagram은 Copy-on-Write에 대해서 찾아본 결과, Copy-on-Write는 page fault와 관련이 있다는 것을 찾았습니다. 각각의 CoW는 page fault를 발생 시킵니다. 그래서 perftool을 이용해서 production 서버를 다시 켜고 fork되어서 worker process의 PID가 나올때까지 기다리고(...) 아래 커맨드를 이용해서 perftool을 붙여 언제  page fault가 일어나는지 지켜본 뒤 stack trace를 확인했다고 합니다.
 
 ```sh
 $ perf record -e page-faults -g -p <PID>
