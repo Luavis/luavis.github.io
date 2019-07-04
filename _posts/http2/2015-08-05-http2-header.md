@@ -528,14 +528,13 @@ bin		 | semantic
 
 index | key/value
 -----|-------------------------
-62 | :authority: localhost:8000
-63 | accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8
-64 | accept-encoding: gzip, deflate, sdch
+62 | user-agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/44.0.2403.125 Safari/537.36
+63 | upgrade-insecure-requests: 1
+64 | cookie: _ga=GA1.1.1626313285.1438268855
 65 | accept-language: ko-KR,ko;q=0.8,en-US;q=0.6,en;q=0.4,ja;q=0.2
-66 | cookie: _ga=GA1.1.1626313285.1438268855
-67 | upgrade-insecure-requests: 1
-68 | user-agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/44.0.2403.125 Safari/537.36
-
+66 | accept-encoding: gzip, deflate, sdch
+67 | accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,```*/*```;q=0.8
+68 | :authority: localhost:8000
 
 그리고 크롬에서 자동적으로 그 뒤에 요청한 다음은 GET /favicon.ico에 대한 요청 헤더이다.
 
@@ -545,7 +544,7 @@ C4 82 00 84 B9 58 D3 3F 89 62 51 F7 31 0F 52 E6 21 FF 87 53 03 2A 2F 2A C3 C2 C1
 
 bin		 | semantic
 -----------|-------------------------
-\xc4 | Indexed - idx=68 (user-agent: Mozilla/5.0...)
+\xc4 | Indexed - idx=68 :authority: localhost:8000
 \x82 | idx=2 :method GET
 \x00 | Literal without index
 \x84 | len 4 / with huffman
@@ -556,11 +555,44 @@ bin		 | semantic
 \x53 | Literal Indexed idx=19 accept
 \x03 | len 3 / without huffman
 \x2a\x2f\x2a | ```*/*```
-\xc3 | Indexed - idx=67 (upgrade-insecure-requests: 1)
-\xc2 | Indexed - idx=66 cookie: _ga=GA1.1.1626313285.1438268855
-\xc1 | Indexed - idx=65 accept-language: ko-KR,ko;q=0.8,en-US;q=0.6,en;q=0.4,ja;q=0.2
+
+여기서 dynamic table에 accept가 추가됩니다.
+
+index | key/value
+-----|-------------------------
+62 | accept: ```*/*```
+63 | user-agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/44.0.2403.125 Safari/537.36
+64 | upgrade-insecure-requests: 1
+65 | cookie: _ga=GA1.1.1626313285.1438268855
+66 | accept-language: ko-KR,ko;q=0.8,en-US;q=0.6,en;q=0.4,ja;q=0.2
+67 | accept-encoding: gzip, deflate, sdch
+68 | accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,```*/*```;q=0.8
+69 | :authority: localhost:8000
+
+bin		 | semantic
+-----------|-------------------------
+\xc3 | Indexed - idx=67 accept-encoding: gzip, deflate, sdch
+\xc2 | Indexed - idx=66 accept-language: ko-KR,ko;q=0.8,en-US;q=0.6,en;q=0.4,ja;q=0.2
+\xc1 | Indexed - idx=65 cookie: _ga=GA1.1.1626313285.1438268855
 \x73 | Literal Indexed idx=51 referer
 \x90 | len 16 / with huffman
 \x9d\x29\xad...\x00\x18 | https://localhost:8000/
-\xc0 | Indexed - Add idx=64 accept-encoding: gzip, deflate, sdch
+
+여기서 dynamic table에 referer가 추가됩니다.
+
+index | key/value
+-----|-------------------------
+62 | referer: https://localhost:8000/
+63 | accept: ```*/*```
+64 | user-agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/44.0.2403.125 Safari/537.36
+65 | upgrade-insecure-requests: 1
+66 | cookie: _ga=GA1.1.1626313285.1438268855
+67 | accept-language: ko-KR,ko;q=0.8,en-US;q=0.6,en;q=0.4,ja;q=0.2
+68 | accept-encoding: gzip, deflate, sdch
+69 | accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,```*/*```;q=0.8
+70 | :authority: localhost:8000
+
+bin		 | semantic
+-----------|-------------------------
+\xc0 | Indexed - Add idx=64 (user-agent: Mozilla/5.0...)
 
