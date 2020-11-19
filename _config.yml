@@ -1,17 +1,18 @@
 # Site settings
 title: Luavis' Dev Story
 description: 생계코딩 이야기
-email: me@luav.is
+email: luaviskang@gmail.com
 timezone: Asia/Seoul
-# baseurl: ""  # the subpath of your site, e.g. /blog/
-url: "https://b.luavis.kr" # the base hostname & protocol for your site
+url: "https://b.luavis.kr"
 facebook_username: luavis
 github_username:  luavis
 nickname: Luavis
+name: 강성일
+profile_image_url: https://avatars3.githubusercontent.com/u/1534596
 designed_by: shydah
 designed_by_url: https://github.com/shydah
 since_year: 2015
-copyright_year: 2019
+copyright_year: 2020
 include: ["_categories", "_pages"]
 permalink: "/:categories/:title"
 github: [metadata]
@@ -19,6 +20,8 @@ markdown: kramdown
 kramdown:
     input: GFM
 gems:
+    - jekyll-gist
+plugins:
     - jekyll-gist
 whitelist:
     - jekyll-gist
