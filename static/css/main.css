@@ -390,6 +390,17 @@ blockquote {
   width: 100%;
 }
 
+.post-content img+strong {
+  display: block;
+  text-align: center;
+  margin-bottom: 12px;
+}
+
+.post-content img.ld-img {
+  max-width: 500px;
+  margin: 0 auto;
+}
+
 .post-content img.md-img {
   width: 300px;
   margin: 0;
@@ -402,6 +413,10 @@ blockquote {
 
 .post-content img.xm-img {
   width: 100px;
+}
+
+.post-content .MJXc-display {
+  overflow: scroll;
 }
 
 .fb-like {
