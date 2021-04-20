@@ -1,4 +1,6 @@
-b.luavis.kr
+luavis.me
 ===
 
-This is my [Github blog](https://b.luavis.kr). Repository worked with [Jekyll](http://www.jekyllrb.com).
+This is my [Github blog](https://luavis.me).
+Repository worked with [Jekyll](http://www.jekyllrb.com).
+
