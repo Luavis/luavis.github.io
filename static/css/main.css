@@ -252,7 +252,7 @@ blockquote {
 }
 
 .share p {
-  margin-bottom: 0;
+  margin-bottom: 8px;
   font-size: 12px;
   text-align: right;
   color: #72757c;
@@ -261,6 +261,10 @@ blockquote {
 .links li {
   list-style: none;
   display: inline-block;
+}
+
+.links li a {
+  cursor: pointer;
 }
 
 #wrapper {
@@ -295,8 +299,7 @@ blockquote {
 }
 .home .subscribe.share span {
   position: relative;
-  top: -10px;
-  left: -12px;
+  top: -6px;
 }
 
 .home .post-list {

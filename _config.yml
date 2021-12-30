@@ -6,13 +6,14 @@ timezone: Asia/Seoul
 url: "https://luavis.me"
 facebook_username: luavis
 github_username:  luavis
+linkedin_username: luavis
 nickname: Luavis
 name: 강성일
 profile_image_url: https://avatars3.githubusercontent.com/u/1534596
 designed_by: shydah
 designed_by_url: https://github.com/shydah
 since_year: 2015
-copyright_year: 2020
+copyright_year: 2022
 include: ["_categories", "_pages"]
 permalink: "/:categories/:title"
 github: [metadata]

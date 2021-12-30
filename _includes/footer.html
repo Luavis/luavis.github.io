@@ -9,20 +9,27 @@
             {% if site.github_username %}
               <li>
                 <a href="https://github.com/{{ site.github_username }}">
-                  <img src="{{ "/static/image/github-social-logo.png" | prepend: site.baseurl }}" alt="github">
+                  <img src="{{ "/static/image/github.svg" | prepend: site.baseurl }}" alt="github" width="20" height="20">
                 </a>
               </li>
+            {% endif %}
+            {% if site.linkedin_username %}
+            <li>
+              <a href="https://linkedin.com/u/{{ site.linkedin_username }}">
+                <img src="{{ " /static/image/linkedin.svg" | prepend: site.baseurl }}" alt="linkedin" width="20" height="20">
+              </a>
+            </li>
             {% endif %}
             {% if site.facebook_username %}
               <li>
                 <a href="https://facebook.com/{{ site.facebook_username }}">
-                  <img src="{{ "/static/image/facebook-social-logo.png" | prepend: site.baseurl }}" alt="facebook">
+                  <img src="{{ "/static/image/facebook.svg" | prepend: site.baseurl }}" alt="facebook" width="20" height="20">
                 </a>
               </li>
             {% endif %}
               <li>
                 <a href="{{ site_url }}/feed.xml" rel="alternate" type="application/rss+xml">
-                  <img src="{{ "/static/image/rss-social-logo.png" | prepend: site.baseurl }}" alt="rss">
+                  <img src="{{ "/static/image/rss.svg" | prepend: site.baseurl }}" alt="rss" width="20" height="20">
                 </a>
               </li>
           </ul>
