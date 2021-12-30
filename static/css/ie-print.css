@@ -10,11 +10,13 @@
     display: none;
   }
   #blog-title {
-    position: static;
+    /* position: static;
     margin-bottom: 50px;
     height: 145px;
+    */
+    display: none;
   }
-  #blog-title h1 {
+  /* #blog-title h1 {
     background: none;;
     padding-top: 20px;
   }
@@ -26,12 +28,14 @@
   #blog-title p {
     color: #404040;
     position: static;
-  }
+  } */
   #triangle-wrapper {
     display: none;
   }
   .main-content-wrapper {
     padding: 0;
+    padding-top: 24px;
+    zoom: 0.9;
   }
   .share {
     display: none;

@@ -558,3 +558,12 @@ blockquote {
     padding-right: env(safe-area-inset-right);
   }
 }
+
+.pagination {
+  text-align: right;
+  font-size: 12px;
+}
+
+.pagination a {
+  text-decoration: none;
+}

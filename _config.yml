@@ -14,6 +14,8 @@ designed_by: shydah
 designed_by_url: https://github.com/shydah
 since_year: 2015
 copyright_year: 2022
+paginate: 10
+paginate_path: "./page:num/"
 include: ["_categories", "_pages"]
 permalink: "/:categories/:title"
 github: [metadata]
@@ -22,7 +24,10 @@ kramdown:
     input: GFM
 gems:
     - jekyll-gist
+    - jekyll-paginate
 plugins:
     - jekyll-gist
+    - jekyll-paginate
 whitelist:
     - jekyll-gist
+    - jekyll-paginate
